@@ -126,7 +126,7 @@ namespace EducationPortal.Storage
 
         public Guid FindRecordByAttribute<T>(string attribute, string value)
         {
-            foreach (var file in Directory.EnumerateFiles(Service.TablePath<T>(Storage)))
+            foreach (var file in Directory.EnumerateFiles(TablePath<T>(Storage)))
             {
                 using (var fileStream = new FileStream(file, FileMode.Open))
                 {
@@ -155,5 +155,11 @@ namespace EducationPortal.Storage
 
             return default;
         }
+
+        public bool IsRowWithValueExists<T>(string attribute, string value)
+        {
+            return FindRecordByAttribute<T>(attribute, value) != Guid.Empty;
+        }
+
     }
 }
