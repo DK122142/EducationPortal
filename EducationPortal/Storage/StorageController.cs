@@ -11,21 +11,16 @@ namespace EducationPortal.Storage
 {
     public class StorageController
     {
-        public string StorageName { get; private set; }
+        public Storage storage { get; private set; }
 
         public StorageController()
         {
-            StorageName = typeof(StorageController).Namespace;
-
-            if (!Directory.Exists(StorageName))
-            {
-                Directory.CreateDirectory(StorageName);
-            }
+            storage = new Storage();
         }
 
         public StorageController AddEntity<T>()
         {
-            string directory = EntityPath<T>();
+            string directory = Service.EntityPath<T>(storage);
 
             if (!Directory.Exists(directory))
             {
@@ -34,31 +29,17 @@ namespace EducationPortal.Storage
 
             return this;
         }
-        
-        private string RecordPath<T>(T record)
-        {
-            return $"{StorageName}/{typeof(T).Name}/{(record as Entity).Id}.json";
-        }
-        private string RecordPath<T>(Guid id)
-        {
-            return $"{StorageName}/{typeof(T).Name}/{id}.json";
-        }
-
-        private string EntityPath<T>()
-        {
-            return $"{StorageName}/{typeof(T).Name}";
-        }
 
         public async Task AddRecord<T>(T record)
         {
-            await AddRecords(new List<T>(){record});
+            await AddRecords(new List<T> {record});
         }
 
         public async Task AddRecords<T>(IEnumerable<T> records)
         {
             foreach (var record in records)
             {
-                using (var file = new FileStream(RecordPath(record), FileMode.Create))
+                using (var file = new FileStream(Service.RecordPath(storage, record), FileMode.Create))
                 {
                     await JsonSerializer.SerializeAsync(file, record);
                     file.Close();
@@ -66,13 +47,13 @@ namespace EducationPortal.Storage
             }
         }
         
-        public bool IsExists<T>(T record)
+        public bool Exists<T>(T record)
         {
-            return File.Exists(RecordPath(record));
+            return File.Exists(Service.RecordPath(storage, record));
         }
-        public bool IsExists<T>(Guid id)
+        public bool Exists<T>(Guid id)
         {
-            return File.Exists(RecordPath<T>(id));
+            return File.Exists(Service.RecordPath<T>(storage, id));
         }
 
         private Guid GetIdByFileName(string fileName)
@@ -84,9 +65,9 @@ namespace EducationPortal.Storage
 
         public async Task<T> GetRecordById<T>(Guid id)
         {
-            if (IsExists<T>(id))
+            if (Exists<T>(id))
             {
-                await using (var fs = new FileStream(RecordPath<T>(id), FileMode.Open))
+                await using (var fs = new FileStream(Service.RecordPath<T>(storage, id), FileMode.Open))
                 {
                     return await JsonSerializer.DeserializeAsync<T>(fs);
                 }
@@ -97,7 +78,7 @@ namespace EducationPortal.Storage
 
         public Guid FindRecordByAttribute<T>(string attribute, string value)
         {
-            foreach (var file in Directory.EnumerateFiles(EntityPath<T>()))
+            foreach (var file in Directory.EnumerateFiles(Service.EntityPath<T>(storage)))
             {
                 using (var fs = new FileStream(file, FileMode.Open))
                 {
