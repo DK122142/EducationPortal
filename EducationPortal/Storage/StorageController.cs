@@ -2,25 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using EducationPortal.Entities;
+using static EducationPortal.Storage.Service;
 
 namespace EducationPortal.Storage
 {
     public class StorageController
     {
-        public Storage storage { get; private set; }
+        public Storage Storage { get; private set; }
 
         public StorageController()
         {
-            storage = new Storage();
+            Storage = new Storage();
         }
 
         public StorageController AddTable<T>()
         {
-            string directory = Service.EntityPath<T>(storage);
+            string directory = TablePath<T>(Storage);
 
             if (!Directory.Exists(directory))
             {
@@ -30,30 +29,79 @@ namespace EducationPortal.Storage
             return this;
         }
 
-        public async Task AddRow<T>(T record)
+        public StorageController DeleteTable<T>()
         {
-            await AddRows(new List<T> {record});
+            string directory = TablePath<T>(Storage);
+
+            if (Directory.Exists(directory))
+            {
+                try
+                {
+                    Directory.Delete(directory, true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Failed to delete table(directory). Message: {e.Message} " +
+                                      $"In method: {e.TargetSite} StackTrace: {e.StackTrace}");
+                    throw;
+                }
+            }
+
+            return this;
         }
 
-        public async Task AddRows<T>(IEnumerable<T> records)
+        public async Task AddRow<T>(T row)
         {
-            foreach (var record in records)
+            await AddRows(new List<T>(1) {row});
+        }
+
+        public async Task AddRows<T>(IEnumerable<T> rows)
+        {
+            foreach (var record in rows)
             {
-                using (var file = new FileStream(Service.RecordPath(storage, record), FileMode.Create))
+                using (var fileStream = new FileStream(RowPath(Storage, record), FileMode.Create))
                 {
-                    await JsonSerializer.SerializeAsync(file, record);
-                    file.Close();
+                    await JsonSerializer.SerializeAsync(fileStream, record);
+                    fileStream.Close();
+                }
+            }
+        }
+
+        public void DeleteRow<T>(T row)
+        {
+            DeleteRows(new List<T>(1){row});
+        }
+
+        public void DeleteRows<T>(IEnumerable<T> rows)
+        {
+            foreach (var row in rows)
+            {
+                if (Exists(row))
+                {
+                    File.Delete(RowPath(Storage, row));
+                }
+            }
+        }
+
+        public async Task UpdateRow<T>(Guid id, T updatedRow)
+        {
+            if (Exists<T>(id))
+            {
+                using (var fileStream = new FileStream(RowPath<T>(Storage, id), FileMode.Create))
+                {
+                    await JsonSerializer.SerializeAsync(fileStream, updatedRow);
+                    fileStream.Close();
                 }
             }
         }
         
         public bool Exists<T>(T record)
         {
-            return File.Exists(Service.RecordPath(storage, record));
+            return File.Exists(RowPath(Storage, record));
         }
         public bool Exists<T>(Guid id)
         {
-            return File.Exists(Service.RecordPath<T>(storage, id));
+            return File.Exists(RowPath<T>(Storage, id));
         }
 
         private Guid GetIdByFileName(string fileName)
@@ -67,9 +115,9 @@ namespace EducationPortal.Storage
         {
             if (Exists<T>(id))
             {
-                await using (var fs = new FileStream(Service.RecordPath<T>(storage, id), FileMode.Open))
+                await using (var fileStream = new FileStream(RowPath<T>(Storage, id), FileMode.Open))
                 {
-                    return await JsonSerializer.DeserializeAsync<T>(fs);
+                    return await JsonSerializer.DeserializeAsync<T>(fileStream);
                 }
             }
 
@@ -78,11 +126,11 @@ namespace EducationPortal.Storage
 
         public Guid FindRecordByAttribute<T>(string attribute, string value)
         {
-            foreach (var file in Directory.EnumerateFiles(Service.EntityPath<T>(storage)))
+            foreach (var file in Directory.EnumerateFiles(Service.TablePath<T>(Storage)))
             {
-                using (var fs = new FileStream(file, FileMode.Open))
+                using (var fileStream = new FileStream(file, FileMode.Open))
                 {
-                    using (var jsonDoc = JsonDocument.ParseAsync(fs))
+                    using (var jsonDoc = JsonDocument.ParseAsync(fileStream))
                     {
                         string json = jsonDoc.Result.RootElement.ToString();
                         var jsonSplit = json.Replace("{", "")

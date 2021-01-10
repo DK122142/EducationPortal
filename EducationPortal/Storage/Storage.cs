@@ -23,7 +23,7 @@ namespace EducationPortal.Storage
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"Failed to create storage. Message{e.Message} " +
+                    Console.WriteLine($"Failed to create storage. Message: {e.Message} " +
                                       $"In method: {e.TargetSite} StackTrace: {e.StackTrace}");
                     throw;
                 }
