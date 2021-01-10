@@ -32,12 +32,15 @@ namespace EducationPortal.UI.Pages
                               "Already registered? (2)Log In. \n" +
                               "(5)Exit");
             
-            var option = int.Parse(Console.ReadLine());
+            int.TryParse(Console.ReadLine(), out var option);
             
             Console.Clear();
 
             switch (option)
             {
+                case 0:
+                    Console.WriteLine("Wrong input!");
+                    break;
                 case 1:
                     Console.WriteLine("Input your login: ");
                     login = Console.ReadLine();

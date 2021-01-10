@@ -12,7 +12,15 @@ namespace EducationPortal.UI.Pages
     {
         public Profile(string msg = null)
         {
+            Console.Clear();
             new Header();
+
+            if (msg != null)
+            {
+                Console.WriteLine("========");
+                Console.WriteLine($"message: {msg}");
+                Console.WriteLine("========");
+            }
 
             if (Provider.AuthorizedUser != null)
             {
@@ -22,12 +30,15 @@ namespace EducationPortal.UI.Pages
                 Console.WriteLine("(4)Log Out. \n" +
                                   "(5)Exit");
 
-                var option = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out var option);
 
                 Console.Clear();
 
                 switch (option)
                 {
+                    case 0:
+                        Console.WriteLine("Wrong input!");
+                        break;
                     case 4:
                         Provider.AuthorizedUser = null;
                         break;
