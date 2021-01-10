@@ -49,27 +49,12 @@ namespace CustomersLinq
         {
             if (isDescending)
             {
-                return customers.OrderByDescending(customer => GetMethodInvoke(customer, field));
+                return customers.OrderByDescending(customer => customer.GetType().GetProperty(field).GetValue(customer));
             }
-            return customers.OrderBy(customer => GetMethodInvoke(customer, field));
+            return customers.OrderBy(customer => customer.GetType().GetProperty(field).GetValue(customer));
             
         }
-
-        private static object? GetMethodInvoke(Customer customer, string field)
-        {
-            TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
-            var fieldName = ti.ToTitleCase(field.ToLower());
-            var type = typeof(Customer);
-            var act = Activator.CreateInstance(type, new object[]
-            {
-                customer.Id, customer.Name, customer.RegistrationDate, customer.Balance
-            });
-            var member = type.GetMember(fieldName);
-            var method = type.GetMethod($"get_{fieldName}");
-            var res = method.Invoke(act, null);
-            return res;
-        }
-
+        
         public static string AllNames(List<Customer> customers)
         {
             return string.Join(",", customers.Select(customer => customer.Name));

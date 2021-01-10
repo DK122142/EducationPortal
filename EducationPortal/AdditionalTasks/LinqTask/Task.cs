@@ -9,7 +9,7 @@ namespace EducationPortal.AdditionalTasks.LinqTask
 {
     public static class Task
     {
-        static List<Customer> customers = new List<Customer>
+        private static List<Customer> customers = new List<Customer>
             {
                 new Customer(1, "Tawana Shope", new DateTime(2017, 7, 15), 15.8),
                 new Customer(2, "Danny Wemple", new DateTime(2016, 2, 3), 88.54),
@@ -102,7 +102,7 @@ namespace EducationPortal.AdditionalTasks.LinqTask
             public static void G()
             {
                 Console.WriteLine("G.");
-                var byField = Operations.ByField(customers, "name");
+                var byField = Operations.ByField(customers, "Name");
                 foreach (var customer in byField)
                 {
                     Console.WriteLine(customer.Name);
