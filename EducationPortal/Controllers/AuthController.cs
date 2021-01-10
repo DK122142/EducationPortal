@@ -27,6 +27,12 @@ namespace EducationPortal.Controllers
         
         public async Task<User> Register(string login, string password)
         {
+            if (storageController.IsRowWithValueExists<User>("Name", login))
+            {
+                Console.WriteLine($"User with name(login) {login} already exists!");
+                return null;
+            }
+
             User newUser = new User(Guid.NewGuid(), login, PasswordHasher.HashPassword(password));
             await storageController.AddRow(newUser);
             return newUser;
