@@ -18,7 +18,7 @@ namespace EducationPortal.Storage
             storage = new Storage();
         }
 
-        public StorageController AddEntity<T>()
+        public StorageController AddTable<T>()
         {
             string directory = Service.EntityPath<T>(storage);
 
@@ -30,12 +30,12 @@ namespace EducationPortal.Storage
             return this;
         }
 
-        public async Task AddRecord<T>(T record)
+        public async Task AddRow<T>(T record)
         {
-            await AddRecords(new List<T> {record});
+            await AddRows(new List<T> {record});
         }
 
-        public async Task AddRecords<T>(IEnumerable<T> records)
+        public async Task AddRows<T>(IEnumerable<T> records)
         {
             foreach (var record in records)
             {

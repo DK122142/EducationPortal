@@ -28,7 +28,7 @@ namespace EducationPortal.Controllers
         public async Task<User> Register(string login, string password)
         {
             User newUser = new User(Guid.NewGuid(), login, PasswordHasher.HashPassword(password));
-            await storageController.AddRecord(newUser);
+            await storageController.AddRow(newUser);
             return newUser;
         }
     }

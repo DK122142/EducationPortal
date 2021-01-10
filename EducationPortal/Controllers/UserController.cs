@@ -11,7 +11,7 @@ namespace EducationPortal.Controllers
     {
         public UserController()
         {
-            storageController.AddEntity<User>();
+            storageController.AddTable<User>();
         }
     }
 }
