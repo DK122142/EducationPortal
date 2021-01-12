@@ -8,12 +8,12 @@ using EducationPortal.UI.Services;
 
 namespace EducationPortal.UI.Pages
 {
-    public class Home
+    public static class Home
     {
-        public Home(string msg = null)
+        public static void Show(string msg = null)
         {
             Console.Clear();
-            new Header();
+            Header.Show();
             
             if (msg != null)
             {
@@ -24,11 +24,11 @@ namespace EducationPortal.UI.Pages
 
             if (Provider.AuthorizedUser == null)
             {
-                new Login(msg);
+                Login.Show(msg);
             }
             else
             {
-                new Profile(msg);
+                Profile.Show(msg);
             }
         }
     }

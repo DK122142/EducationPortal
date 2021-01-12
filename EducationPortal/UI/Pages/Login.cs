@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
 using EducationPortal.Controllers;
 using EducationPortal.UI.Components;
 using EducationPortal.UI.Services;
@@ -12,14 +7,14 @@ namespace EducationPortal.UI.Pages
 {
     public class Login
     {
-        public Login(string msg = null)
+        public static void Show(string msg = null)
         {
             string login;
             string password;
             AuthController authController = new AuthController();
 
             Console.Clear();
-            new Header();
+            Header.Show();
             
             if (msg != null)
             {
@@ -52,7 +47,7 @@ namespace EducationPortal.UI.Pages
                     Provider.AuthorizedUser = authController.Login(login, password).Result;
                     break;
                 case 2:
-                    new Registration();
+                    Registration.Show();
                     break;
                 case 5:
                     Environment.Exit(0);
@@ -64,7 +59,7 @@ namespace EducationPortal.UI.Pages
 
             Console.Clear();
 
-            new Home();
+            Home.Show();
         }
         
     }

@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EducationPortal.UI.Components;
 using EducationPortal.UI.Services;
 
 namespace EducationPortal.UI.Pages
 {
-    public class Profile
+    public static class Profile
     {
-        public Profile(string msg = null)
+        public static void Show(string msg = null)
         {
             Console.Clear();
-            new Header();
+            Header.Show();
 
             if (msg != null)
             {
@@ -52,7 +48,7 @@ namespace EducationPortal.UI.Pages
                 
                 Console.Clear();
 
-                new Home();
+                Home.Show();
             }
         }
     }

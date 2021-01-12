@@ -9,16 +9,16 @@ using EducationPortal.UI.Services;
 
 namespace EducationPortal.UI.Pages
 {
-    public class Registration
+    public static class Registration
     {
-        public Registration(string msg = null)
+        public static void Show(string msg = null)
         {
             string login;
             string password;
             AuthController authController = new AuthController();
 
             Console.Clear();
-            new Header();
+            Header.Show();
             
             if (msg != null)
             {
@@ -54,16 +54,16 @@ namespace EducationPortal.UI.Pages
                     {
                         Console.Clear();
 
-                        new Home();
+                        Home.Show();
                     }
                     else
                     {
-                        new Home($"User with name {login} already exists!");
+                        Home.Show($"User with name {login} already exists!");
                     }
 
                     break;
                 case 2:
-                    new Login();
+                    Login.Show();
                     break;
                 case 5:
                     Environment.Exit(0);
