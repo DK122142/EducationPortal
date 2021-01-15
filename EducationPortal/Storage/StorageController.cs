@@ -8,16 +8,16 @@ using static EducationPortal.Storage.Service;
 
 namespace EducationPortal.Storage
 {
-    public class StorageController
+    public class StorageController : IStorageController
     {
-        public Storage Storage { get; private set; }
+        public Storage Storage { get; }
 
         public StorageController()
         {
             Storage = new Storage();
         }
 
-        public StorageController AddTable<T>()
+        public IStorageController CreateTable<T>()
         {
             string directory = TablePath<T>(Storage);
 
@@ -29,7 +29,7 @@ namespace EducationPortal.Storage
             return this;
         }
 
-        public StorageController DeleteTable<T>()
+        public IStorageController DeleteTable<T>()
         {
             string directory = TablePath<T>(Storage);
 
@@ -50,12 +50,12 @@ namespace EducationPortal.Storage
             return this;
         }
 
-        public async Task AddRow<T>(T row)
+        public async Task InsertInto<T>(T row)
         {
-            await AddRows(new List<T>(1) {row});
+            await InsertInto(new List<T>(1) {row});
         }
 
-        public async Task AddRows<T>(IEnumerable<T> rows)
+        public async Task InsertInto<T>(IEnumerable<T> rows)
         {
             foreach (var record in rows)
             {
@@ -83,7 +83,7 @@ namespace EducationPortal.Storage
             }
         }
 
-        public async Task UpdateRow<T>(Guid id, T updatedRow)
+        public async Task Update<T>(Guid id, T updatedRow)
         {
             if (Exists<T>(id))
             {
@@ -160,6 +160,5 @@ namespace EducationPortal.Storage
         {
             return FindRecordByAttribute<T>(attribute, value) != Guid.Empty;
         }
-
     }
 }

@@ -10,12 +10,10 @@ namespace EducationPortal.Controllers
 {
     public class AuthController : UserController
     {
-
-
         public async Task<User> Login(string login, string password)
         {
-            Guid id = storageController.FindRecordByAttribute<User>("Name", login);
-            User user = await storageController.GetRecordById<User>(id);
+            Guid id = StorageController.FindRecordByAttribute<User>("Name", login);
+            User user = await StorageController.GetRecordById<User>(id);
             
             if (PasswordHasher.VerifyHashedPassword(user.Password, password))
             {
@@ -27,14 +25,14 @@ namespace EducationPortal.Controllers
         
         public async Task<User> Register(string login, string password)
         {
-            if (storageController.IsRowWithValueExists<User>("Name", login))
+            if (StorageController.IsRowWithValueExists<User>("Name", login))
             {
                 Console.WriteLine($"User with name(login) {login} already exists!");
                 return null;
             }
 
             User newUser = new User(Guid.NewGuid(), login, PasswordHasher.HashPassword(password));
-            await storageController.AddRow(newUser);
+            await StorageController.InsertInto(newUser);
             return newUser;
         }
     }

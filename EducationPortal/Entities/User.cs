@@ -10,10 +10,8 @@ namespace EducationPortal.Entities
 {
     public class User : Entity
     {
-        [JsonInclude]
         public string Name { get; private set; }
-
-        [JsonInclude]
+        
         public string Password { get; private set; }
 
         public User(Guid id, string name, string password) : base(id)

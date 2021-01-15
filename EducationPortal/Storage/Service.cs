@@ -7,7 +7,7 @@ namespace EducationPortal.Storage
     {
         public static string RowPath<T>(Storage storage, T record)
         {
-            return $"{storage.Name}/{typeof(T).Name}/{(record as Entity).Id}.json";
+            return $"{storage.Name}/{typeof(T).Name}/{(record as IStorageEntity<Guid>).Id}.json";
         }
         public static string RowPath<T>(Storage storage, Guid id)
         {
