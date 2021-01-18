@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using EducationPortal.Controllers;
 using EducationPortal.Storage;
 using EducationPortal.UI.Components;
@@ -6,14 +10,12 @@ using EducationPortal.UI.Services;
 
 namespace EducationPortal.UI.Pages
 {
-    public class Login
+    public static class Videos
     {
         public static void Show(ITableManager tm, string msg = null)
         {
-            string login;
-            string password;
-
-            AuthController authController = new AuthController(tm);
+            VideoController vc = new VideoController(tm);
+            UserController uc = new UserController(tm);
 
             Console.Clear();
             Header.Show();
@@ -25,10 +27,22 @@ namespace EducationPortal.UI.Pages
                 Console.WriteLine("========");
             }
 
-            Console.WriteLine("Login.");
-            Console.WriteLine("(1)Log In. \n" +
-                              "Not registered yet? (2)Registration. \n" +
+            Console.WriteLine("(2)Add video \n" +
+                              "(3)Profile \n" +
+                              "(4)Log Out. \n" +
                               "(5)Exit");
+
+            var videos = uc.GetVideos(Provider.AuthorizedUser);
+
+            if (videos != null){
+
+                Console.WriteLine($"Videos of {Provider.AuthorizedUser.Name}");
+
+                foreach (var video in videos)
+                {
+                    Console.WriteLine($"Video: {video.Result.Name}, Link: {video.Result.Link}");
+                }
+            }
             
             int.TryParse(Console.ReadLine(), out var option);
 
@@ -36,20 +50,14 @@ namespace EducationPortal.UI.Pages
 
             switch (option)
             {
-                case 0:
-                    Console.WriteLine("Wrong input!");
-                    break;
-                case 1:
-                    Console.WriteLine("Input your login: ");
-                    login = Console.ReadLine();
-
-                    Console.WriteLine("Input your password: ");
-                    password = Console.ReadLine();
-
-                    Provider.AuthorizedUser = authController.Login(login, password).Result;
-                    break;
                 case 2:
-                    Registration.Show(tm);
+                    AddVideo.Show(tm);
+                    break;
+                case 3:
+                    Profile.Show(tm);
+                    break;
+                case 4:
+                    Provider.AuthorizedUser = null;
                     break;
                 case 5:
                     Environment.Exit(0);

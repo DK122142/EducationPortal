@@ -24,7 +24,8 @@ namespace EducationPortal.UI.Pages
                 Console.WriteLine("Profile.");
                 Console.WriteLine($"Welcome, {Provider.AuthorizedUser.Name}");
 
-                Console.WriteLine("(4)Log Out. \n" +
+                Console.WriteLine("(3)My Videos \n" +
+                                  "(4)Log Out. \n" +
                                   "(5)Exit");
 
                 int.TryParse(Console.ReadLine(), out var option);
@@ -35,6 +36,9 @@ namespace EducationPortal.UI.Pages
                 {
                     case 0:
                         Console.WriteLine("Wrong input!");
+                        break;
+                    case 3:
+                        Videos.Show(tm);
                         break;
                     case 4:
                         Provider.AuthorizedUser = null;
