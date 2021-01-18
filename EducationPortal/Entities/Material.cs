@@ -10,9 +10,12 @@ namespace EducationPortal.Entities
     {
         public string Name { get; private set; }
 
-        protected Material(Guid id, string name) : base(id)
+        public Guid Owner { get; private set; }
+
+        protected Material(Guid id, string name, Guid owner) : base(id)
         {
             this.Name = name;
+            this.Owner = owner;
         }
     }
 }

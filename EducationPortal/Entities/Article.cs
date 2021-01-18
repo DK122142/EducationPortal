@@ -12,7 +12,7 @@ namespace EducationPortal.Entities
 
         public DateTime Published { get; }
 
-        public Article(Guid id, string name, string link, DateTime published) : base(id, name)
+        public Article(Guid id, string name, Guid owner, string link, DateTime published) : base(id, name, owner)
         {
             this.Link = link;
             this.Published = published;

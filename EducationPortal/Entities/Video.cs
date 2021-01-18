@@ -15,8 +15,10 @@ namespace EducationPortal.Entities
         public string Quality { get; private set; }
 
 
-        public Video(Guid id, string name, string link, string duration, string quality) : base(id, name)
+        public Video(Guid id, string name, Guid owner, string link, string duration, string quality) : base(id, name,
+            owner)
         {
+            
             this.Link = link;
             this.Duration = duration;
             this.Quality = quality;
