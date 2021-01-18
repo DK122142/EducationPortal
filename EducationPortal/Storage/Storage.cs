@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EducationPortal.Storage
 {
-    public class Storage
+    public class Storage : IStorage
     {
-        public string Name { get; private set; }
+        public string Name { get; }
 
         public Storage()
         {
-            Name = typeof(Storage).Namespace;
+            this.Name = typeof(Storage).Namespace;
 
-            if (!Directory.Exists(Name))
+            if (!Directory.Exists(this.Name))
             {
                 try
                 {
-                    Directory.CreateDirectory(Name);
+                    Directory.CreateDirectory(this.Name);
                 }
                 catch (Exception e)
                 {

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EducationPortal.Storage
 {
     public interface IStorageController
     {
-        Storage Storage { get; }
+        IStorage Storage { get; }
 
         IStorageController CreateTable<T>();
 
@@ -17,6 +15,10 @@ namespace EducationPortal.Storage
         Task InsertInto<T>(IEnumerable<T> values);
 
         Task InsertInto<T>(T value);
+
+        void Delete<T>(IEnumerable<T> values);
+
+        void Delete<T>(T value);
 
         Task Update<T>(Guid id, T value);
     }
