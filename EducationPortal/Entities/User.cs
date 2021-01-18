@@ -16,8 +16,8 @@ namespace EducationPortal.Entities
 
         public User(Guid id, string name, string password) : base(id)
         {
-            Name = name;
-            Password = password;
+            this.Name = name;
+            this.Password = password;
         }
     }
 }
