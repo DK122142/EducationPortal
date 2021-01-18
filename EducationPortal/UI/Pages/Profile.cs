@@ -1,4 +1,5 @@
 ﻿using System;
+using EducationPortal.Storage;
 using EducationPortal.UI.Components;
 using EducationPortal.UI.Services;
 
@@ -6,7 +7,7 @@ namespace EducationPortal.UI.Pages
 {
     public static class Profile
     {
-        public static void Show(string msg = null)
+        public static void Show(ITableManager tm, string msg = null)
         {
             Console.Clear();
             Header.Show();
@@ -48,7 +49,7 @@ namespace EducationPortal.UI.Pages
                 
                 Console.Clear();
 
-                Home.Show();
+                Home.Show(tm);
             }
         }
     }

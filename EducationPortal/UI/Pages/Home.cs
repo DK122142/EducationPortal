@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EducationPortal.Storage;
 using EducationPortal.UI.Components;
 using EducationPortal.UI.Services;
 
@@ -10,7 +11,7 @@ namespace EducationPortal.UI.Pages
 {
     public static class Home
     {
-        public static void Show(string msg = null)
+        public static void Show(ITableManager tm, string msg = null)
         {
             Console.Clear();
             Header.Show();
@@ -24,11 +25,11 @@ namespace EducationPortal.UI.Pages
 
             if (Provider.AuthorizedUser == null)
             {
-                Login.Show(msg);
+                Login.Show(tm, msg);
             }
             else
             {
-                Profile.Show(msg);
+                Profile.Show(tm, msg);
             }
         }
     }

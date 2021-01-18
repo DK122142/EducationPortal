@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.Controllers;
+using EducationPortal.Storage;
 using EducationPortal.UI.Components;
 using EducationPortal.UI.Services;
 
@@ -11,11 +12,11 @@ namespace EducationPortal.UI.Pages
 {
     public static class Registration
     {
-        public static void Show(string msg = null)
+        public static void Show(ITableManager tm, string msg = null)
         {
             string login;
             string password;
-            AuthController authController = new AuthController();
+            AuthController authController = new AuthController(tm);
 
             Console.Clear();
             Header.Show();
@@ -54,16 +55,16 @@ namespace EducationPortal.UI.Pages
                     {
                         Console.Clear();
 
-                        Home.Show();
+                        Home.Show(tm);
                     }
                     else
                     {
-                        Home.Show($"User with name {login} already exists!");
+                        Home.Show(tm, $"User with name {login} already exists!");
                     }
 
                     break;
                 case 2:
-                    Login.Show();
+                    Login.Show(tm);
                     break;
                 case 5:
                     Environment.Exit(0);

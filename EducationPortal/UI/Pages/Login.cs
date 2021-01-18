@@ -1,5 +1,6 @@
 ﻿using System;
 using EducationPortal.Controllers;
+using EducationPortal.Storage;
 using EducationPortal.UI.Components;
 using EducationPortal.UI.Services;
 
@@ -7,11 +8,11 @@ namespace EducationPortal.UI.Pages
 {
     public class Login
     {
-        public static void Show(string msg = null)
+        public static void Show(ITableManager tm, string msg = null)
         {
             string login;
             string password;
-            AuthController authController = new AuthController();
+            AuthController authController = new AuthController(tm);
 
             Console.Clear();
             Header.Show();
@@ -47,7 +48,7 @@ namespace EducationPortal.UI.Pages
                     Provider.AuthorizedUser = authController.Login(login, password).Result;
                     break;
                 case 2:
-                    Registration.Show();
+                    Registration.Show(tm);
                     break;
                 case 5:
                     Environment.Exit(0);
@@ -59,7 +60,7 @@ namespace EducationPortal.UI.Pages
 
             Console.Clear();
 
-            Home.Show();
+            Home.Show(tm);
         }
         
     }
