@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.Entities;
 using EducationPortal.Services;
@@ -18,7 +16,7 @@ namespace EducationPortal.Controllers
 
         public async Task<User> Login(string login, string password)
         {
-            Guid id = TableManager.Where<User>("Name", login);
+            Guid id = TableManager.Where<User>("Name", login).FirstOrDefault();
             User user = await TableManager.WhereId<User>(id);
             
             if (PasswordHasher.VerifyHashedPassword(user.Password, password))
