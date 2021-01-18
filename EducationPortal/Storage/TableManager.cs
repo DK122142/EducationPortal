@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -14,8 +16,10 @@ namespace EducationPortal.Storage
             StorageController = storageController;
         }
 
-        public Guid Where<T>(string attribute, string value)
+        public List<Guid> Where<T>(string attribute, string value)
         {
+            var result = new List<Guid>();
+
             foreach (var file in Directory.EnumerateFiles(Service.TablePath<T>(StorageController.Storage)))
             {
                 using (var fileStream = new FileStream(file, FileMode.Open))
@@ -35,7 +39,7 @@ namespace EducationPortal.Storage
                             {
                                 if (jsonSplit[i + 1].ToLower().Equals(value.ToLower()))
                                 {
-                                    return Service.GetIdByFileName(file);
+                                    result.Add(Service.GetIdByFileName(file));
                                 }
                             }
                         }
@@ -43,12 +47,12 @@ namespace EducationPortal.Storage
                 }
             }
 
-            return default;
+            return result;
         }
 
         public bool AnyEqual<T>(string attribute, string value)
         {
-            return Where<T>(attribute, value) != Guid.Empty;
+            return Where<T>(attribute, value).FirstOrDefault() != Guid.Empty;
         }
 
         public async Task<T> WhereId<T>(Guid id)

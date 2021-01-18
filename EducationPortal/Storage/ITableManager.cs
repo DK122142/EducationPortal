@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EducationPortal.Storage
@@ -7,7 +8,7 @@ namespace EducationPortal.Storage
     {
         IStorageController StorageController { get; set; }
 
-        Guid Where<T>(string attribute, string value);
+        List<Guid> Where<T>(string attribute, string value);
 
         bool AnyEqual<T>(string attribute, string value);
 
