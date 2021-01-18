@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EducationPortal.Entities;
+﻿using EducationPortal.Entities;
+using EducationPortal.Storage;
 
 namespace EducationPortal.Controllers
 {
     public class UserController : BaseController
     {
-        public UserController()
+        public UserController(ITableManager tableManager) : base(tableManager)
         {
-            StorageController.CreateTable<User>();
+            TableManager.StorageController.CreateTable<User>();
         }
     }
 }

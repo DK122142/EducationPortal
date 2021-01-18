@@ -9,11 +9,11 @@ namespace EducationPortal.Controllers
 {
     public abstract class BaseController
     {
-        public StorageController StorageController { get; }
+        public ITableManager TableManager { get; }
 
-        protected BaseController()
+        protected BaseController(ITableManager tableManager)
         {
-            StorageController = new StorageController();
+            this.TableManager = tableManager;
         }
     }
 }

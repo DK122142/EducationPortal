@@ -5,15 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.Entities;
 using EducationPortal.Services;
+using EducationPortal.Storage;
 
 namespace EducationPortal.Controllers
 {
     public class AuthController : UserController
     {
+        public AuthController(ITableManager tableManager) : base(tableManager)
+        {
+            
+        }
+
         public async Task<User> Login(string login, string password)
         {
-            Guid id = StorageController.FindRecordByAttribute<User>("Name", login);
-            User user = await StorageController.GetRecordById<User>(id);
+            Guid id = TableManager.Where<User>("Name", login);
+            User user = await TableManager.WhereId<User>(id);
             
             if (PasswordHasher.VerifyHashedPassword(user.Password, password))
             {
@@ -25,14 +31,14 @@ namespace EducationPortal.Controllers
         
         public async Task<User> Register(string login, string password)
         {
-            if (StorageController.IsRowWithValueExists<User>("Name", login))
+            if (TableManager.AnyEqual<User>("Name", login))
             {
                 Console.WriteLine($"User with name(login) {login} already exists!");
                 return null;
             }
 
             User newUser = new User(Guid.NewGuid(), login, PasswordHasher.HashPassword(password));
-            await StorageController.InsertInto(newUser);
+            await TableManager.StorageController.InsertInto(newUser);
             return newUser;
         }
     }
