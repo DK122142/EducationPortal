@@ -8,7 +8,7 @@ using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Repositories
 {
-    public class UserRepository : IRepository<Account>
+    public class AccountRepository : IRepository<Account>
     {
         public IEnumerable<Account> GetAll()
         {

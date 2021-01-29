@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace EducationPortal.DAL.Services
+namespace EducationPortal.DAL.Infrastructure
 {
     public class PasswordHasher
     {
