@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationPortal", "Educatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationPortal.DAL", "EducationPortal.DAL\EducationPortal.DAL.csproj", "{144C1A08-54B1-4AD3-B178-E64C59F5DD35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationPortal.BLL", "EducationPortal.BLL\EducationPortal.BLL.csproj", "{2B1CA742-B5E6-42A0-87F6-E9DC0B34E759}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationPortal.BLL", "EducationPortal.BLL\EducationPortal.BLL.csproj", "{2B1CA742-B5E6-42A0-87F6-E9DC0B34E759}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationPortal.Console", "EducationPortal.Console\EducationPortal.Console.csproj", "{1DED5729-959B-426F-ACF4-262747BE268E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationPortal.C", "EducationPortal.Console\EducationPortal.C.csproj", "{1DED5729-959B-426F-ACF4-262747BE268E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationPortal.Prompt", "EducationPortal.Prompt\EducationPortal.Prompt.csproj", "{13EE8991-56F8-420A-9E41-0935394010AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1DED5729-959B-426F-ACF4-262747BE268E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DED5729-959B-426F-ACF4-262747BE268E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DED5729-959B-426F-ACF4-262747BE268E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13EE8991-56F8-420A-9E41-0935394010AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13EE8991-56F8-420A-9E41-0935394010AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13EE8991-56F8-420A-9E41-0935394010AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13EE8991-56F8-420A-9E41-0935394010AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

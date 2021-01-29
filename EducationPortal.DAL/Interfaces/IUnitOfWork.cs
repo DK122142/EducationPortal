@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
+using EducationPortal.DAL.Identity;
 
 namespace EducationPortal.DAL.Interfaces
 {
@@ -14,6 +15,8 @@ namespace EducationPortal.DAL.Interfaces
         IRepository<Article> Articles { get; }
 
         IRepository<Book> Books { get; }
+
+        AccountManager AccountManager { get; }
 
         void Save();
     }

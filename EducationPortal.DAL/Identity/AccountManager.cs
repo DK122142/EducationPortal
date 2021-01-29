@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.FS;
-using EducationPortal.DAL.Services;
+using EducationPortal.DAL.Infrastructure;
 
 namespace EducationPortal.DAL.Identity
 {
