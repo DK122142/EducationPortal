@@ -13,9 +13,11 @@ namespace EducationPortal.DAL.FS
     {
         public FSSet<Video> Videos { get; set; }
 
-        public FSSet<Article> Art { get; set; }
+        public FSSet<Article> Articles { get; set; }
 
         public FSSet<Book> Books { get; set; }
+
+        public FSSet<Course> Courses { get; set; }
 
         public EducationPortalContext(IFileStorageSetInitializer initializer = null) : base(initializer)
         {

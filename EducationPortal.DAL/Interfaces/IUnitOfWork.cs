@@ -8,7 +8,7 @@ using EducationPortal.DAL.Identity;
 
 namespace EducationPortal.DAL.Interfaces
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
         IRepository<Video> Videos { get; }
 
@@ -16,8 +16,6 @@ namespace EducationPortal.DAL.Interfaces
 
         IRepository<Book> Books { get; }
 
-        AccountManager AccountManager { get; }
-
-        void Save();
+        IRepository<Course> Courses { get; }
     }
 }

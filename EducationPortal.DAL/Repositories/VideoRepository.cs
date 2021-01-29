@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
+using EducationPortal.DAL.FileStorage.Core;
 using EducationPortal.DAL.FS;
 using EducationPortal.DAL.Interfaces;
 
@@ -11,41 +12,41 @@ namespace EducationPortal.DAL.Repositories
 {
     public class VideoRepository : IRepository<Video>
     {
-        private EducationPortalContext dbContext;
+        private FSContext context;
 
-        public VideoRepository(EducationPortalContext context)
+        public VideoRepository(FSContext context)
         {
-            this.dbContext = context;
+            this.context = context;
         }
 
         public IEnumerable<Video> GetAll()
         {
-            return this.dbContext.Storage.GetAll<Video>();
+            return this.context.Storage.GetAll<Video>();
         }
 
         public Video Get(Guid id)
         {
-            return dbContext.Storage.Get<Video>(id);
+            return context.Storage.Get<Video>(id);
         }
 
         public IEnumerable<Video> Find(Func<Video, bool> predicate)
         {
-            return dbContext.Storage.Find(predicate);
+            return context.Storage.Find(predicate);
         }
 
         public Task Create(Video item)
         {
-            return dbContext.Storage.CreateAsync(item);
+            return context.Storage.CreateAsync(item);
         }
 
         public Task Update(Guid old, Video newVideo)
         {
-            return dbContext.Storage.UpdateAsync(old, newVideo);
+            return context.Storage.UpdateAsync(old, newVideo);
         }
 
         public void Delete(Guid id)
         {
-            dbContext.Storage.Delete<Video>(id);
+            context.Storage.Delete<Video>(id);
         }
     }
 }
