@@ -11,8 +11,8 @@ namespace EducationPortal.DAL.Entities
 
         public List<string> Authors { get; }
 
-        public Book(Guid id, string name, Guid owner, int pages, DateTime published, List<string> authors) : base(id,
-            name, owner)
+        public Book(Guid id, string name, Guid owner, int pages, DateTime published, List<string> authors)
+            : base(id, name, owner)
         {
             this.Pages = pages;
             this.Published = published;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EducationPortal.DAL.Entities
 {
-    public class Course : Entity
+    public class Course : Material
     {
         public string Name { get; }
 
@@ -19,10 +19,8 @@ namespace EducationPortal.DAL.Entities
         public List<Video> Videos { get; }
 
         public Course(Guid id, string name, Guid owner, List<Article> articles, List<Book> books, List<Video> videos)
-            : base(id)
+            : base(id, name, owner)
         {
-            this.Name = name;
-            this.Owner = owner;
             this.Articles = articles;
             this.Books = books;
             this.Videos = videos;

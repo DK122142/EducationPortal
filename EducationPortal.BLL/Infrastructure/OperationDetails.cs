@@ -8,15 +8,15 @@ namespace EducationPortal.BLL.Infrastructure
 {
     public class OperationDetails
     {
-        public bool Succeded { get; private set; }
+        public bool Succeeded { get; private set; }
 
         public string Message { get; private set; }
 
         public string Property { get; private set; }
 
-        public OperationDetails(bool succedeed, string message, string prop)
+        public OperationDetails(bool succeeded, string message, string prop)
         {
-            this.Succeded = succedeed;
+            this.Succeeded = succeeded;
             this.Message = message;
             this.Property = prop;
         }

@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationPortal.DAL", "Educ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationPortal.BLL", "EducationPortal.BLL\EducationPortal.BLL.csproj", "{2B1CA742-B5E6-42A0-87F6-E9DC0B34E759}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationPortal.C", "EducationPortal.Console\EducationPortal.C.csproj", "{1DED5729-959B-426F-ACF4-262747BE268E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationPortal.Prompt", "EducationPortal.Prompt\EducationPortal.Prompt.csproj", "{13EE8991-56F8-420A-9E41-0935394010AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationPortal.Prompt", "EducationPortal.Prompt\EducationPortal.Prompt.csproj", "{13EE8991-56F8-420A-9E41-0935394010AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{2B1CA742-B5E6-42A0-87F6-E9DC0B34E759}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B1CA742-B5E6-42A0-87F6-E9DC0B34E759}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B1CA742-B5E6-42A0-87F6-E9DC0B34E759}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1DED5729-959B-426F-ACF4-262747BE268E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1DED5729-959B-426F-ACF4-262747BE268E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1DED5729-959B-426F-ACF4-262747BE268E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1DED5729-959B-426F-ACF4-262747BE268E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{13EE8991-56F8-420A-9E41-0935394010AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{13EE8991-56F8-420A-9E41-0935394010AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13EE8991-56F8-420A-9E41-0935394010AB}.Release|Any CPU.ActiveCfg = Release|Any CPU

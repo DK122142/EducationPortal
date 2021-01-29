@@ -11,8 +11,8 @@ namespace EducationPortal.DAL.Entities
         public string Quality { get; private set; }
 
 
-        public Video(Guid id, string name, Guid owner, string link, string duration, string quality) : base(id, name,
-            owner)
+        public Video(Guid id, string name, Guid owner, string link, string duration, string quality)
+            : base(id, name, owner)
         {
             
             this.Link = link;
