@@ -38,7 +38,7 @@ namespace EducationPortal.Prompt.Controllers
             AccountDTO accountDto = new AccountDTO {Login = model.Login, Password = model.Password};
             var operationDetails = await this.AccountService.Create(accountDto);
 
-            if (operationDetails.Succeded)
+            if (operationDetails.Succeeded)
             {
                 Login(model);
             }

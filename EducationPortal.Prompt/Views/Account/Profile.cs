@@ -1,5 +1,6 @@
 ﻿using System;
 using EducationPortal.Prompt.Infrastructure;
+using EducationPortal.Prompt.Views.Material.Video;
 using EducationPortal.Prompt.Views.Shared;
 
 namespace EducationPortal.Prompt.Views.Account
@@ -23,7 +24,7 @@ namespace EducationPortal.Prompt.Views.Account
                 Console.WriteLine("Profile.");
                 Console.WriteLine($"Welcome, {Provider.AuthorizedUser.Login}");
 
-                Console.WriteLine("(3)My Videos \n" +
+                Console.WriteLine("(3)Videos \n" +
                                   "(4)Log Out. \n" +
                                   "(5)Exit");
 
@@ -34,7 +35,7 @@ namespace EducationPortal.Prompt.Views.Account
                 switch (option)
                 {
                     case 3:
-                        // Videos.Show(tm);
+                        Videos.Show();
                         break;
                     case 4:
                         Provider.AccountController.Logout();

@@ -1,12 +1,10 @@
 ﻿using System;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.BLL.Services;
-using EducationPortal.DAL.FileStorage.Core;
-using EducationPortal.DAL.FileStorage.Core.Internal;
-using EducationPortal.DAL.FileStorage.Core.Internal.Interfaces;
 using EducationPortal.DAL.FS;
 using EducationPortal.DAL.Identity;
-using EducationPortal.Prompt.Interfaces;
+using EducationPortal.DAL.Interfaces;
+using EducationPortal.DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.Prompt
@@ -32,6 +30,8 @@ namespace EducationPortal.Prompt
             Services.AddSingleton<IdentityContext>();
             Services.AddSingleton<AccountManager>();
             Services.AddSingleton<IAccountService, AccountService>();
+            Services.AddSingleton<IUnitOfWork, FSUnitOfWork>();
+            Services.AddSingleton<IVideoService, VideoService>();
             
             ServiceProvider = Services.BuildServiceProvider();
         }
