@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using EducationPortal.DAL.FileStorage.Core.Infrastructure;
+using EducationPortal.DAL.FileStorage.Core.Internal;
 using EducationPortal.DAL.FileStorage.Core.Internal.Interfaces;
 
 namespace EducationPortal.DAL.FileStorage.Core
@@ -12,9 +13,9 @@ namespace EducationPortal.DAL.FileStorage.Core
 
         private IFileStorageSetInitializer _setInitializer;
 
-        public FSContext(IFileStorageSetInitializer fileStorageSetInitializer)
+        public FSContext(IFileStorageSetInitializer fileStorageSetInitializer = null)
         {
-            this._setInitializer = fileStorageSetInitializer;
+            this._setInitializer = new FileStorageSetInitializer();
 
             this._setInitializer.InitializeSets(this);
 
@@ -26,14 +27,6 @@ namespace EducationPortal.DAL.FileStorage.Core
             get
             {
                 return this._storage ??= new Storage(this);
-            }
-        }
-
-        public void test()
-        {
-            foreach (var type in _sets)
-            {
-                Console.WriteLine(type.Name);
             }
         }
     }

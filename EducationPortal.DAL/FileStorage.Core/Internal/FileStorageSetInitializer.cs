@@ -7,13 +7,16 @@ namespace EducationPortal.DAL.FileStorage.Core.Internal
 {
     public class FileStorageSetInitializer : IFileStorageSetInitializer
     {
-        public virtual void InitializeSets(FSContext context)
+        public void InitializeSets(FSContext context)
         {
-            var sets = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-                .Where(type => type.IsSubclassOf(context.GetType())).SelectMany(type => type.GetProperties())
+            var test = Assembly.GetExecutingAssembly();
+
+            var sets = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(type => type.IsSubclassOf(context.GetType().BaseType))
+                .SelectMany(type => type.GetProperties())
                 .SelectMany(property => property.PropertyType.GetGenericArguments());
 
-            var setsField = context.GetType().GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
+            var setsField = context.GetType().BaseType.GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
             
             setsField?.SetValue(context, sets.ToList());
         }

@@ -17,7 +17,7 @@ namespace EducationPortal.DAL.FS
 
         public FSSet<Book> Books { get; set; }
 
-        public EducationPortalContext(IFileStorageSetInitializer initializer) : base(initializer)
+        public EducationPortalContext(IFileStorageSetInitializer initializer = null) : base(initializer)
         {
             
         }

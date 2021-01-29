@@ -38,7 +38,9 @@ namespace EducationPortal.DAL.Identity
         
         public async Task<Account> Register(string login, string password)
         {
-            if(db.Storage.Find<Account>(a => a.Login == login).Any())
+            var exists = db.Storage.Find<Account>(a => a.Login == login).Any();
+
+            if(exists)
             {
                 Console.WriteLine($"Account with login {login} already exists!");
                 return null;

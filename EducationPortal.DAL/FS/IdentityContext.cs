@@ -13,7 +13,7 @@ namespace EducationPortal.DAL.FS
     {
         public FSSet<Account> Accounts { get; set; }
 
-        public IdentityContext(IFileStorageSetInitializer initializer) : base(initializer)
+        public IdentityContext(IFileStorageSetInitializer initializer = null) : base(initializer)
         {
             
         }

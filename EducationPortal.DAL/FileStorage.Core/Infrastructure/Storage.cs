@@ -19,6 +19,9 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
         {
             this._context = context;
             this._name = typeof(Storage).Namespace;
+            // this._name = Assembly.GetExecutingAssembly().FullName;
+
+            // this.EnsureCreated();
         }
 
         // true if created, false if it already existed
@@ -51,7 +54,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
 
         public void CreateTables()
         {
-            var setsField = this._context.GetType().GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
+            var setsField = this._context.GetType().BaseType.GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
 
             var sets = (List<Type>)setsField?.GetValue(this._context);
 
