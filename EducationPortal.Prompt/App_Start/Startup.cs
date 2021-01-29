@@ -14,10 +14,10 @@ namespace EducationPortal.Prompt
         }
 
 
-        public IAccountService CreateAccountService()
-        {
-            return this.serviceCreator.CreateAccountService();
-        }
+        // public IAccountService CreateAccountService()
+        // {
+        //     return this.serviceCreator.CreateAccountService();
+        // }
 
 
 

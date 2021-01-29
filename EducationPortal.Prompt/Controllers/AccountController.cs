@@ -11,6 +11,7 @@ namespace EducationPortal.Prompt.Controllers
     public class AccountController
     {
         private IAccountService AccountService => AppContext.ServiceProvider.GetService<IAccountService>();
+        // private IAccountService AccountService => AppContext.CreateAccountService();
 
         public void Login(LoginModel model)
         {
