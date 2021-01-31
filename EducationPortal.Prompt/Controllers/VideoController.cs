@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
+using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Interfaces;
 using EducationPortal.Prompt.Models;
@@ -13,7 +14,7 @@ namespace EducationPortal.Prompt.Controllers
 {
     public class VideoController
     {
-        private IVideoService VideoService => AppContext.ServiceProvider.GetRequiredService<IVideoService>();
+        private IVideoService VideoService => ServiceModule.ServiceProvider.GetRequiredService<IVideoService>();
 
         VideoModel GetVideo(Guid id)
         {

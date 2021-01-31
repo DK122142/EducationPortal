@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EducationPortal.BLL.DTO
 {
@@ -11,5 +7,7 @@ namespace EducationPortal.BLL.DTO
         public string Name { get; set; }
 
         public Guid Owner { get; set; }
+        
+        public abstract MaterialType MaterialType { get; }
     }
 }

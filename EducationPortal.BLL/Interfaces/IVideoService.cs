@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
 
 namespace EducationPortal.BLL.Interfaces
@@ -12,5 +9,7 @@ namespace EducationPortal.BLL.Interfaces
         void AddVideo(VideoDTO video);
 
         VideoDTO GetVideo(Guid id);
+
+        List<VideoDTO> AllVideos();
     }
 }

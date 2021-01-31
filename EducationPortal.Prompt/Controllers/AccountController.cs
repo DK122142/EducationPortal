@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
+using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Models;
@@ -10,8 +11,7 @@ namespace EducationPortal.Prompt.Controllers
 {
     public class AccountController
     {
-        private IAccountService AccountService => AppContext.ServiceProvider.GetService<IAccountService>();
-        // private IAccountService AccountService => AppContext.CreateAccountService();
+        private IAccountService AccountService => ServiceModule.ServiceProvider.GetService<IAccountService>();
 
         public void Login(LoginModel model)
         {

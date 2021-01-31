@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
@@ -51,6 +49,14 @@ namespace EducationPortal.BLL.Services
                 Link = video.Duration,
                 Quality = video.Quality
             };
+        }
+
+        public List<VideoDTO> AllVideos()
+        {
+            var mapper = new MapperConfiguration(cfg =>
+                cfg.CreateMap<Video, VideoDTO>()).CreateMapper();
+
+            return mapper.Map<IEnumerable<Video>, List<VideoDTO>>(this.Db.Videos.GetAll());
         }
     }
 }

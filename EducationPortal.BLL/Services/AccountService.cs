@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.Identity;
-using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.BLL.Services
 {
@@ -21,18 +16,13 @@ namespace EducationPortal.BLL.Services
         {
             this.AccountManager = accountManager;
         }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public async Task<OperationDetails> Create(AccountDTO accountDto)
         {
             try
             {
                 await this.AccountManager.Register(accountDto.Login, accountDto.Password);
-                return new OperationDetails(true, $"Registration succeded", "");
+                return new OperationDetails(true, $"Registration succeeded", "");
 
             }
             catch (Exception e)

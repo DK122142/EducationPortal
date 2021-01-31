@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EducationPortal.BLL.DTO
+﻿namespace EducationPortal.BLL.DTO
 {
     public class VideoDTO : MaterialDTO
     {
@@ -9,5 +7,7 @@ namespace EducationPortal.BLL.DTO
         public string Duration { get; set; }
 
         public string Quality { get; set; }
+
+        public override MaterialType MaterialType { get; } = MaterialType.Video;
     }
 }

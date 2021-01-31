@@ -7,6 +7,7 @@ namespace EducationPortal.BLL.DTO
         public string Link { get; set; }
 
         public DateTime Published { get; set; }
-        
+
+        public override MaterialType MaterialType { get; } = MaterialType.Article;
     }
 }

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using EducationPortal.DAL.Entities;
 
 namespace EducationPortal.BLL.DTO
 {
     public class CourseDTO : MaterialDTO
     {
-        public List<BLL.DTO.ArticleDTO> Articles { get; set; }
+        public string Description { get; set; }
 
-        public List<BookDTO> Books { get; set; }
+        public List<Guid> Materials { get; set; }
 
-        public List<VideoDTO> Videos { get; set; }
+        public List<Guid> Skills { get; set; }
+
+        public override MaterialType MaterialType { get; } = MaterialType.None;
     }
 }

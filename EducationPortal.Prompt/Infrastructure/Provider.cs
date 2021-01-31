@@ -1,7 +1,7 @@
 ﻿using System;
 using EducationPortal.BLL.DTO;
+using EducationPortal.BLL.Infrastructure;
 using EducationPortal.Prompt.Controllers;
-using EducationPortal.Prompt.Interfaces;
 
 namespace EducationPortal.Prompt.Infrastructure
 {
@@ -13,6 +13,6 @@ namespace EducationPortal.Prompt.Infrastructure
 
         public static VideoController VideoController { get; set; } = new VideoController();
 
-        public static IServiceProvider ServiceProvider { get; set; } = AppContext.ServiceProvider;
+        public static IServiceProvider ServiceProvider { get; set; } = ServiceModule.ServiceProvider;
     }
 }

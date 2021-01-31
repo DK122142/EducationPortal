@@ -10,5 +10,7 @@ namespace EducationPortal.BLL.DTO
         public DateTime Published { get; set; }
 
         public List<string> Authors { get; set; }
+
+        public override MaterialType MaterialType { get; } = MaterialType.Book;
     }
 }
