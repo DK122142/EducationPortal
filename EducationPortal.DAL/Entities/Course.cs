@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EducationPortal.DAL.Entities
 {
     public class Course : Material
     {
-        public List<Article> Articles { get; set; }
+        public string Description { get; set; }
 
-        public List<Book> Books { get; set; }
+        //List<Material>
+        public List<Guid> Materials { get; set; }
 
-        public List<Video> Videos { get; set; }
+        //List<Skill>
+        public List<Guid> Skills { get; set; }
+
+        public override MaterialType MaterialType { get; } = MaterialType.None;
     }
 }

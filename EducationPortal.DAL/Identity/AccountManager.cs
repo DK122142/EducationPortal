@@ -44,10 +44,11 @@ namespace EducationPortal.DAL.Identity
                 return null;
             }
 
-            Account newAccount = new Account{
+            Account newAccount = new Account {
                 Id = Guid.NewGuid(),
                 Login = login,
-                Password = PasswordHasher.HashPassword(password)
+                Password = PasswordHasher.HashPassword(password),
+                Profile = Guid.NewGuid()
             };
             
             await db.Storage.CreateAsync(newAccount);

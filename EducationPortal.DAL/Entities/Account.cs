@@ -7,5 +7,8 @@ namespace EducationPortal.DAL.Entities
         public string Login { get; set; }
         
         public string Password { get; set;}
+
+        //Profile
+        public Guid Profile { get; set; }
     }
 }

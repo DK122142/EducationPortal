@@ -2,33 +2,41 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
+using EducationPortal.DAL.FileStorage.Core;
 using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Repositories.FileStorageRepositories
 {
-    public class AccountRepository : IRepository<Account>
+    public class SkillRepository : IRepository<Skill>
     {
-        public IEnumerable<Account> GetAll()
+        private readonly FSContext _context;
+
+        public SkillRepository(FSContext context)
+        {
+            this._context = context;
+        }
+
+        public IEnumerable<Skill> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Account Get(Guid id)
+        public Skill Get(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Account> Find(Func<Account, bool> predicate)
+        public IEnumerable<Skill> Find(Func<Skill, bool> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Task Create(Account item)
+        public Task Create(Skill item)
         {
             throw new NotImplementedException();
         }
 
-        public Task Update(Account item)
+        public Task Update(Skill item)
         {
             throw new NotImplementedException();
         }

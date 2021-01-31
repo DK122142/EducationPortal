@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EducationPortal.DAL.Entities;
+﻿using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.FileStorage.Core;
 using EducationPortal.DAL.FileStorage.Core.Internal.Interfaces;
 
@@ -18,6 +13,10 @@ namespace EducationPortal.DAL.FS
         public FSSet<Book> Books { get; set; }
 
         public FSSet<Course> Courses { get; set; }
+
+        public FSSet<Skill> Skills { get; set; }
+
+        public FSSet<Profile> Profiles { get; set; }
 
         public EducationPortalContext(IFileStorageSetInitializer initializer = null) : base(initializer)
         {

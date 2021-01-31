@@ -6,64 +6,91 @@ namespace EducationPortal.DAL.Repositories.FileStorageRepositories
 {
     public class FSUnitOfWork : IUnitOfWork
     {
-        private EducationPortalContext context;
+        private readonly EducationPortalContext _context;
 
-        private CourseRepository courseRepository;
-        private ArticleRepository articleRepository;
-        private VideoRepository videoRepository;
-        private BookRepository bookRepository;
+        private CourseRepository _courseRepository;
+        private ArticleRepository _articleRepository;
+        private VideoRepository _videoRepository;
+        private BookRepository _bookRepository;
+        private ProfileRepository _profileRepository;
+        private SkillRepository _skillRepository;
 
         public FSUnitOfWork()
         {
-            this.context = new EducationPortalContext();
+            this._context = new EducationPortalContext();
         }
 
         public IRepository<Video> Videos
         {
             get
             {
-                if (this.videoRepository == null)
+                if (this._videoRepository == null)
                 {
-                    this.videoRepository = new VideoRepository(this.context);
+                    this._videoRepository = new VideoRepository(this._context);
                 }
 
-                return this.videoRepository;
+                return this._videoRepository;
             }
         }
 
         public IRepository<Article> Articles { 
             get
             {
-                if (this.articleRepository == null)
+                if (this._articleRepository == null)
                 {
-                    this.articleRepository = new ArticleRepository(this.context);
+                    this._articleRepository = new ArticleRepository(this._context);
                 }
 
-                return this.articleRepository;
+                return this._articleRepository;
             }
         }
 
         public IRepository<Book> Books { 
             get
             {
-                if (this.bookRepository == null)
+                if (this._bookRepository == null)
                 {
-                    this.bookRepository = new BookRepository(this.context);
+                    this._bookRepository = new BookRepository(this._context);
                 }
 
-                return this.bookRepository;
+                return this._bookRepository;
             } }
 
         public IRepository<Course> Courses
         {
             get
             {
-                if (this.courseRepository == null)
+                if (this._courseRepository == null)
                 {
-                    this.courseRepository = new CourseRepository(this.context);
+                    this._courseRepository = new CourseRepository(this._context);
                 }
 
-                return this.courseRepository;
+                return this._courseRepository;
+            }
+        }
+
+        public IRepository<Skill> Skills
+        {
+            get
+            {
+                if (this._skillRepository == null)
+                {
+                    this._skillRepository = new SkillRepository(this._context);
+                }
+
+                return this._skillRepository;
+            }
+        }
+
+        public IRepository<Profile> Profiles { 
+            get
+            {
+                if (this._profileRepository == null)
+                {
+                    this._profileRepository = new ProfileRepository(this._context);
+                }
+
+                return this._profileRepository;
             }
         }
     }
