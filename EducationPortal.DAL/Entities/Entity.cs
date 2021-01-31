@@ -8,11 +8,6 @@ namespace EducationPortal.DAL.Entities
 {
     public abstract class Entity
     {
-        public Guid Id { get; }
-
-        protected Entity(Guid id)
-        {
-            this.Id = id;
-        }
+        public Guid Id { get; set; }
     }
 }

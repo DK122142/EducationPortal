@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using EducationPortal.BLL.DTO;
 
-namespace EducationPortal.DAL.Entities
+namespace EducationPortal.BLL.DTO
 {
     public class BookDTO : MaterialDTO
     {

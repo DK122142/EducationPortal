@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.FS;
@@ -46,7 +44,11 @@ namespace EducationPortal.DAL.Identity
                 return null;
             }
 
-            Account newAccount = new Account(Guid.NewGuid(), login, PasswordHasher.HashPassword(password));
+            Account newAccount = new Account{
+                Id = Guid.NewGuid(),
+                Login = login,
+                Password = PasswordHasher.HashPassword(password)
+            };
             
             await db.Storage.CreateAsync(newAccount);
 

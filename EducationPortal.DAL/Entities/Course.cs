@@ -8,22 +8,10 @@ namespace EducationPortal.DAL.Entities
 {
     public class Course : Material
     {
-        public string Name { get; }
+        public List<Article> Articles { get; set; }
 
-        public Guid Owner { get; }
-        
-        public List<Article> Articles { get; }
+        public List<Book> Books { get; set; }
 
-        public List<Book> Books { get; }
-
-        public List<Video> Videos { get; }
-
-        public Course(Guid id, string name, Guid owner, List<Article> articles, List<Book> books, List<Video> videos)
-            : base(id, name, owner)
-        {
-            this.Articles = articles;
-            this.Books = books;
-            this.Videos = videos;
-        }
+        public List<Video> Videos { get; set; }
     }
 }

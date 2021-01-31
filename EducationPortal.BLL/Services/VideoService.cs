@@ -21,8 +21,14 @@ namespace EducationPortal.BLL.Services
 
         public void AddVideo(VideoDTO video)
         {
-            Video newVideo = new Video(Guid.NewGuid(), video.Name, video.Owner, video.Link, video.Duration,
-                video.Quality);
+            Video newVideo = new Video{
+                Id = Guid.NewGuid(), 
+                Name = video.Name,
+                Owner = video.Owner,
+                Link = video.Link,
+                Duration = video.Duration,
+                Quality = video.Quality
+            };
 
             this.Db.Videos.Create(newVideo);
         }
