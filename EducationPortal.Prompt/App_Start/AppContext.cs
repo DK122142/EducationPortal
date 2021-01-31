@@ -5,6 +5,7 @@ using EducationPortal.DAL.FS;
 using EducationPortal.DAL.Identity;
 using EducationPortal.DAL.Interfaces;
 using EducationPortal.DAL.Repositories;
+using EducationPortal.DAL.Repositories.FileStorageRepositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.Prompt

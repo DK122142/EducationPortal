@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.FileStorage.Core;
 using EducationPortal.DAL.Interfaces;
 
-namespace EducationPortal.DAL.Repositories
+namespace EducationPortal.DAL.Repositories.FileStorageRepositories
 {
     public class ArticleRepository : IRepository<Article>
     {
@@ -38,9 +36,9 @@ namespace EducationPortal.DAL.Repositories
             return this.context.Storage.CreateAsync(item);
         }
 
-        public Task Update(Guid id, Article item)
+        public Task Update(Article item)
         {
-            return this.context.Storage.UpdateAsync(id, item);
+            return this.context.Storage.UpdateAsync(item);
         }
 
         public void Delete(Guid id)

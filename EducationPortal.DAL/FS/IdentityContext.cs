@@ -17,8 +17,5 @@ namespace EducationPortal.DAL.FS
         {
             
         }
-
-
-
     }
 }

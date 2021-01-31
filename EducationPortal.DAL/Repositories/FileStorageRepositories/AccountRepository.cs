@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.Interfaces;
 
-namespace EducationPortal.DAL.Repositories
+namespace EducationPortal.DAL.Repositories.FileStorageRepositories
 {
     public class AccountRepository : IRepository<Account>
     {
@@ -30,7 +28,7 @@ namespace EducationPortal.DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public Task Update(Guid id, Account item)
+        public Task Update(Account item)
         {
             throw new NotImplementedException();
         }

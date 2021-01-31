@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EducationPortal.DAL.Entities;
+﻿using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.FS;
 using EducationPortal.DAL.Interfaces;
 
-namespace EducationPortal.DAL.Repositories
+namespace EducationPortal.DAL.Repositories.FileStorageRepositories
 {
     public class FSUnitOfWork : IUnitOfWork
     {
