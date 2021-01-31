@@ -13,5 +13,7 @@ namespace EducationPortal.Prompt.Models
         public string Duration { get; set; }
 
         public string Quality { get; set; }
+
+        public override MaterialType MaterialType { get; } = MaterialType.Video;
     }
 }

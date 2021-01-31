@@ -12,6 +12,7 @@ namespace EducationPortal.BLL.Infrastructure
     public static class ServiceModule
     {
         public static IServiceCollection Services { get; set; }
+
         public static IServiceProvider ServiceProvider { get; set; }
 
         static ServiceModule()

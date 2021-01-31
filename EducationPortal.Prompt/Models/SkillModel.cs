@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace EducationPortal.Prompt.Models
 {
-    public abstract class MaterialModel : EntityModel
+    public class SkillModel
     {
         public string Name { get; set; }
 
-        public Guid Owner { get; set; }
-
-        public abstract MaterialType MaterialType { get; }
+        public string Description { get; set; }
     }
 }

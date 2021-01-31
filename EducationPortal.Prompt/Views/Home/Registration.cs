@@ -40,7 +40,7 @@ namespace EducationPortal.Prompt.Views.Home
                     Console.WriteLine("Input your password: ");
                     password = Console.ReadLine();
 
-                    await Provider.AccountController.Register(new LoginModel
+                    await Provider.AccountController.Register(new AccountModel
                     {
                         Login = login,
                         Password = password

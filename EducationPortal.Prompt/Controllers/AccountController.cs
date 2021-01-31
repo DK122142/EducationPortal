@@ -13,7 +13,7 @@ namespace EducationPortal.Prompt.Controllers
     {
         private IAccountService AccountService => ServiceModule.ServiceProvider.GetService<IAccountService>();
 
-        public void Login(LoginModel model)
+        public void Login(AccountModel model)
         {
             AccountDTO accountDto = new AccountDTO {Login = model.Login, Password = model.Password};
             var authAcc = this.AccountService.Authenticate(accountDto);
@@ -22,7 +22,7 @@ namespace EducationPortal.Prompt.Controllers
             {
                 Logout();
 
-                Provider.AuthorizedUser = new AccountDTO
+                Provider.AuthorizedUser = new AccountModel
                 {
                     Id = authAcc.Id,
                     Login = authAcc.Login,
@@ -33,7 +33,7 @@ namespace EducationPortal.Prompt.Controllers
             Home.Show();
         }
 
-        public async Task Register(LoginModel model)
+        public async Task Register(AccountModel model)
         {
             AccountDTO accountDto = new AccountDTO {Login = model.Login, Password = model.Password};
             var operationDetails = await this.AccountService.Create(accountDto);
