@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace EducationPortal.DAL.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T>
+        where T : class
     {
         IEnumerable<T> GetAll();
 
@@ -16,9 +17,8 @@ namespace EducationPortal.DAL.Interfaces
 
         Task Create(T item);
 
-        Task Update(Guid id, T item);
+        Task Update(T item);
 
         void Delete(Guid id);
-
     }
 }

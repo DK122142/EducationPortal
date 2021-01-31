@@ -14,7 +14,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure.Interfaces
 
         Task CreateAsync<T>(T item);
 
-        Task UpdateAsync<T>(Guid id, T item);
+        Task UpdateAsync<T>(T item);
 
         void Delete<T>(Guid id);
         

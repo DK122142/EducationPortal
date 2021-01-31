@@ -120,13 +120,13 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
 
-        public async Task UpdateAsync<T>(Guid oldItemId, T newItem)
+        public async Task UpdateAsync<T>(T updatedItem)
         {
-            if (FileExists<T>(oldItemId))
+            if (FileExists<T>((updatedItem as Entity).Id))
             {
-                using (var fileStream = new FileStream(FilePathById<T>(oldItemId), FileMode.Create))
+                using (var fileStream = new FileStream(FilePathById<T>((updatedItem as Entity).Id), FileMode.Create))
                 {
-                    await JsonSerializer.SerializeAsync(fileStream, newItem);
+                    await JsonSerializer.SerializeAsync(fileStream, updatedItem);
                     fileStream.Close();
                 }
             }

@@ -13,6 +13,14 @@ namespace EducationPortal.DAL.FileStorage.Core
 
         private IFileStorageSetInitializer _setInitializer;
 
+        public virtual Storage Storage
+        {
+            get
+            {
+                return this._storage ??= new Storage(this);
+            }
+        }
+
         public FSContext(IFileStorageSetInitializer fileStorageSetInitializer = null)
         {
             this._setInitializer = new FileStorageSetInitializer();
@@ -20,14 +28,6 @@ namespace EducationPortal.DAL.FileStorage.Core
             this._setInitializer.InitializeSets(this);
 
             this.Storage.EnsureCreated();
-        }
-
-        public virtual Storage Storage
-        {
-            get
-            {
-                return this._storage ??= new Storage(this);
-            }
         }
     }
 }
