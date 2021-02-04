@@ -10,5 +10,8 @@ namespace EducationPortal.DAL.Entities
 
         // Profile
         public Guid Profile { get; set; }
+
+        // Role
+        public Guid Role { get; set; }
     }
 }

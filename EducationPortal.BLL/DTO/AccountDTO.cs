@@ -9,5 +9,7 @@ namespace EducationPortal.BLL.DTO
         public string Password { get; set; }
 
         public Guid Profile { get; set; }
+
+        public Guid Role { get; set; }
     }
 }
