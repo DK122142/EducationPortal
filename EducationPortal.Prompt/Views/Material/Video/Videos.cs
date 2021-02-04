@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Account;
@@ -27,7 +26,7 @@ namespace EducationPortal.Prompt.Views.Material.Video
                               "(4)Log Out. \n" +
                               "(5)Exit");
 
-            //TODO
+            // TODO
             IEnumerable<VideoModel> videos = null;
 
             if (videos != null){

@@ -1,6 +1,4 @@
-﻿using System;
-using EducationPortal.BLL.Infrastructure;
-using EducationPortal.Prompt.Controllers;
+﻿using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Models;
 
 namespace EducationPortal.Prompt.Infrastructure

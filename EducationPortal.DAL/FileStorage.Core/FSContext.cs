@@ -8,24 +8,23 @@ namespace EducationPortal.DAL.FileStorage.Core
 {
     public class FSContext
     {
-        private IEnumerable<Type> _sets; 
-        private Storage _storage;
+        private IEnumerable<Type> sets; 
+        private Storage storage;
+        private IFileStorageSetInitializer setInitializer;
 
-        private IFileStorageSetInitializer _setInitializer;
-
-        public virtual Storage Storage
+        public Storage Storage
         {
             get
             {
-                return this._storage ??= new Storage(this);
+                return this.storage ??= new Storage(this);
             }
         }
 
         public FSContext(IFileStorageSetInitializer fileStorageSetInitializer = null)
         {
-            this._setInitializer = new FileStorageSetInitializer();
+            this.setInitializer = new FileStorageSetInitializer();
 
-            this._setInitializer.InitializeSets(this);
+            this.setInitializer.InitializeSets(this);
 
             this.Storage.EnsureCreated();
         }

@@ -12,14 +12,14 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
 {
     public class Storage : IDatabase
     {
-        private readonly FSContext _context;
-        private readonly string _name;
+        private readonly FSContext context;
+        private readonly string name;
 
         public Storage(FSContext context)
         {
-            this._context = context;
-            this._name = typeof(Storage).Namespace;
-            // this._name = Assembly.GetExecutingAssembly().FullName;
+            this.context = context;
+            this.name = typeof(Storage).Namespace;
+            // this.name = Assembly.GetExecutingAssembly().FullName;
 
             // this.EnsureCreated();
         }
@@ -49,20 +49,20 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
         // Create storage(directory)
         public void Create()
         {
-            Directory.CreateDirectory(this._name);
+            Directory.CreateDirectory(this.name);
         }
 
         public void CreateTables()
         {
-            var setsField = this._context.GetType().BaseType.GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
+            var setsField = this.context.GetType().BaseType.GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            var sets = (List<Type>)setsField?.GetValue(this._context);
+            var sets = (List<Type>)setsField?.GetValue(this.context);
 
             if (sets != null)
             {
                 foreach (var fileStorageSet in sets)
                 {
-                    Directory.CreateDirectory($"{this._name}/{fileStorageSet.Name}");
+                    Directory.CreateDirectory($"{this.name}/{fileStorageSet.Name}");
                 }
             }
         }
@@ -78,9 +78,9 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             return false;
         }
 
-        public void Delete() => Directory.Delete(this._name, true);
+        public void Delete() => Directory.Delete(this.name, true);
 
-        public bool Exists() => Directory.Exists(this._name);
+        public bool Exists() => Directory.Exists(this.name);
 
 
         public IEnumerable<T> GetAll<T>()
@@ -140,13 +140,13 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
 
-        public string FilePathFor<T>(T entity) => $"{this._name}/{typeof(T).Name}/{(entity as Entity).Id}.json";
+        public string FilePathFor<T>(T entity) => $"{this.name}/{typeof(T).Name}/{(entity as Entity).Id}.json";
         
-        public string FilePathById<T>(Guid id) => $"{this._name}/{typeof(T).Name}/{id}.json";
+        public string FilePathById<T>(Guid id) => $"{this.name}/{typeof(T).Name}/{id}.json";
 
         public bool FileExists<T>(Guid id) => File.Exists(FilePathById<T>(id));
 
-        public string DirectoryPath<T>() => $"{this._name}/{typeof(T).Name}";
+        public string DirectoryPath<T>() => $"{this.name}/{typeof(T).Name}";
 
         public static Guid IdByFileName(string fileName)
         {

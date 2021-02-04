@@ -7,10 +7,10 @@ namespace EducationPortal.DAL.Entities
     {
         public string Description { get; set; }
 
-        //List<Material>
+        // List<Material>
         public List<Guid> Materials { get; set; }
 
-        //List<Skill>
+        // List<Skill>
         public List<Guid> Skills { get; set; }
 
         public override MaterialType MaterialType { get; } = MaterialType.None;

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EducationPortal.Prompt.Models
 {
@@ -12,7 +8,7 @@ namespace EducationPortal.Prompt.Models
         
         public string Password { get; set;}
 
-        //Profile
+        // Profile
         public Guid Profile { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace EducationPortal.DAL.Entities
     {
         public string Name { get; set; }
 
-        //Account
+        // Account
         public Guid Owner { get; set; }
 
         public abstract MaterialType MaterialType { get; }

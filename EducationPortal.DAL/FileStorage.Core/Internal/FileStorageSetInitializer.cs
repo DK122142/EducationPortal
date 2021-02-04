@@ -15,7 +15,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Internal
                 .SelectMany(type => type.GetProperties())
                 .SelectMany(property => property.PropertyType.GetGenericArguments());
 
-            var setsField = context.GetType().BaseType.GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
+            var setsField = context.GetType().BaseType.GetField("sets", BindingFlags.NonPublic | BindingFlags.Instance);
             
             setsField?.SetValue(context, sets.ToList());
         }

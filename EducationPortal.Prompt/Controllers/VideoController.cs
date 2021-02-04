@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
-using EducationPortal.DAL.Interfaces;
 using EducationPortal.Prompt.Models;
 using Microsoft.Extensions.DependencyInjection;
 
