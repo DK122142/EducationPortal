@@ -14,7 +14,8 @@ namespace EducationPortal.DAL.FileStorage.Core.Internal
                 .Where(type => type.IsSubclassOf(context.GetType().BaseType))
                 .SelectMany(type => type.GetProperties())
                 .SelectMany(property => property.PropertyType.GetGenericArguments());
-
+            
+            // Be sure string "sets" equal to string "sets" in Storage
             var setsField = context.GetType().BaseType.GetField("sets", BindingFlags.NonPublic | BindingFlags.Instance);
             
             setsField?.SetValue(context, sets.ToList());

@@ -54,7 +54,8 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
 
         public void CreateTables()
         {
-            var setsField = this.context.GetType().BaseType.GetField("_sets", BindingFlags.NonPublic | BindingFlags.Instance);
+            // Be sure string "sets" equal to string "sets" in FileStorageSetInitializer
+            var setsField = this.context.GetType().BaseType.GetField("sets", BindingFlags.NonPublic | BindingFlags.Instance);
 
             var sets = (List<Type>)setsField?.GetValue(this.context);
 
