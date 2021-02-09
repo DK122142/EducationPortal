@@ -4,9 +4,9 @@ namespace EducationPortal.Prompt.Models
 {
     public class RoleModel : EntityModel
     {
-        public Guid Account { get; set; }
+        public string Name { get; set; }
 
-        public Prompt.Models.Roles RoleType { get; set; }
+        public int Identifier { get; set; }
 
         public string Description { get; set; }
     }
