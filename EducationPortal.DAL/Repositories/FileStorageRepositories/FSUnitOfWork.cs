@@ -6,66 +6,66 @@ namespace EducationPortal.DAL.Repositories.FileStorageRepositories
 {
     public class FSUnitOfWork : IUnitOfWork
     {
-        private readonly EducationPortalContext _context;
-
-        private CourseRepository _courseRepository;
-        private ArticleRepository _articleRepository;
-        private VideoRepository _videoRepository;
-        private BookRepository _bookRepository;
-        private ProfileRepository _profileRepository;
-        private SkillRepository _skillRepository;
+        private readonly EducationPortalContext context;
+        
+        private GenericRepository<Course> courseRepository;
+        private GenericRepository<Article> articleRepository;
+        private GenericRepository<Video> videoRepository;
+        private GenericRepository<Book> bookRepository;
+        private GenericRepository<Profile> profileRepository;
+        private GenericRepository<Skill> skillRepository;
 
         public FSUnitOfWork()
         {
-            this._context = new EducationPortalContext();
+            this.context = new EducationPortalContext();
         }
 
         public IRepository<Video> Videos
         {
             get
             {
-                if (this._videoRepository == null)
+                if (this.videoRepository == null)
                 {
-                    this._videoRepository = new VideoRepository(this._context);
+                    this.videoRepository = new GenericRepository<Video>(this.context);
                 }
 
-                return this._videoRepository;
+                return this.videoRepository;
             }
         }
 
         public IRepository<Article> Articles { 
             get
             {
-                if (this._articleRepository == null)
+                if (this.articleRepository == null)
                 {
-                    this._articleRepository = new ArticleRepository(this._context);
+                    this.articleRepository = new GenericRepository<Article>(this.context);
                 }
 
-                return this._articleRepository;
+                return this.articleRepository;
             }
         }
 
         public IRepository<Book> Books { 
             get
             {
-                if (this._bookRepository == null)
+                if (this.bookRepository == null)
                 {
-                    this._bookRepository = new BookRepository(this._context);
+                    this.bookRepository = new GenericRepository<Book>(this.context);
                 }
 
-                return this._bookRepository;
+                return this.bookRepository;
             } }
 
         public IRepository<Course> Courses
         {
             get
             {
-                if (this._courseRepository == null)
+                if (this.courseRepository == null)
                 {
-                    this._courseRepository = new CourseRepository(this._context);
+                    this.courseRepository = new GenericRepository<Course>(this.context);
                 }
 
-                return this._courseRepository;
+                return this.courseRepository;
             }
         }
 
@@ -73,24 +73,24 @@ namespace EducationPortal.DAL.Repositories.FileStorageRepositories
         {
             get
             {
-                if (this._skillRepository == null)
+                if (this.skillRepository == null)
                 {
-                    this._skillRepository = new SkillRepository(this._context);
+                    this.skillRepository = new GenericRepository<Skill>(this.context);
                 }
 
-                return this._skillRepository;
+                return this.skillRepository;
             }
         }
 
         public IRepository<Profile> Profiles { 
             get
             {
-                if (this._profileRepository == null)
+                if (this.profileRepository == null)
                 {
-                    this._profileRepository = new ProfileRepository(this._context);
+                    this.profileRepository = new GenericRepository<Profile>(this.context);
                 }
 
-                return this._profileRepository;
+                return this.profileRepository;
             }
         }
     }

@@ -47,8 +47,7 @@ namespace EducationPortal.DAL.Identity
             Account newAccount = new Account {
                 Id = Guid.NewGuid(),
                 Login = login,
-                Password = PasswordHasher.HashPassword(password),
-                Profile = Guid.NewGuid()
+                Password = PasswordHasher.HashPassword(password)
             };
             
             await db.Storage.CreateAsync(newAccount);

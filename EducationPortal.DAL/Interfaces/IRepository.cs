@@ -4,16 +4,15 @@ using System.Threading.Tasks;
 
 namespace EducationPortal.DAL.Interfaces
 {
-    public interface IRepository<T>
-        where T : class
+    public interface IRepository<T> where T : class
     {
+        Task Create(T item);
+
         IEnumerable<T> GetAll();
 
         T Get(Guid id);
 
         IEnumerable<T> Find(Func<T, Boolean> predicate);
-
-        Task Create(T item);
 
         Task Update(T item);
 

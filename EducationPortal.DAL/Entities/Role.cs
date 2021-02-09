@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EducationPortal.DAL.Entities
+﻿namespace EducationPortal.DAL.Entities
 {
     public class Role : Entity
     {

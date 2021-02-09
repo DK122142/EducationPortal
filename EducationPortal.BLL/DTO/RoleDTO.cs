@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EducationPortal.BLL.DTO
+﻿namespace EducationPortal.BLL.DTO
 {
     public class RoleDTO : EntityDTO
     {
