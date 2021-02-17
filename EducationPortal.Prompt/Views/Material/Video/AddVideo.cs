@@ -48,7 +48,7 @@ namespace EducationPortal.Prompt.Views.Material.Video
                         Id = Guid.NewGuid(),
                         Name = name,
                         Owner = Provider.AuthorizedUser.Id,
-                        Link = link,
+                        Source = link,
                         Duration = duration,
                         Quality = quality
                     });

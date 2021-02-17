@@ -5,7 +5,7 @@ namespace EducationPortal.Prompt.Models
 {
     public class BookModel : MaterialModel
     {
-        public int Pages { get; set; }
+        public int PageCount { get; set; }
 
         public List<string> Authors { get; set; }
 
@@ -13,6 +13,6 @@ namespace EducationPortal.Prompt.Models
         
         public DateTime Published { get; set; }
 
-        public override MaterialType MaterialType { get; } = MaterialType.Book;
+        public new string MaterialType { get; } = "Book";
     }
 }

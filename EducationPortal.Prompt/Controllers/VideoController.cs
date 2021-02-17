@@ -26,7 +26,7 @@ namespace EducationPortal.Prompt.Controllers
                 Name = video.Name,
                 Owner = video.Owner,
                 Duration = video.Duration,
-                Link = video.Duration,
+                Source = video.Duration,
                 Quality = video.Quality
             };
         }
@@ -39,7 +39,7 @@ namespace EducationPortal.Prompt.Controllers
                 Name = model.Name,
                 Owner = model.Owner,
                 Duration = model.Duration,
-                Link = model.Link,
+                Source = model.Source,
                 Quality = model.Quality
             };
 

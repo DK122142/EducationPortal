@@ -35,7 +35,7 @@ namespace EducationPortal.Prompt.Views.Material.Video
 
                 foreach (var video in videos)
                 {
-                    Console.WriteLine($"Video: {video.Name}, Link: {video.Link}");
+                    Console.WriteLine($"Video: {video.Name}, Link: {video.Source}");
                 }
             }
             

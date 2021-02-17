@@ -23,7 +23,7 @@ namespace EducationPortal.BLL.Services
                 Id = Guid.NewGuid(), 
                 Name = video.Name,
                 Owner = video.Owner,
-                Link = video.Link,
+                Source = video.Source,
                 Duration = video.Duration,
                 Quality = video.Quality
             };
@@ -46,7 +46,7 @@ namespace EducationPortal.BLL.Services
                 Name = video.Name,
                 Owner = video.Owner,
                 Duration = video.Duration,
-                Link = video.Duration,
+                Source = video.Source,
                 Quality = video.Quality
             };
         }
