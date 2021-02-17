@@ -16,9 +16,9 @@ namespace EducationPortal.DAL.Repositories.FileStorageRepositories
         private GenericRepository<Skill> skillRepository;
         private GenericRepository<Role> roleRepository;
 
-        public FSUnitOfWork()
+        public FSUnitOfWork(EducationPortalContext educationPortalContext)
         {
-            this.context = new EducationPortalContext();
+            this.context = educationPortalContext;
         }
 
         public IRepository<Video> Videos

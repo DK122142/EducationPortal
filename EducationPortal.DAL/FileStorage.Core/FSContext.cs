@@ -20,9 +20,9 @@ namespace EducationPortal.DAL.FileStorage.Core
             }
         }
 
-        public FSContext(IFileStorageSetInitializer fileStorageSetInitializer = null)
+        public FSContext(IFileStorageSetInitializer fileStorageSetInitializer)
         {
-            this.setInitializer = new FileStorageSetInitializer();
+            this.setInitializer = fileStorageSetInitializer;
 
             this.setInitializer.InitializeSets(this);
 

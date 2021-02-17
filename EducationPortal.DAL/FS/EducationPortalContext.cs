@@ -20,7 +20,7 @@ namespace EducationPortal.DAL.FS
 
         public FSSet<Role> Roles { get; set; }
 
-        public EducationPortalContext(IFileStorageSetInitializer initializer = null) : base(initializer)
+        public EducationPortalContext(IFileStorageSetInitializer initializer) : base(initializer)
         {
             
         }
