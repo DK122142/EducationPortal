@@ -5,12 +5,14 @@ namespace EducationPortal.BLL.DTO
 {
     public class BookDTO : MaterialDTO
     {
-        public int Pages { get; set; }
-        
-        public DateTime Published { get; set; }
+        public int PageCount { get; set; }
 
         public List<string> Authors { get; set; }
 
-        public override MaterialType MaterialType { get; } = MaterialType.Book;
+        public string Format { get; set; }
+        
+        public DateTime Published { get; set; }
+
+        public new string MaterialType { get; } = "Book";
     }
 }
