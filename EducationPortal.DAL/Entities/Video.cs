@@ -2,12 +2,12 @@
 {
     public class Video : Material
     {
-        public string Link { get; set; }
+        // Link changed to Source in Material
 
         public string Duration { get; set; }
 
         public string Quality { get; set; }
 
-        public override MaterialType MaterialType { get; } = MaterialType.Video;
+        public new string MaterialType { get; } = "Video";
     }
 }

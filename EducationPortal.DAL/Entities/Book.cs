@@ -5,7 +5,8 @@ namespace EducationPortal.DAL.Entities
 {
     public class Book : Material
     {
-        public int Pages { get; set; }
+        // Fixed name of property
+        public int PageCount { get; set; }
 
         public List<string> Authors { get; set; }
 
@@ -13,6 +14,6 @@ namespace EducationPortal.DAL.Entities
         
         public DateTime Published { get; set; }
 
-        public override MaterialType MaterialType { get; } = MaterialType.Book;
+        public new string MaterialType { get; } = "Book";
     }
 }

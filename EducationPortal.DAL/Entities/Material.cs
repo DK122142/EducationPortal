@@ -9,6 +9,9 @@ namespace EducationPortal.DAL.Entities
         // Account
         public Guid Owner { get; set; }
 
-        public abstract MaterialType MaterialType { get; }
+        public string MaterialType { get; set; }
+
+        // Can be Null
+        public string Source { get; set; }
     }
 }
