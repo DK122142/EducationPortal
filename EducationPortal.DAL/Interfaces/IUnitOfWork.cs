@@ -15,5 +15,7 @@ namespace EducationPortal.DAL.Interfaces
         IRepository<Skill> Skills { get; }
 
         IRepository<Profile> Profiles { get; }
+
+        IRepository<Role> Roles { get; }
     }
 }

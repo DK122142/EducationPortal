@@ -33,7 +33,7 @@ namespace EducationPortal.BLL.Services
 
         public VideoDTO GetVideo(Guid id)
         {
-            Video video = this.Db.Videos.Get(id);
+            Video video = this.Db.Videos.GetById(id);
 
             if (video == null)
             {

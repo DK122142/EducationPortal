@@ -14,6 +14,7 @@ namespace EducationPortal.DAL.Repositories.FileStorageRepositories
         private GenericRepository<Book> bookRepository;
         private GenericRepository<Profile> profileRepository;
         private GenericRepository<Skill> skillRepository;
+        private GenericRepository<Role> roleRepository;
 
         public FSUnitOfWork()
         {
@@ -91,6 +92,19 @@ namespace EducationPortal.DAL.Repositories.FileStorageRepositories
                 }
 
                 return this.profileRepository;
+            }
+        }
+
+        public IRepository<Role> Roles
+        {
+            get
+            {
+                if (this.roleRepository == null)
+                {
+                    this.roleRepository = new GenericRepository<Role>(this.context);
+                }
+
+                return this.roleRepository;
             }
         }
     }

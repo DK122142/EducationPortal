@@ -18,6 +18,8 @@ namespace EducationPortal.DAL.FS
 
         public FSSet<Profile> Profiles { get; set; }
 
+        public FSSet<Role> Roles { get; set; }
+
         public EducationPortalContext(IFileStorageSetInitializer initializer = null) : base(initializer)
         {
             

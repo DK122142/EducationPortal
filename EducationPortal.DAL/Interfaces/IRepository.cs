@@ -10,7 +10,7 @@ namespace EducationPortal.DAL.Interfaces
 
         IEnumerable<T> GetAll();
 
-        T Get(Guid id);
+        T GetById(Guid id);
 
         IEnumerable<T> Find(Func<T, Boolean> predicate);
 

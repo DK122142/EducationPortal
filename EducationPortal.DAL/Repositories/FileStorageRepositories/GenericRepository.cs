@@ -20,7 +20,7 @@ namespace EducationPortal.DAL.Repositories.FileStorageRepositories
             return this.context.Storage.GetAll<TEntity>();
         }
 
-        public TEntity Get(Guid id)
+        public TEntity GetById(Guid id)
         {
             return this.context.Storage.Get<TEntity>(id);
         }
