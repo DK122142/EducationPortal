@@ -1,48 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using EducationPortal.DAL.FileStorage.Core;
+using EducationPortal.DAL.FS.Interfaces;
 using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Repositories.FileStorageRepositories
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public abstract class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private FSContext context;
+        public IContext context;
 
-        public GenericRepository(FSContext context)
+        public GenericRepository(IEducationPortalContext context)
         {
             this.context = context;
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return this.context.Storage.GetAll<TEntity>();
+            return this.context.Db.GetAll<TEntity>();
         }
 
         public TEntity GetById(Guid id)
         {
-            return this.context.Storage.Get<TEntity>(id);
+            return this.context.Db.Get<TEntity>(id);
         }
 
         public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)
         {
-            return this.context.Storage.Find(predicate);
+            return this.context.Db.Find(predicate);
         }
 
         public Task Create(TEntity item)
         {
-            return this.context.Storage.CreateAsync(item);
+            return this.context.Db.CreateAsync(item);
         }
 
         public Task Update(TEntity item)
         {
-            return this.context.Storage.UpdateAsync(item);
+            return this.context.Db.UpdateAsync(item);
         }
 
         public void Delete(Guid id)
         {
-            this.context.Storage.Delete<TEntity>(id);
+            this.context.Db.Delete<TEntity>(id);
         }
     }
 }

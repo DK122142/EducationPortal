@@ -1,111 +1,38 @@
 ﻿using EducationPortal.DAL.Entities;
-using EducationPortal.DAL.FS;
+using EducationPortal.DAL.FS.Interfaces;
 using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Repositories.FileStorageRepositories
 {
     public class FSUnitOfWork : IUnitOfWork
     {
-        private readonly EducationPortalContext context;
+        private readonly IEducationPortalContext context;
         
-        private GenericRepository<Course> courseRepository;
-        private GenericRepository<Article> articleRepository;
-        private GenericRepository<Video> videoRepository;
-        private GenericRepository<Book> bookRepository;
-        private GenericRepository<Profile> profileRepository;
-        private GenericRepository<Skill> skillRepository;
-        private GenericRepository<Role> roleRepository;
+        private IRepository<Course> courseRepository;
+        private IRepository<Article> articleRepository;
+        private IRepository<Video> videoRepository;
+        private IRepository<Book> bookRepository;
+        private IRepository<Profile> profileRepository;
+        private IRepository<Skill> skillRepository;
+        private IRepository<Role> roleRepository;
 
-        public FSUnitOfWork(EducationPortalContext educationPortalContext)
+        public FSUnitOfWork(IEducationPortalContext educationPortalContext)
         {
             this.context = educationPortalContext;
         }
 
-        public IRepository<Video> Videos
-        {
-            get
-            {
-                if (this.videoRepository == null)
-                {
-                    this.videoRepository = new GenericRepository<Video>(this.context);
-                }
+        public IRepository<Video> Videos => this.videoRepository ??= new VideoRepository(this.context);
 
-                return this.videoRepository;
-            }
-        }
+        public IRepository<Article> Articles => this.articleRepository ??= new ArticleRepository(this.context);
 
-        public IRepository<Article> Articles { 
-            get
-            {
-                if (this.articleRepository == null)
-                {
-                    this.articleRepository = new GenericRepository<Article>(this.context);
-                }
+        public IRepository<Book> Books => this.bookRepository ??= new BookRepository(this.context);
 
-                return this.articleRepository;
-            }
-        }
+        public IRepository<Course> Courses => this.courseRepository ??= new CourseRepository(this.context);
 
-        public IRepository<Book> Books { 
-            get
-            {
-                if (this.bookRepository == null)
-                {
-                    this.bookRepository = new GenericRepository<Book>(this.context);
-                }
+        public IRepository<Skill> Skills => this.skillRepository ??= new SkillRepository(this.context);
 
-                return this.bookRepository;
-            } }
+        public IRepository<Profile> Profiles => this.profileRepository ??= new ProfileRepository(this.context);
 
-        public IRepository<Course> Courses
-        {
-            get
-            {
-                if (this.courseRepository == null)
-                {
-                    this.courseRepository = new GenericRepository<Course>(this.context);
-                }
-
-                return this.courseRepository;
-            }
-        }
-
-        public IRepository<Skill> Skills
-        {
-            get
-            {
-                if (this.skillRepository == null)
-                {
-                    this.skillRepository = new GenericRepository<Skill>(this.context);
-                }
-
-                return this.skillRepository;
-            }
-        }
-
-        public IRepository<Profile> Profiles { 
-            get
-            {
-                if (this.profileRepository == null)
-                {
-                    this.profileRepository = new GenericRepository<Profile>(this.context);
-                }
-
-                return this.profileRepository;
-            }
-        }
-
-        public IRepository<Role> Roles
-        {
-            get
-            {
-                if (this.roleRepository == null)
-                {
-                    this.roleRepository = new GenericRepository<Role>(this.context);
-                }
-
-                return this.roleRepository;
-            }
-        }
+        public IRepository<Role> Roles => this.roleRepository ??= new RoleRepository(this.context);
     }
 }
