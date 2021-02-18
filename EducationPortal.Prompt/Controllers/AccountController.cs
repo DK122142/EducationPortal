@@ -1,33 +1,34 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using EducationPortal.BLL.DTO;
-using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Home;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.Prompt.Controllers
 {
     public class AccountController
     {
-        private IAccountService AccountService => ServiceModule.ServiceProvider.GetService<IAccountService>();
+        private IAccountService accountService;
+        private IMapper mapper;
+
+        public AccountController(IAccountService service)
+        {
+            this.accountService = service;
+            
+            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<AccountDTO, AccountModel>().ReverseMap()).CreateMapper();
+        }
 
         public void Login(AccountModel model)
         {
-            AccountDTO accountDto = new AccountDTO {Login = model.Login, Password = model.Password};
-            var authAcc = this.AccountService.Authenticate(accountDto);
+            var authAcc = this.accountService.Authenticate(this.mapper.Map<AccountModel, AccountDTO>(model));
 
             if (authAcc != null)
             {
                 Logout();
 
-                Provider.AuthorizedUser = new AccountModel
-                {
-                    Id = authAcc.Id,
-                    Login = authAcc.Login,
-                    Password = authAcc.Password
-                };
+                Provider.AuthorizedUser = this.mapper.Map<AccountDTO, AccountModel>(authAcc);
             }
 
             Home.Show();
@@ -35,12 +36,11 @@ namespace EducationPortal.Prompt.Controllers
 
         public async Task Register(AccountModel model)
         {
-            AccountDTO accountDto = new AccountDTO {Login = model.Login, Password = model.Password};
-            var operationDetails = await this.AccountService.Create(accountDto);
+            var operationDetails = await this.accountService.Create(this.mapper.Map<AccountModel, AccountDTO>(model));
 
             if (operationDetails.Succeeded)
             {
-                Login(model);
+                this.Login(model);
             }
 
             Home.Show($"{operationDetails.Message}, {operationDetails.Property}");

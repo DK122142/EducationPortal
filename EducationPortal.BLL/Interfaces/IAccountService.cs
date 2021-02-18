@@ -9,6 +9,6 @@ namespace EducationPortal.BLL.Interfaces
     {
         Task<OperationDetails> Create(AccountDTO accountDto);
 
-        Account Authenticate(AccountDTO userDto);
+        AccountDTO Authenticate(AccountDTO userDto);
     }
 }

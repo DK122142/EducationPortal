@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
@@ -10,11 +11,15 @@ namespace EducationPortal.BLL.Services
 {
     public class AccountService : IAccountService
     {
+        private IMapper mapper;
+
         private AccountManager AccountManager { get; set; }
 
         public AccountService(AccountManager accountManager)
         {
             this.AccountManager = accountManager;
+            
+            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<Account, AccountDTO>().ReverseMap()).CreateMapper();
         }
         
         public async Task<OperationDetails> Create(AccountDTO accountDto)
@@ -32,9 +37,10 @@ namespace EducationPortal.BLL.Services
             }
         }
 
-        public Account Authenticate(AccountDTO userDto)
+        public AccountDTO Authenticate(AccountDTO userDto)
         {
-            return this.AccountManager.Authenticate(userDto.Login, userDto.Password);
+            return this.mapper.Map<Account, AccountDTO>(
+                this.AccountManager.Authenticate(userDto.Login, userDto.Password));
         }
     }
 }
