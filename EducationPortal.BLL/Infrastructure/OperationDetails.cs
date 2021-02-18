@@ -8,11 +8,11 @@
 
         public string Property { get; private set; }
 
-        public OperationDetails(bool succeeded, string message, string prop)
+        public OperationDetails(bool succeeded, string message, string property)
         {
             this.Succeeded = succeeded;
             this.Message = message;
-            this.Property = prop;
+            this.Property = property;
         }
     }
 }
