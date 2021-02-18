@@ -15,16 +15,30 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
         private readonly FSContext context;
         private readonly string name;
 
-        public Storage(FSContext context)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="storageName">Directory name of Storage</param>
+        public Storage(FSContext context, string storageName = null)
         {
             this.context = context;
-            this.name = typeof(Storage).Namespace;
-            // this.name = Assembly.GetExecutingAssembly().FullName;
 
-            // this.EnsureCreated();
+            if (!string.IsNullOrEmpty(storageName))
+            {
+                this.name = storageName;
+            }
+            else
+            {
+                this.name = typeof(Storage).Namespace;
+            }
         }
 
-        // true if created, false if it already existed
+        /// <summary>
+        /// If Storage not exist, it will be created and returns true
+        /// If Storage already exists, returns false
+        /// </summary>
+        /// <returns></returns>
         public virtual bool EnsureCreated()
         {
             if (!this.Exists())
@@ -37,7 +51,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"Failed to create storage. Message: {e.Message} " +
+                    Console.WriteLine($"Failed to create Storage. Message: {e.Message} " +
                                       $"In method: {e.TargetSite} StackTrace: {e.StackTrace}");
                     throw;
                 }
@@ -46,7 +60,9 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             return false;
         }
 
-        // Create storage(directory)
+        /// <summary>
+        /// Create Storage(directory)
+        /// </summary>
         public void Create()
         {
             Directory.CreateDirectory(this.name);
@@ -57,7 +73,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             // Be sure string "sets" equal to string "sets" in FileStorageSetInitializer
             var setsField = this.context.GetType().BaseType.GetField("sets", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            var sets = (List<Type>)setsField?.GetValue(this.context);
+            var sets = (IEnumerable<Type>)setsField?.GetValue(this.context);
 
             if (sets != null)
             {
@@ -123,7 +139,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
 
         public async Task UpdateAsync<T>(T updatedItem)
         {
-            if (FileExists<T>((updatedItem as Entity).Id))
+            if (this.FileExists<T>((updatedItem as Entity).Id))
             {
                 using (var fileStream = new FileStream(FilePathById<T>((updatedItem as Entity).Id), FileMode.Create))
                 {
@@ -135,10 +151,15 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
         
         public void Delete<T>(Guid id)
         {
-            if (FileExists<T>(id))
+            if (this.FileExists<T>(id))
             {
-                File.Delete(FilePathById<T>(id));
+                File.Delete(this.FilePathById<T>(id));
             }
+        }
+
+        public bool Any<T>(Func<T, bool> predicate)
+        {
+            return this.Find(predicate).Any();
         }
 
         public string FilePathFor<T>(T entity) => $"{this.name}/{typeof(T).Name}/{(entity as Entity).Id}.json";

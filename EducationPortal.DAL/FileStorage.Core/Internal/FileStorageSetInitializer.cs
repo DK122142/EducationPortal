@@ -8,8 +8,6 @@ namespace EducationPortal.DAL.FileStorage.Core.Internal
     {
         public void InitializeSets(FSContext context)
         {
-            var test = Assembly.GetExecutingAssembly();
-
             var sets = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(type => type.IsSubclassOf(context.GetType().BaseType))
                 .SelectMany(type => type.GetProperties())
@@ -18,7 +16,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Internal
             // Be sure string "sets" equal to string "sets" in Storage
             var setsField = context.GetType().BaseType.GetField("sets", BindingFlags.NonPublic | BindingFlags.Instance);
             
-            setsField?.SetValue(context, sets.ToList());
+            setsField?.SetValue(context, sets);
         }
     }
 }
