@@ -8,6 +8,6 @@
 
         public string Quality { get; set; }
 
-        public new string MaterialType { get; } = "Video";
+        public override string MaterialType { get; set; } = "Video";
     }
 }

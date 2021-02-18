@@ -6,6 +6,6 @@ namespace EducationPortal.BLL.DTO
     {
         public DateTime Published { get; set; }
 
-        public new string MaterialType { get; } = "Article";
+        public override string MaterialType { get; set; } = "Article";
     }
 }
