@@ -17,6 +17,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure.Interfaces
         Task UpdateAsync<T>(T item);
 
         void Delete<T>(Guid id);
-        
+
+        bool Any<T>(Func<T, Boolean> predicate);
     }
 }

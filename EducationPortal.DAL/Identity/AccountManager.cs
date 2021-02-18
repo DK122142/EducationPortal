@@ -2,23 +2,23 @@
 using System.Linq;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
-using EducationPortal.DAL.FS;
+using EducationPortal.DAL.FS.Interfaces;
 using EducationPortal.DAL.Infrastructure;
 
 namespace EducationPortal.DAL.Identity
 {
     public class AccountManager
     {
-        private IdentityContext db;
+        private readonly IContext context;
 
-        public AccountManager(IdentityContext context)
+        public AccountManager(IIdentityContext context)
         {
-            this.db = context;
+            this.context = context;
         }
 
         public Account Authenticate(string login, string password)
         {
-            Account account = db.Storage.Find<Account>(a => a.Login == login).FirstOrDefault();
+            Account account = context.Db.Find<Account>(a => a.Login == login).FirstOrDefault();
 
             if (account == null)
             {
@@ -36,7 +36,7 @@ namespace EducationPortal.DAL.Identity
         
         public async Task<Account> Register(string login, string password)
         {
-            var exists = db.Storage.Find<Account>(a => a.Login == login).Any();
+            var exists = context.Db.Any<Account>(a => a.Login == login);
 
             if(exists)
             {
@@ -50,7 +50,7 @@ namespace EducationPortal.DAL.Identity
                 Password = PasswordHasher.HashPassword(password)
             };
             
-            await db.Storage.CreateAsync(newAccount);
+            await context.Db.CreateAsync(newAccount);
 
             return newAccount;
         }
