@@ -3,15 +3,18 @@ using System.Security.Cryptography;
 
 namespace EducationPortal.DAL.Infrastructure
 {
-    public class PasswordHasher
+    public class PasswordHasher : IPasswordHasher
     {
         private const int SALT_SIZE = 16;
         private const int HASH_SIZE = 20;
         private const int DEFAULT_ITERATIONS_COUNT = 10000;
         private const string HASH_V1 = "EP|PH|V1";
 
-        public static string HashPassword(string password, int iterations = DEFAULT_ITERATIONS_COUNT)
+        // TODO "iterations"
+        public string HashPassword(string password)
         {
+            int iterations = DEFAULT_ITERATIONS_COUNT;
+
             using (var rng = new RNGCryptoServiceProvider())
             {
                 byte[] salt;
@@ -31,16 +34,16 @@ namespace EducationPortal.DAL.Infrastructure
                 }
             }
         }
-        
-        public static bool IsHashSupported(string hashString)
+
+        private bool IsHashSupported(string hashString)
         {
             return hashString.Contains(HASH_V1);
         }
 
-        public static bool VerifyHashedPassword(string hashedPassword, string providedPassword)
+        public bool VerifyHashedPassword(string hashedPassword, string providedPassword)
         {
             // Check hash
-            if (!IsHashSupported(hashedPassword))
+            if (!this.IsHashSupported(hashedPassword))
             {
                 throw new NotSupportedException("The hashtype is not supported");
             }

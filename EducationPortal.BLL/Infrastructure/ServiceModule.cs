@@ -19,8 +19,7 @@ namespace EducationPortal.BLL.Infrastructure
 
         public static IServiceProvider ServiceProvider { get; set; }
 
-        // TODO separate
-        private static readonly string storageName = "EducationPortal";
+        public static Config Config { get; set; }
 
         static ServiceModule()
         {
@@ -29,9 +28,9 @@ namespace EducationPortal.BLL.Infrastructure
             Services.AddSingleton<IFileStorageSetInitializer, FileStorageSetInitializer>();
             Services.AddSingleton<FSContext>();
             Services.AddSingleton<IIdentityContext>(s =>
-                new IdentityContext(s.GetRequiredService<IFileStorageSetInitializer>(), storageName));
+                new IdentityContext(s.GetRequiredService<IFileStorageSetInitializer>(), Config.StorageName));
             Services.AddSingleton<IEducationPortalContext>(s =>
-                new EducationPortalContext(s.GetRequiredService<IFileStorageSetInitializer>(), storageName));
+                new EducationPortalContext(s.GetRequiredService<IFileStorageSetInitializer>(), Config.StorageName));
             Services.AddSingleton<AccountManager>();
             // Services.AddSingleton(typeof(GenericRepository<>));
             Services.AddSingleton<IAccountService, AccountService>();

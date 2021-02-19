@@ -10,10 +10,13 @@ namespace EducationPortal.DAL.Identity
     public class AccountManager
     {
         private readonly IContext context;
+        private IPasswordHasher passwordHasher;
 
         public AccountManager(IIdentityContext context)
         {
             this.context = context;
+            // TODO rethink/reconstruct
+            this.passwordHasher = new PasswordHasher();
         }
 
         public Account Authenticate(string login, string password)
@@ -26,7 +29,7 @@ namespace EducationPortal.DAL.Identity
                 return default;
             }
 
-            if (PasswordHasher.VerifyHashedPassword(account.Password, password))
+            if (this.passwordHasher.VerifyHashedPassword(account.Password, password))
             {
                 return account;
             }
@@ -47,7 +50,7 @@ namespace EducationPortal.DAL.Identity
             Account newAccount = new Account {
                 Id = Guid.NewGuid(),
                 Login = login,
-                Password = PasswordHasher.HashPassword(password)
+                Password = this.passwordHasher.HashPassword(password)
             };
             
             await context.Db.CreateAsync(newAccount);
