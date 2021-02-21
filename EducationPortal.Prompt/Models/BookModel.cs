@@ -13,6 +13,6 @@ namespace EducationPortal.Prompt.Models
         
         public DateTime Published { get; set; }
 
-        public override string MaterialType { get; set; } = "Book";
+        public override string MaterialType => "Book";
     }
 }

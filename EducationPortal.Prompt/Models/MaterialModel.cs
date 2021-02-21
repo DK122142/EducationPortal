@@ -9,7 +9,7 @@ namespace EducationPortal.Prompt.Models
         // Account
         public Guid Owner { get; set; }
 
-        public abstract string MaterialType { get; set; }
+        public abstract string MaterialType { get; }
 
         // Can be Null
         public string Source { get; set; }

@@ -6,6 +6,6 @@
 
         public string Quality { get; set; }
 
-        public override string MaterialType { get; set; } = "Video";
+        public override string MaterialType => "Video";
     }
 }
