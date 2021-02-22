@@ -28,7 +28,7 @@ namespace EducationPortal.Prompt.Controllers
             {
                 Logout();
 
-                Provider.AuthorizedUser = this.mapper.Map<AccountDTO, AccountModel>(authAcc);
+                SessionProvider.AuthorizedUser = this.mapper.Map<AccountDTO, AccountModel>(authAcc);
             }
 
             Home.Show();
@@ -36,7 +36,7 @@ namespace EducationPortal.Prompt.Controllers
 
         public async Task Register(AccountModel model)
         {
-            var operationDetails = await this.accountService.Create(this.mapper.Map<AccountModel, AccountDTO>(model));
+            var operationDetails = await this.accountService.RegisterAccount(this.mapper.Map<AccountModel, AccountDTO>(model));
 
             if (operationDetails.Succeeded)
             {
@@ -48,7 +48,7 @@ namespace EducationPortal.Prompt.Controllers
 
         public void Logout()
         {
-            Provider.AuthorizedUser = null;
+            SessionProvider.AuthorizedUser = null;
         }
     }
 }

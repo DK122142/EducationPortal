@@ -6,11 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.Prompt.Infrastructure
 {
-    // TODO: update
-    public static class Provider
+    public static class SessionProvider
     {
-        public static AccountModel AuthorizedUser { get; set; } = default;
+        public static AccountModel AuthorizedUser { get; set; }
 
+        // TODO: remove
         public static AccountController AccountController { get; set; } =
             new AccountController(ServiceModule.ServiceProvider.GetRequiredService<IAccountService>());
 

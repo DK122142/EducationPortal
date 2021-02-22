@@ -15,12 +15,10 @@ namespace EducationPortal.BLL.Infrastructure
 {
     public static class ServiceModule
     {
-        public static IServiceCollection Services { get; set; }
+        public static IServiceCollection Services { get; }
 
-        public static IServiceProvider ServiceProvider { get; set; }
-
-        public static Config Config { get; set; }
-
+        public static IServiceProvider ServiceProvider { get; }
+        
         static ServiceModule()
         {
             Services = new ServiceCollection();
@@ -33,10 +31,14 @@ namespace EducationPortal.BLL.Infrastructure
                 new EducationPortalContext(s.GetRequiredService<IFileStorageSetInitializer>(), Config.StorageName));
             Services.AddSingleton<AccountManager>();
             // Services.AddSingleton(typeof(GenericRepository<>));
-            Services.AddSingleton<IAccountService, AccountService>();
             Services.AddSingleton<IUnitOfWork, FSUnitOfWork>();
+            Services.AddSingleton<IAccountService, AccountService>();
+            Services.AddSingleton<IArticleService, ArticleService>();
+            Services.AddSingleton<IBookService, BookService>();
             Services.AddSingleton<IVideoService, VideoService>();
-            
+            // Services.AddSingleton<IMaterialService<VideoDTO>, MaterialService<Video, VideoDTO>>();
+            // Services.AddSingleton<MaterialService<Video, VideoDTO>, VideoService>();
+
             ServiceProvider = Services.BuildServiceProvider();
         }
     }

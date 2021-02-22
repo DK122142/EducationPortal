@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.FS.Interfaces;
 using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Repositories.FileStorageRepositories
 {
-    public abstract class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public abstract class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
         public IContext context;
 

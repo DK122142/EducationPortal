@@ -20,7 +20,7 @@ namespace EducationPortal.Prompt.Controllers
 
         VideoModel GetVideo(Guid id)
         {
-            VideoDTO video = this.videoService.GetVideo(id);
+            VideoDTO video = this.videoService.GetMaterialById(id);
             
             if (video == null)
             {
@@ -32,7 +32,7 @@ namespace EducationPortal.Prompt.Controllers
 
         public void AddVideo(VideoModel model)
         {
-            this.videoService.AddVideo(this.mapper.Map<VideoModel, VideoDTO>(model));
+            this.videoService.AddMaterial(this.mapper.Map<VideoModel, VideoDTO>(model));
         }
     }
 }

@@ -5,9 +5,9 @@ using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.BLL.Services
 {
-    public class VideoService : MaterialService<Video, VideoDTO>, IVideoService
+    public class BookService : MaterialService<Book, BookDTO>, IBookService
     {
-        public VideoService(IUnitOfWork uow) : base(uow)
+        public BookService(IUnitOfWork uow) : base(uow)
         {
         }
     }

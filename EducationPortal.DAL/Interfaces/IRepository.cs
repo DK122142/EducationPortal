@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EducationPortal.DAL.Entities;
 
 namespace EducationPortal.DAL.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<TEntity> where TEntity : Entity
     {
-        Task Create(T item);
+        Task Create(TEntity item);
 
-        IEnumerable<T> GetAll();
+        IEnumerable<TEntity> GetAll();
 
-        T GetById(Guid id);
+        TEntity GetById(Guid id);
 
-        IEnumerable<T> Find(Func<T, Boolean> predicate);
+        IEnumerable<TEntity> Find(Func<TEntity, Boolean> predicate);
 
-        Task Update(T item);
+        Task Update(TEntity item);
 
         void Delete(Guid id);
     }

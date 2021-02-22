@@ -13,7 +13,7 @@ namespace EducationPortal.BLL.Services
     {
         private IMapper mapper;
 
-        private AccountManager AccountManager { get; set; }
+        private AccountManager AccountManager { get; }
 
         public AccountService(AccountManager accountManager)
         {
@@ -22,7 +22,7 @@ namespace EducationPortal.BLL.Services
             this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<Account, AccountDTO>().ReverseMap()).CreateMapper();
         }
         
-        public async Task<OperationDetails> Create(AccountDTO accountDto)
+        public async Task<OperationDetails> RegisterAccount(AccountDTO accountDto)
         {
             try
             {

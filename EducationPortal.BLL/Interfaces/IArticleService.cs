@@ -2,8 +2,8 @@
 
 namespace EducationPortal.BLL.Interfaces
 {
-    //TODO update
-    public interface IVideoService : IMaterialService<VideoDTO>
+    public interface IArticleService : IMaterialService<ArticleDTO>
     {
+        
     }
 }
