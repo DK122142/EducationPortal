@@ -1,6 +1,6 @@
 ﻿namespace EducationPortal.BLL.DTO
 {
-    public class RoleDTO : EntityDTO
+    public class RoleDTO
     {
         public string Name { get; set; }
 

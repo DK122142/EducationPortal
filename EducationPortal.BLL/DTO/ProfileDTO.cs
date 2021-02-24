@@ -7,9 +7,6 @@ namespace EducationPortal.BLL.DTO
     {
         public string Name { get; set; }
 
-        //Account
-        public Guid Owner { get; set; }
-
         //List<Material>
         public List<Guid> PassedMaterials { get; set; }
         

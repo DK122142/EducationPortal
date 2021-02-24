@@ -2,7 +2,7 @@
 
 namespace EducationPortal.BLL.DTO
 {
-    public class AccountDTO : EntityDTO
+    public class AccountDTO
     {
         public string Login { get; set; }
         
