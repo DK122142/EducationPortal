@@ -100,19 +100,19 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
         public bool Exists() => Directory.Exists(this.name);
 
 
-        public IEnumerable<T> GetAll<T>()
+        public IEnumerable<T> GetAll<T>() where T : Entity
         {
-            foreach (var file in Directory.EnumerateFiles(DirectoryPath<T>()))
+            foreach (var file in Directory.EnumerateFiles(this.DirectoryPath<T>()))
             {
-                yield return Get<T>(IdByFileName(file));
+                yield return Get<T>(this.IdByFileName(file));
             }
         }
 
-        public T Get<T>(Guid id)
+        public T Get<T>(Guid id) where T : Entity
         {
-            if (FileExists<T>(id))
+            if (this.FileExists<T>(id))
             {
-                using (var fileStream = File.OpenRead(FilePathById<T>(id)))
+                using (var fileStream = File.OpenRead(this.FilePathById<T>(id)))
                 {
                     return JsonSerializer.DeserializeAsync<T>(fileStream).Result;
                 }
@@ -123,25 +123,25 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             return default;
         }
 
-        public IEnumerable<T> Find<T>(Func<T, bool> predicate)
+        public IEnumerable<T> Find<T>(Func<T, bool> predicate) where T : Entity
         {
-            return GetAll<T>().Where(predicate);
+            return this.GetAll<T>().Where(predicate);
         }
 
-        public async Task CreateAsync<T>(T item)
+        public async Task CreateAsync<T>(T item) where T : Entity
         {
-            using (var fileStream = new FileStream(FilePathFor(item), FileMode.Create))
+            using (var fileStream = new FileStream(this.FilePathFor(item), FileMode.Create))
             {
                 await JsonSerializer.SerializeAsync(fileStream, item);
                 fileStream.Close();
             }
         }
 
-        public async Task UpdateAsync<T>(T updatedItem)
+        public async Task UpdateAsync<T>(T updatedItem) where T : Entity
         {
             if (this.FileExists<T>((updatedItem as Entity).Id))
             {
-                using (var fileStream = new FileStream(FilePathById<T>((updatedItem as Entity).Id), FileMode.Create))
+                using (var fileStream = new FileStream(this.FilePathById<T>((updatedItem as Entity).Id), FileMode.Create))
                 {
                     await JsonSerializer.SerializeAsync(fileStream, updatedItem);
                     fileStream.Close();
@@ -149,7 +149,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
         
-        public void Delete<T>(Guid id)
+        public void Delete<T>(Guid id) where T : Entity
         {
             if (this.FileExists<T>(id))
             {
@@ -157,20 +157,21 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
 
-        public bool Any<T>(Func<T, bool> predicate)
+        public bool Any<T>(Func<T, bool> predicate) where T : Entity
         {
             return this.Find(predicate).Any();
         }
 
-        public string FilePathFor<T>(T entity) => $"{this.name}/{typeof(T).Name}/{(entity as Entity).Id}.json";
-        
-        public string FilePathById<T>(Guid id) => $"{this.name}/{typeof(T).Name}/{id}.json";
+        public string FilePathFor<T>(T entity) where T : Entity =>
+            $"{this.name}/{typeof(T).Name}/{(entity as Entity).Id}.json";
 
-        public bool FileExists<T>(Guid id) => File.Exists(FilePathById<T>(id));
+        public string FilePathById<T>(Guid id) where T : Entity => $"{this.name}/{typeof(T).Name}/{id}.json";
 
-        public string DirectoryPath<T>() => $"{this.name}/{typeof(T).Name}";
+        public bool FileExists<T>(Guid id) where T : Entity => File.Exists(this.FilePathById<T>(id));
 
-        public static Guid IdByFileName(string fileName)
+        public string DirectoryPath<T>() where T : Entity => $"{this.name}/{typeof(T).Name}";
+
+        public Guid IdByFileName(string fileName)
         {
             string reversed = new string(fileName.Reverse().ToArray()).Substring(5,36);
             string result = new string(reversed.Reverse().ToArray());
