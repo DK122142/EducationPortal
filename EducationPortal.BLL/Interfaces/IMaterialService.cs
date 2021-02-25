@@ -6,16 +6,16 @@ namespace EducationPortal.BLL.Interfaces
 {
     public interface IMaterialService<TMaterialDTO>
     {
-        Task AddMaterial(TMaterialDTO material);
+        Task Add(TMaterialDTO material);
 
-        IEnumerable<TMaterialDTO> GetAllMaterials();
+        IEnumerable<TMaterialDTO> GetAll();
 
-        TMaterialDTO GetMaterialById(Guid id);
+        TMaterialDTO GetById(Guid id);
 
-        IEnumerable<TMaterialDTO> FindMaterial(Func<TMaterialDTO, Boolean> predicate);
+        IEnumerable<TMaterialDTO> Find(Func<TMaterialDTO, Boolean> predicate);
         
-        Task UpdateMaterial(TMaterialDTO material);
+        Task Update(TMaterialDTO material);
 
-        void DeleteMaterial(Guid id);
+        void Delete(Guid id);
     }
 }

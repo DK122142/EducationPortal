@@ -13,12 +13,12 @@ namespace EducationPortal.BLL.Services
         where TMaterial : Material
         where TMaterialDTO : MaterialDTO
     {
-        private readonly IUnitOfWork db;
+        private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
 
         public MaterialService(IUnitOfWork uow)
         {
-            this.db = uow;
+            this.uow = uow;
 
             this.mapper = new MapperConfiguration(cfg =>
                 {
@@ -27,19 +27,19 @@ namespace EducationPortal.BLL.Services
                 .CreateMapper();
         }
 
-        public async Task AddMaterial(TMaterialDTO material)
+        public async Task Add(TMaterialDTO material)
         {
             await this.GetRepositoryByType(material.MaterialType)
                 .Create(this.mapper.Map<TMaterialDTO, TMaterial>(material));
         }
 
-        public IEnumerable<TMaterialDTO> GetAllMaterials()
+        public IEnumerable<TMaterialDTO> GetAll()
         {
             return this.mapper.Map<IEnumerable<TMaterial>, IEnumerable<TMaterialDTO>>(
                 this.GetRepositoryByType(this.GetMaterialType()).GetAll());
         }
 
-        public TMaterialDTO GetMaterialById(Guid id)
+        public TMaterialDTO GetById(Guid id)
         {
             var material = this.GetRepositoryByType(this.GetMaterialType()).GetById(id);
 
@@ -51,35 +51,34 @@ namespace EducationPortal.BLL.Services
             return default;
         }
 
-        public IEnumerable<TMaterialDTO> FindMaterial(Func<TMaterialDTO, bool> predicate)
+        public IEnumerable<TMaterialDTO> Find(Func<TMaterialDTO, bool> predicate)
         {
             return this.mapper.Map<IEnumerable<TMaterial>, IEnumerable<TMaterialDTO>>(this
                 .GetRepositoryByType(this.GetMaterialType())
                 .Find(this.mapper.Map<Func<TMaterialDTO, bool>, Func<TMaterial, bool>>(predicate)));
         }
 
-        public async Task UpdateMaterial(TMaterialDTO material)
+        public async Task Update(TMaterialDTO material)
         {
             await this.GetRepositoryByType(material.MaterialType)
                 .Update(this.mapper.Map<TMaterialDTO, TMaterial>(material));
         }
 
-        public void DeleteMaterial(Guid id)
+        public void Delete(Guid id)
         {
             this.GetRepositoryByType(this.GetMaterialType()).Delete(id);
         }
 
-        
         private IRepository<TMaterial> GetRepositoryByType(string type)
         {
             switch (type)
             {
                 case nameof(Article):
-                    return this.db.Articles as IRepository<TMaterial>;
+                    return this.uow.GetRepositoryOfEntity<Article>() as IRepository<TMaterial>;
                 case nameof(Book):
-                    return this.db.Books as IRepository<TMaterial>;
+                    return this.uow.GetRepositoryOfEntity<Book>() as IRepository<TMaterial>;
                 case nameof(Video):
-                    return this.db.Videos as IRepository<TMaterial>;
+                    return this.uow.GetRepositoryOfEntity<Video>() as IRepository<TMaterial>;
                 default:
                     return default;
             }
