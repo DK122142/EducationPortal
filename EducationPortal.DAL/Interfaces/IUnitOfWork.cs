@@ -4,18 +4,8 @@ namespace EducationPortal.DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        IRepository<Video> Videos { get; }
+        TRepository GetRepository<TRepository>() where TRepository : IRepository<Entity>;
 
-        IRepository<Article> Articles { get; }
-
-        IRepository<Book> Books { get; }
-
-        IRepository<Course> Courses { get; }
-
-        IRepository<Skill> Skills { get; }
-
-        IRepository<Profile> Profiles { get; }
-
-        IRepository<Role> Roles { get; }
+        IRepository<TEntity> GetRepositoryOfEntity<TEntity>() where TEntity : Entity;
     }
 }
