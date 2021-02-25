@@ -24,6 +24,7 @@ namespace EducationPortal.DAL.Infrastructure
             
             Services.AddSingleton<IFileStorageSetInitializer, FileStorageSetInitializer>();
             Services.AddScoped<FSContext>();
+
             Services.AddScoped<IIdentityContext>(s =>
                 new IdentityContext(s.GetRequiredService<IFileStorageSetInitializer>(), Config.StorageName));
             Services.AddSingleton<IEducationPortalContext>(s =>

@@ -8,13 +8,6 @@ namespace EducationPortal.DAL.Repositories.FileStorageRepositories
 {
     public class FSUnitOfWork : IUnitOfWork
     {
-        private readonly IEducationPortalContext context;
-
-        public FSUnitOfWork(IEducationPortalContext educationPortalContext)
-        {
-            this.context = educationPortalContext;
-        }
-        
         public TRepository GetRepository<TRepository>() where TRepository : IRepository<Entity>
         {
             return RepositoryContainer.ServiceProvider.GetRequiredService<TRepository>();
