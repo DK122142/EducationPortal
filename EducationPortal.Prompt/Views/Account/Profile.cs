@@ -19,10 +19,10 @@ namespace EducationPortal.Prompt.Views.Account
                 Console.WriteLine("========");
             }
 
-            if (Provider.AuthorizedUser != null)
+            if (SessionProvider.AuthorizedUser != null)
             {
                 Console.WriteLine("Profile.");
-                Console.WriteLine($"Welcome, {Provider.AuthorizedUser.Login}");
+                Console.WriteLine($"Welcome, {SessionProvider.AuthorizedUser.Login}");
 
                 Console.WriteLine("(3)Videos \n" +
                                   "(4)Log Out. \n" +
@@ -38,7 +38,7 @@ namespace EducationPortal.Prompt.Views.Account
                         Videos.Show();
                         break;
                     case 4:
-                        Provider.AccountController.Logout();
+                        SessionProvider.AccountController.Logout();
                         break;
                     case 5:
                         Environment.Exit(0);

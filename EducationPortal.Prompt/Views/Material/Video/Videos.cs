@@ -31,7 +31,7 @@ namespace EducationPortal.Prompt.Views.Material.Video
 
             if (videos != null){
 
-                Console.WriteLine($"Videos of {Provider.AuthorizedUser.Login}");
+                Console.WriteLine($"Videos of {SessionProvider.AuthorizedUser.Login}");
 
                 foreach (var video in videos)
                 {
@@ -52,7 +52,7 @@ namespace EducationPortal.Prompt.Views.Material.Video
                     Profile.Show();
                     break;
                 case 4:
-                    Provider.AuthorizedUser = null;
+                    SessionProvider.AuthorizedUser = null;
                     break;
                 case 5:
                     Environment.Exit(0);

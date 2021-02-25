@@ -40,13 +40,13 @@ namespace EducationPortal.Prompt.Views.Home
                     Console.WriteLine("Input your password: ");
                     password = Console.ReadLine();
 
-                    await Provider.AccountController.Register(new AccountModel
+                    await SessionProvider.AccountController.Register(new AccountModel
                     {
                         Login = login,
                         Password = password
                     });
 
-                    if (Provider.AuthorizedUser != null)
+                    if (SessionProvider.AuthorizedUser != null)
                     {
                         Console.Clear();
                         Home.Show();

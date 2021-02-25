@@ -43,11 +43,11 @@ namespace EducationPortal.Prompt.Views.Material.Video
                     Console.WriteLine("Input video link: ");
                     link = Console.ReadLine();
 
-                    Provider.VideoController.AddVideo(new VideoModel
+                    SessionProvider.VideoController.AddVideo(new VideoModel
                     {
                         Id = Guid.NewGuid(),
                         Name = name,
-                        Owner = Provider.AuthorizedUser.Id,
+                        Owner = SessionProvider.AuthorizedUser.Id,
                         Source = link,
                         Duration = duration,
                         Quality = quality
@@ -57,7 +57,7 @@ namespace EducationPortal.Prompt.Views.Material.Video
                     Profile.Show();
                     break;
                 case 4:
-                    Provider.AuthorizedUser = null;
+                    SessionProvider.AuthorizedUser = null;
                     break;
                 case 5:
                     Environment.Exit(0);

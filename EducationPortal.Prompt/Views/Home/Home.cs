@@ -19,7 +19,7 @@ namespace EducationPortal.Prompt.Views.Home
                 Console.WriteLine("========");
             }
             
-            if (Provider.AuthorizedUser == null)
+            if (SessionProvider.AuthorizedUser == null)
             {
                 Login.Show(msg);
             }
