@@ -1,5 +1,4 @@
 ﻿using EducationPortal.DAL.Entities;
-using EducationPortal.DAL.FS.Interfaces;
 using EducationPortal.DAL.Infrastructure;
 using EducationPortal.DAL.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
