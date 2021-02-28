@@ -1,7 +1,4 @@
-﻿using EducationPortal.BLL.Interfaces;
-using EducationPortal.Prompt.Controllers;
-using EducationPortal.Prompt.Models;
-using Microsoft.Extensions.DependencyInjection;
+﻿using EducationPortal.Prompt.Models;
 
 namespace EducationPortal.Prompt.Infrastructure
 {

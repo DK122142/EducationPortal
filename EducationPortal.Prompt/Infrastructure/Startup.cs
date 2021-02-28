@@ -16,7 +16,7 @@ namespace EducationPortal.Prompt.Infrastructure
         {
             Services = new ServiceCollection();
             
-            Services.AddTransient<AccountController>(s =>
+            Services.AddTransient(s =>
                 new AccountController(ServiceModule.ServiceProvider.GetRequiredService<IAccountService>()));
 
             ServiceProvider = Services.BuildServiceProvider();

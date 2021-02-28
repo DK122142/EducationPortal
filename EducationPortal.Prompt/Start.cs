@@ -1,5 +1,4 @@
-﻿using EducationPortal.Prompt.Models;
-using EducationPortal.Prompt.Views.Home;
+﻿using EducationPortal.Prompt.Views.Home;
 
 namespace EducationPortal.Prompt
 {

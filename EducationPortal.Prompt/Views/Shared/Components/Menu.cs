@@ -1,10 +1,11 @@
 ﻿using System;
+using EducationPortal.Prompt.Infrastructure;
 
-namespace EducationPortal.Prompt.Views.Shared
+namespace EducationPortal.Prompt.Views.Shared.Components
 {
-    public static class Component
+    public static class Menu
     {
-        public static string Header(string title = null)
+        public static string Home(string title = null)
         {
             if (title == null)
             {
@@ -14,12 +15,12 @@ namespace EducationPortal.Prompt.Views.Shared
             return new string($"Education Portal{Environment.NewLine}{title}");
         }
         
-        public static string LoginBtn()
+        public static string Login()
         {
             return new string("Login");
         }
 
-        public static string RegistrationBtn()
+        public static string Registration()
         {
             return new string("Registration");
         }
@@ -31,7 +32,7 @@ namespace EducationPortal.Prompt.Views.Shared
 
         public static string Profile()
         {
-            return "Profile";
+            return $"{SessionStorage.AuthorizedUser.Login} (Profile)";
         }
 
         public static string LogOut()

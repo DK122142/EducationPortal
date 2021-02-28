@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Account;
-using EducationPortal.Prompt.Views.Shared;
+using EducationPortal.Prompt.Views.Shared.Components;
 
 namespace EducationPortal.Prompt.Views.Home
 {
@@ -13,20 +13,20 @@ namespace EducationPortal.Prompt.Views.Home
         {
             var clickable = new List<string>
             {
-                Component.Header()
+                Menu.Home()
             };
 
-            var actions = new List<Action>()
+            var actions = new List<Action>
             {
-                delegate { Index.View(); }
+                delegate { View(); }
             };
 
             if (SessionStorage.AuthorizedUser == null)
             {
                 clickable.AddRange(new []
                 {
-                    Component.LoginBtn(),
-                    Component.RegistrationBtn(),
+                    Menu.Login(),
+                    Menu.Registration(),
                 });
 
                 actions.AddRange(new Action[]
@@ -39,8 +39,8 @@ namespace EducationPortal.Prompt.Views.Home
             {
                 clickable.AddRange(new []
                 {
-                    Component.Profile(),
-                    Component.LogOut()
+                    Menu.Profile(),
+                    Menu.LogOut()
                 });
 
                 actions.AddRange(new Action[]
@@ -50,39 +50,11 @@ namespace EducationPortal.Prompt.Views.Home
                 });
             }
 
-            clickable.Add(Component.Exit());
+            clickable.Add(Menu.Exit());
             actions.Add(delegate { Environment.Exit(0); });
 
             ClickableElements.Show(clickable, actions);
             ClickableElements.Execute(Convert.ToInt32(Console.ReadLine()));
-
-            // ClickableElements.Show(new[]
-            // {
-            //     Component.Header(),
-            //     Component.LoginBtn(),
-            //     Component.RegistrationBtn(),
-            //     Component.Exit()
-            // }, new Action[]
-            // {
-            //     delegate { Index.View<TModel>(); },
-            //     delegate { Login.View<TModel>(); },
-            //     delegate { Registration.View<TModel>(); },
-            //     delegate { Environment.Exit(0); }
-            // });
-
-
-            // Component.Header();
-            //
-            //
-            //
-            // if (SessionStorage.AuthorizedUser == null)
-            // {
-            //     Login.View();
-            // }
-            // else
-            // {
-            //     Profile.View();
-            // }
         }
     }
 }

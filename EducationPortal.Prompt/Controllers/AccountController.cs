@@ -2,10 +2,6 @@
 using AutoMapper;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
-using EducationPortal.BLL.Services;
-using EducationPortal.DAL.FileStorage.Core.Internal;
-using EducationPortal.DAL.FS;
-using EducationPortal.DAL.Identity;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Home;
