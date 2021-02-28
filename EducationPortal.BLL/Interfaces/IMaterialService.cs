@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EducationPortal.BLL.DTO;
 
 namespace EducationPortal.BLL.Interfaces
 {
-    public interface IMaterialService<TMaterialDTO>
+    public interface IMaterialService<TMaterialDTO> where TMaterialDTO : MaterialDTO
     {
         Task Add(TMaterialDTO material);
 
