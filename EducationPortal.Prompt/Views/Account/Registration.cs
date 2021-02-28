@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Models;
+using EducationPortal.Prompt.Views.Home;
 using EducationPortal.Prompt.Views.Shared.Components;
 using Microsoft.Extensions.DependencyInjection;
-using Index = EducationPortal.Prompt.Views.Home.Index;
 
 namespace EducationPortal.Prompt.Views.Account
 {
@@ -20,7 +20,7 @@ namespace EducationPortal.Prompt.Views.Account
 
             var actions = new List<Action>
             {
-                delegate { Index.View(); }
+                delegate { IndexPage.View(); }
             };
             
             ClickableElements.Show(clickable, actions);

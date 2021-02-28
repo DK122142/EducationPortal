@@ -8,7 +8,7 @@ namespace EducationPortal.Prompt
         {
             while (true)
             {
-                Index.View();
+                IndexPage.View();
             }
         }
     }

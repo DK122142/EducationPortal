@@ -29,7 +29,7 @@ namespace EducationPortal.Prompt.Controllers
                 SessionStorage.AuthorizedUser = this.mapper.Map<AccountDTO, AccountModel>(authAcc);
             }
 
-            Index.View(SessionStorage.AuthorizedUser);
+            IndexPage.View(SessionStorage.AuthorizedUser);
         }
 
         public async Task Register(AccountModel model)
@@ -38,7 +38,6 @@ namespace EducationPortal.Prompt.Controllers
 
             if (operationDetails.Succeeded)
             {
-                // Index.View();
                 this.Login(model);
             }
         }
@@ -46,7 +45,7 @@ namespace EducationPortal.Prompt.Controllers
         public void Logout()
         {
             SessionStorage.AuthorizedUser = null;
-            Index.View(SessionStorage.AuthorizedUser);
+            IndexPage.View(SessionStorage.AuthorizedUser);
         }
     }
 }

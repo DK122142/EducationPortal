@@ -7,7 +7,7 @@ using EducationPortal.Prompt.Views.Shared.Components;
 
 namespace EducationPortal.Prompt.Views.Home
 {
-    public static class Index
+    public static class IndexPage
     {
         public static void View(EntityModel model = default(EntityModel))
         {

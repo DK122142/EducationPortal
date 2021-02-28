@@ -1,57 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using EducationPortal.Prompt.Infrastructure;
-using EducationPortal.Prompt.Views.Material.Video;
-using EducationPortal.Prompt.Views.Shared;
+using EducationPortal.Prompt.Models;
+using EducationPortal.Prompt.Views.Home;
+using EducationPortal.Prompt.Views.Shared.Components;
 
 namespace EducationPortal.Prompt.Views.Account
 {
     public static class Profile
     {
-        public static void Show(string msg = null)
+        public static void View(EntityModel model = default(EntityModel))
         {
-            Console.Clear();
-            Header.Show();
-
-            if (msg != null)
+            var clickable = new List<string>
             {
-                Console.WriteLine("========");
-                Console.WriteLine($"message: {msg}");
-                Console.WriteLine("========");
-            }
+                Menu.Home(Menu.Profile()),
+                Menu.LogOut(),
+                Menu.Exit(),
+                // Option.AddMaterial(),
+                // Option.CreateNewCourse(),
+                // Option.ViewAllCourses(),
+            };
 
-            if (SessionProvider.AuthorizedUser != null)
+            var actions = new List<Action>
             {
-                Console.WriteLine("Profile.");
-                Console.WriteLine($"Welcome, {SessionProvider.AuthorizedUser.Login}");
-
-                Console.WriteLine("(3)Videos \n" +
-                                  "(4)Log Out. \n" +
-                                  "(5)Exit");
-
-                int.TryParse(Console.ReadLine(), out var option);
-
-                Console.Clear();
-
-                switch (option)
-                {
-                    case 3:
-                        Videos.Show();
-                        break;
-                    case 4:
-                        SessionProvider.AccountController.Logout();
-                        break;
-                    case 5:
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.WriteLine("Wrong option");
-                        break;
-                }
-                
-                Console.Clear();
-
-                Home.Home.Show();
-            }
+                delegate { IndexPage.View(); },
+                delegate { SessionStorage.AuthorizedUser = null; },
+                delegate { Environment.Exit(0); }
+            };
+            
+            ClickableElements.Show(clickable, actions);
+            ClickableElements.Execute(Convert.ToInt32(Console.ReadLine()));
         }
     }
 }
