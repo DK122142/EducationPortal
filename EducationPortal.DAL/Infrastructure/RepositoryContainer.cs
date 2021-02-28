@@ -23,16 +23,16 @@ namespace EducationPortal.DAL.Infrastructure
             Services = new ServiceCollection();
             
             Services.AddSingleton<IFileStorageSetInitializer, FileStorageSetInitializer>();
-            Services.AddScoped<FSContext>();
+            Services.AddTransient<FSContext>();
 
-            Services.AddScoped<IIdentityContext>(s =>
+            Services.AddTransient<IIdentityContext>(s =>
                 new IdentityContext(s.GetRequiredService<IFileStorageSetInitializer>(),
                     Config.GetConnectionString("FileStorage")));
             Services.AddSingleton<IEducationPortalContext>(s =>
                 new EducationPortalContext(s.GetRequiredService<IFileStorageSetInitializer>(),
                     Config.GetConnectionString("FileStorage")));
 
-            Services.AddSingleton<AccountManager>();
+            Services.AddTransient<AccountManager>();
             
             Services.AddSingleton<IRepository<Article>, ArticleRepository>();
             Services.AddSingleton<IRepository<Book>, BookRepository>();

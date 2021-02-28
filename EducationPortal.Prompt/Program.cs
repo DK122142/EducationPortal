@@ -1,6 +1,4 @@
-﻿using EducationPortal.Prompt.Views;
-
-namespace EducationPortal.Prompt
+﻿namespace EducationPortal.Prompt
 {
     class Program
     {

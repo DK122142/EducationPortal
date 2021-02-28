@@ -18,13 +18,13 @@ namespace EducationPortal.BLL.Infrastructure
         {
             Services = new ServiceCollection();
             
-            Services.AddSingleton(s => RepositoryContainer.ServiceProvider.GetRequiredService<AccountManager>());
-            Services.AddSingleton<IUnitOfWork>(s =>
+            Services.AddTransient(s => RepositoryContainer.ServiceProvider.GetRequiredService<AccountManager>());
+            Services.AddTransient<IUnitOfWork>(s =>
                 RepositoryContainer.ServiceProvider.GetRequiredService<IUnitOfWork>());
-            Services.AddSingleton<IAccountService, AccountService>();
-            Services.AddSingleton<IArticleService, ArticleService>();
-            Services.AddSingleton<IBookService, BookService>();
-            Services.AddSingleton<IVideoService, VideoService>();
+            Services.AddTransient<IAccountService, AccountService>();
+            Services.AddTransient<IArticleService, ArticleService>();
+            Services.AddTransient<IBookService, BookService>();
+            Services.AddTransient<IVideoService, VideoService>();
 
             ServiceProvider = Services.BuildServiceProvider();
         }

@@ -7,10 +7,10 @@ namespace EducationPortal.DAL.Entities
     {
         public string Name { get; set; }
 
-        //Account
+        // Account
         public Guid Owner { get; set; }
 
-        //List<Material>
+        // List<Material>
         public List<Guid> PassedMaterials { get; set; }
         
         // Maybe change to Dictionary<Course, @status>

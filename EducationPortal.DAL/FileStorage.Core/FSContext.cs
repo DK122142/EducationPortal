@@ -12,13 +12,7 @@ namespace EducationPortal.DAL.FileStorage.Core
         private Storage storage;
         private IFileStorageSetInitializer setInitializer;
 
-        public Storage Storage
-        {
-            get
-            {
-                return this.storage ??= new Storage(this, this.storageName);
-            }
-        }
+        public Storage Storage => this.storage ??= new Storage(this, this.storageName);
 
         public FSContext(IFileStorageSetInitializer fileStorageSetInitializer, string storageName = null)
         {
