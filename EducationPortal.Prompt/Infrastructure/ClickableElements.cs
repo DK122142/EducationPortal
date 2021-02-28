@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace EducationPortal.Prompt.Infrastructure
 {
@@ -19,11 +20,14 @@ namespace EducationPortal.Prompt.Infrastructure
             }
 
             _actions = actions.ToList();
+            StringBuilder elements = new StringBuilder();
 
             for (int i = 0; i < namesList.Count; i++)
             {
-                Console.WriteLine($"({i}) {namesList[i]}");
+                elements.AppendLine($"({i}) {namesList[i]}");
             }
+
+            Console.WriteLine(elements.ToString());
         }
 
         public static void Execute(int actionIndex)
@@ -33,14 +37,6 @@ namespace EducationPortal.Prompt.Infrastructure
                 Console.Clear();
                 _actions[actionIndex].Invoke();
                 _actions.Clear();
-            }
-        }
-
-        public static void Show(IEnumerable<(string, Action)> clickableElement)
-        {
-            for (int i = 0; i < clickableElement.Count(); i++)
-            {
-                Console.WriteLine($"({i}) {clickableElement.ElementAt(i).Item1}");
             }
         }
     }
