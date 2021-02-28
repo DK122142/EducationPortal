@@ -2,6 +2,10 @@
 using AutoMapper;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
+using EducationPortal.BLL.Services;
+using EducationPortal.DAL.FileStorage.Core.Internal;
+using EducationPortal.DAL.FS;
+using EducationPortal.DAL.Identity;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Home;
@@ -26,12 +30,10 @@ namespace EducationPortal.Prompt.Controllers
 
             if (authAcc != null)
             {
-                Logout();
-
-                SessionProvider.AuthorizedUser = this.mapper.Map<AccountDTO, AccountModel>(authAcc);
+                SessionStorage.AuthorizedUser = this.mapper.Map<AccountDTO, AccountModel>(authAcc);
             }
 
-            Home.Show();
+            Index.View(SessionStorage.AuthorizedUser);
         }
 
         public async Task Register(AccountModel model)
@@ -40,15 +42,15 @@ namespace EducationPortal.Prompt.Controllers
 
             if (operationDetails.Succeeded)
             {
+                // Index.View();
                 this.Login(model);
             }
-
-            Home.Show($"{operationDetails.Message}, {operationDetails.Property}");
         }
 
         public void Logout()
         {
-            SessionProvider.AuthorizedUser = null;
+            SessionStorage.AuthorizedUser = null;
+            Index.View(SessionStorage.AuthorizedUser);
         }
     }
 }
