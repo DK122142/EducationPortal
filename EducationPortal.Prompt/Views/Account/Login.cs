@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
+using EducationPortal.Prompt.Interfaces;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Home;
 using EducationPortal.Prompt.Views.Shared.Components;
@@ -9,13 +10,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.Prompt.Views.Account
 {
-    public static class Login
+    public class Login : IView
     {
         public static void View(EntityModel model = default(EntityModel))
         {
             var clickable = new List<string>
             {
-                Menu.Home("Log In"),
+                Menu.Home(Menu.Login),
             };
 
             var actions = new List<Action>
@@ -25,10 +26,10 @@ namespace EducationPortal.Prompt.Views.Account
             
             ClickableElements.Show(clickable, actions);
 
-            Console.WriteLine("Input your login: ");
+            Console.Write("Input your login: ");
             var login = Console.ReadLine();
             
-            Console.WriteLine("Input your password: ");
+            Console.Write("Input your password: ");
             var password = Console.ReadLine();
 
             Startup.ServiceProvider.GetRequiredService<AccountController>().Login(new AccountModel

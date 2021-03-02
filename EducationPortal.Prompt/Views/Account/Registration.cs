@@ -15,7 +15,7 @@ namespace EducationPortal.Prompt.Views.Account
         {
             var clickable = new List<string>
             {
-                Menu.Home("Registration"),
+                Menu.Home(Menu.Registration),
             };
 
             var actions = new List<Action>
@@ -25,10 +25,10 @@ namespace EducationPortal.Prompt.Views.Account
             
             ClickableElements.Show(clickable, actions);
 
-            Console.WriteLine("Input your login: ");
+            Console.Write("Input your login: ");
             var login = Console.ReadLine();
             
-            Console.WriteLine("Input your password: ");
+            Console.Write("Input your password: ");
             var password = Console.ReadLine();
             
             await Startup.ServiceProvider.GetRequiredService<AccountController>().Register(new AccountModel

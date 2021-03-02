@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using EducationPortal.Prompt.Infrastructure;
+using EducationPortal.Prompt.Interfaces;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Account;
+using EducationPortal.Prompt.Views.Account.Profile;
 using EducationPortal.Prompt.Views.Shared.Components;
 
 namespace EducationPortal.Prompt.Views.Home
 {
-    public static class IndexPage
+    public class IndexPage : IView
     {
-        public static void View(EntityModel model = default(EntityModel))
+        public static void View(EntityModel model = default)
         {
             var clickable = new List<string>
             {
@@ -25,8 +27,8 @@ namespace EducationPortal.Prompt.Views.Home
             {
                 clickable.AddRange(new []
                 {
-                    Menu.Login(),
-                    Menu.Registration(),
+                    Menu.Login,
+                    Menu.Registration,
                 });
 
                 actions.AddRange(new Action[]
@@ -39,8 +41,8 @@ namespace EducationPortal.Prompt.Views.Home
             {
                 clickable.AddRange(new []
                 {
-                    Menu.Profile(),
-                    Menu.LogOut()
+                    Menu.Profile,
+                    Menu.LogOut
                 });
 
                 actions.AddRange(new Action[]
@@ -50,7 +52,7 @@ namespace EducationPortal.Prompt.Views.Home
                 });
             }
 
-            clickable.Add(Menu.Exit());
+            clickable.Add(Menu.Exit);
             actions.Add(delegate { Environment.Exit(0); });
 
             ClickableElements.Show(clickable, actions);

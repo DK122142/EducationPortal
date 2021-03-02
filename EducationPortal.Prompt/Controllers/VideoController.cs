@@ -15,7 +15,8 @@ namespace EducationPortal.Prompt.Controllers
         {
             this.videoService = videoService;
 
-            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<VideoDTO, VideoModel>().ReverseMap()).CreateMapper();
+            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<VideoDTO, VideoModel>().ReverseMap())
+                .CreateMapper();
         }
 
         VideoModel GetVideo(Guid id)
