@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
 
@@ -13,7 +14,7 @@ namespace EducationPortal.BLL.Interfaces
 
         TMaterialDTO GetById(Guid id);
 
-        IEnumerable<TMaterialDTO> Find(Func<TMaterialDTO, Boolean> predicate);
+        IEnumerable<TMaterialDTO> Find(Expression<Func<TMaterialDTO, bool>> predicate);
         
         Task Update(TMaterialDTO material);
 

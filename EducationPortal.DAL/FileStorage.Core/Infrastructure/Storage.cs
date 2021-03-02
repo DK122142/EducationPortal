@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -123,9 +124,9 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             return default;
         }
 
-        public IEnumerable<T> Find<T>(Func<T, bool> predicate) where T : Entity
+        public IEnumerable<T> Find<T>(Expression<Func<T, bool>> predicate) where T : Entity
         {
-            return this.GetAll<T>().Where(predicate);
+            return this.GetAll<T>().Where(predicate.Compile());
         }
 
         public async Task CreateAsync<T>(T item) where T : Entity
@@ -157,7 +158,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
 
-        public bool Any<T>(Func<T, bool> predicate) where T : Entity
+        public bool Any<T>(Expression<Func<T, bool>> predicate) where T : Entity
         {
             return this.Find(predicate).Any();
         }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
@@ -10,8 +12,8 @@ using EducationPortal.DAL.Interfaces;
 namespace EducationPortal.BLL.Services
 {
     public class MaterialService<TMaterial, TMaterialDTO> : IMaterialService<TMaterialDTO>
-        where TMaterial : Material
-        where TMaterialDTO : MaterialDTO
+        where TMaterial : Material, new()
+        where TMaterialDTO : MaterialDTO, new()
     {
         private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
@@ -23,6 +25,7 @@ namespace EducationPortal.BLL.Services
             this.mapper = new MapperConfiguration(cfg =>
                 {
                     cfg.CreateMap<TMaterial, TMaterialDTO>().ReverseMap();
+                    cfg.AddExpressionMapping();
                 })
                 .CreateMapper();
         }
@@ -51,11 +54,12 @@ namespace EducationPortal.BLL.Services
             return default;
         }
 
-        public IEnumerable<TMaterialDTO> Find(Func<TMaterialDTO, bool> predicate)
+        public IEnumerable<TMaterialDTO> Find(Expression<Func<TMaterialDTO, bool>> predicate)
         {
             return this.mapper.Map<IEnumerable<TMaterial>, IEnumerable<TMaterialDTO>>(this
                 .GetRepositoryByType(this.GetMaterialType())
-                .Find(this.mapper.Map<Func<TMaterialDTO, bool>, Func<TMaterial, bool>>(predicate)));
+                .Find(this.mapper.Map<Expression<Func<TMaterialDTO, bool>>, Expression<Func<TMaterial, bool>>>(
+                    predicate)));
         }
 
         public async Task Update(TMaterialDTO material)
@@ -86,7 +90,7 @@ namespace EducationPortal.BLL.Services
 
         private string GetMaterialType()
         {
-            return typeof(TMaterial).GetProperty("MaterialType").GetValue(new object() as TMaterial) as string;
+            return typeof(TMaterial).GetProperty("MaterialType").GetValue(new TMaterial()) as string;
         }
     }
 }

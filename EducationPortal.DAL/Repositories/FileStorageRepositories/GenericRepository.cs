@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.FS.Interfaces;
@@ -26,7 +27,7 @@ namespace EducationPortal.DAL.Repositories.FileStorageRepositories
             return this.context.Db.Get<TEntity>(id);
         }
 
-        public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return this.context.Db.Find(predicate);
         }

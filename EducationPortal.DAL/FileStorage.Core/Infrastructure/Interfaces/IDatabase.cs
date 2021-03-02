@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
 
@@ -11,7 +12,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure.Interfaces
 
         T Get<T>(Guid id) where T : Entity;
 
-        IEnumerable<T> Find<T>(Func<T, Boolean> predicate) where T : Entity;
+        IEnumerable<T> Find<T>(Expression<Func<T, bool>> predicate) where T : Entity;
 
         Task CreateAsync<T>(T item) where T : Entity;
 
@@ -19,6 +20,6 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure.Interfaces
 
         void Delete<T>(Guid id) where T : Entity;
 
-        bool Any<T>(Func<T, Boolean> predicate) where T : Entity;
+        bool Any<T>(Expression<Func<T, bool>> predicate) where T : Entity;
     }
 }

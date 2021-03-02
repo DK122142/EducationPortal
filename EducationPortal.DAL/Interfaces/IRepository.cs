@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EducationPortal.DAL.Entities;
 
@@ -13,7 +14,7 @@ namespace EducationPortal.DAL.Interfaces
 
         TEntity GetById(Guid id);
 
-        IEnumerable<TEntity> Find(Func<TEntity, Boolean> predicate);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         Task Update(TEntity item);
 
