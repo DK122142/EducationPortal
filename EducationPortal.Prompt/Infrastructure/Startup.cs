@@ -18,6 +18,8 @@ namespace EducationPortal.Prompt.Infrastructure
             
             Services.AddTransient(s =>
                 new AccountController(ServiceModule.ServiceProvider.GetRequiredService<IAccountService>()));
+            Services.AddTransient(s =>
+                new ArticleController(ServiceModule.ServiceProvider.GetRequiredService<IArticleService>()));
 
             ServiceProvider = Services.BuildServiceProvider();
         }
