@@ -1,13 +1,12 @@
-﻿namespace EducationPortal.DAL.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EducationPortal.DAL.Entities
 {
+    [Table("Videos")]
     public class Video : Material
     {
-        // Link changed to Source in Material
-
         public string Duration { get; set; }
 
         public string Quality { get; set; }
-
-        public override string MaterialType { get; } = nameof(Video);
     }
 }

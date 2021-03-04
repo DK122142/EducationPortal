@@ -3,19 +3,24 @@ using System.Collections.Generic;
 
 namespace EducationPortal.DAL.Entities
 {
-    public class Course : Entity
+    public class Course
     {
-        // Changed illogical inheritance from Material
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public Guid Owner { get; set; }
+        public Guid CreatorId { get; set; }
 
-        // List<Material>
-        public List<Guid> Materials { get; set; }
+        public Profile Creator { get; set; }
+        
+        public IList<Material> Materials { get; set; }
+        
+        public ICollection<Skill> Skills { get; set; }
 
-        // List<Skill>
-        public List<Guid> Skills { get; set; }
+        public IList<Profile> JoinedProfiles { get; set; }
+
+        public IList<Profile> CompletedProfiles { get; set; }
     }
 }

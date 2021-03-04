@@ -1,17 +1,10 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace EducationPortal.DAL.Entities
 {
-    public class Account : Entity
+    public class Account : IdentityUser
     {
-        public string Login { get; set; }
-        
-        public string Password { get; set; }
-
-        // Profile
-        public Guid Profile { get; set; }
-
-        // Role
-        public Guid Role { get; set; }
+        public Profile Profile { get; set; }
     }
 }

@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EducationPortal.DAL.Entities
 {
-    public class Profile : Entity
+    public class Profile
     {
+        [Key]
+        [ForeignKey(nameof(Entities.Account))]
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
-        // Account
-        public Guid Owner { get; set; }
+        public IList<ProfileSkill> ProfileSkills { get; set; }
 
-        // List<Material>
-        public List<Guid> PassedMaterials { get; set; }
+        public ICollection<Material> PassedMaterials { get; set; }
         
-        // Maybe change to Dictionary<Course, @status>
-        public List<Guid> CompletedCourses { get; set; }
+        public IList<Course> CreatedCourses { get; set; }
+        
+        public ICollection<Course> CompletedCourses { get; set; }
 
-        public List<Guid> InProgressCourses { get; set; }
+        public ICollection<Course> JoinedCourses { get; set; }
 
-        //Dictionary<Skill, int>
-        public Dictionary<Guid, int> SkillsLevels { get; set; }
+        public Account Account { get; set; }
     }
 }

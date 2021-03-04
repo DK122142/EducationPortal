@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EducationPortal.DAL.Entities
 {
-    public abstract class Material : Entity
+    public class Material
     {
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
 
-        // Account
-        public Guid Owner { get; set; }
-
-        public abstract string MaterialType { get; }
-
-        // Can be Null
         public string Source { get; set; }
+        
+        public Profile AddedBy { get; set; }
+
+        public IEnumerable<Profile> PassedByUsers { get; set; }
+
+        public IEnumerable<Course> IncludedIn { get; set; }
     }
 }
