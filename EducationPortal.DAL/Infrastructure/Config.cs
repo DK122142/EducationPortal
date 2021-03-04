@@ -5,11 +5,10 @@ namespace EducationPortal.DAL.Infrastructure
 {
     public static class Config
     {
-        static private readonly IConfiguration configuration;
+        private static readonly IConfiguration configuration;
 
         /// <summary>
-        /// In Debug mode
-        /// File appsettings.json must be in EducationPortal\EducationPortal.Prompt\bin\Debug\net5.0
+        /// Configure file appsettings.json in PL app
         /// </summary>
         static Config()
         {
@@ -24,7 +23,5 @@ namespace EducationPortal.DAL.Infrastructure
         {
             return configuration.GetConnectionString(connectionName);
         }
-
-
     }
 }

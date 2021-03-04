@@ -8,19 +8,23 @@ using EducationPortal.DAL.FS.Interfaces;
 using EducationPortal.DAL.Identity;
 using EducationPortal.DAL.Interfaces;
 using EducationPortal.DAL.Repositories.FileStorageRepositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.DAL.Infrastructure
 {
-    public static class RepositoryContainer
+    public static class Startup
     {
         public static IServiceCollection Services { get; }
 
         public static IServiceProvider ServiceProvider { get; }
         
-        static RepositoryContainer()
+        static Startup()
         {
             Services = new ServiceCollection();
+
+            Services.AddDbContext<EF.EducationPortalContext>(options =>
+                options.UseSqlServer(Config.GetConnectionString("DefaultConnection")));
             
             Services.AddSingleton<IFileStorageSetInitializer, FileStorageSetInitializer>();
             Services.AddTransient<FSContext>();
