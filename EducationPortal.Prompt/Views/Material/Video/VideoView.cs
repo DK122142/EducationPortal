@@ -9,11 +9,11 @@ using EducationPortal.Prompt.Views.Home;
 using EducationPortal.Prompt.Views.Shared.Components;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EducationPortal.Prompt.Views.Material.Article
+namespace EducationPortal.Prompt.Views.Material.Video
 {
-    public class ArticleView : IView
+    public class VideoView : IView
     {
-        public static void View(ArticleModel model)
+        public static void View(VideoModel model)
         {
             var clickable = new List<string>
             {
@@ -27,14 +27,13 @@ namespace EducationPortal.Prompt.Views.Material.Article
                 delegate { Environment.Exit(0); },
             };
 
-            var article = Startup.ServiceProvider.GetRequiredService<ArticleController>().GetById(model.Id);
+            var video = Startup.ServiceProvider.GetRequiredService<VideoController>().GetById(model.Id);
             var strBuild = new StringBuilder();
 
-            strBuild.AppendLine($"Name: {article.Name}");
-            strBuild.AppendLine($"Type: {article.MaterialType}");
-            strBuild.AppendLine($"Article of: {article.Owner}");
-            strBuild.AppendLine($"Link: {article.Source}");
-            strBuild.AppendLine($"Published: {article.Published}");
+            strBuild.AppendLine($"Name: {video.Name}");
+            strBuild.AppendLine($"Type: {video.MaterialType}");
+            strBuild.AppendLine($"Video of: {video.Owner}");
+            strBuild.AppendLine($"Link: {video.Source}");
 
             ClickableElements.Show(clickable, actions);
 

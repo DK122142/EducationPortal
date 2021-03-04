@@ -9,11 +9,11 @@ using EducationPortal.Prompt.Views.Home;
 using EducationPortal.Prompt.Views.Shared.Components;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EducationPortal.Prompt.Views.Material.Article
+namespace EducationPortal.Prompt.Views.Material.Book
 {
-    public class ArticleView : IView
+    public class BookView : IView
     {
-        public static void View(ArticleModel model)
+        public static void View(BookModel model)
         {
             var clickable = new List<string>
             {
@@ -27,14 +27,16 @@ namespace EducationPortal.Prompt.Views.Material.Article
                 delegate { Environment.Exit(0); },
             };
 
-            var article = Startup.ServiceProvider.GetRequiredService<ArticleController>().GetById(model.Id);
+            var book = Startup.ServiceProvider.GetRequiredService<BookController>().GetById(model.Id);
             var strBuild = new StringBuilder();
 
-            strBuild.AppendLine($"Name: {article.Name}");
-            strBuild.AppendLine($"Type: {article.MaterialType}");
-            strBuild.AppendLine($"Article of: {article.Owner}");
-            strBuild.AppendLine($"Link: {article.Source}");
-            strBuild.AppendLine($"Published: {article.Published}");
+            strBuild.AppendLine($"Name: {book.Name}");
+            strBuild.AppendLine($"Type: {book.MaterialType}");
+            strBuild.AppendLine($"Book of: {book.Owner}");
+            strBuild.AppendLine($"Link: {book.Source}");
+            strBuild.AppendLine($"Pages: {book.PageCount}");
+            strBuild.AppendLine($"Authors: {string.Join(",", book.Authors)}");
+            strBuild.AppendLine($"Format: {book.Format}");
 
             ClickableElements.Show(clickable, actions);
 

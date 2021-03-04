@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
@@ -19,21 +20,20 @@ namespace EducationPortal.Prompt.Controllers
                 .CreateMapper();
         }
 
-        VideoModel GetVideo(Guid id)
+        public VideoModel GetById(Guid id)
         {
-            VideoDTO video = this.videoService.GetById(id);
-            
-            if (video == null)
-            {
-                return null;
-            }
-
-            return this.mapper.Map<VideoDTO, VideoModel>(video);
+            return this.mapper.Map<VideoDTO, VideoModel>(this.videoService.GetById(id));
         }
 
         public void AddVideo(VideoModel model)
         {
             this.videoService.Add(this.mapper.Map<VideoModel, VideoDTO>(model));
+        }
+        
+        public IEnumerable<VideoModel> GetVideosOf(AccountModel model)
+        {
+            return this.mapper.Map<IEnumerable<VideoDTO>, IEnumerable<VideoModel>>(
+                this.videoService.Find(a => a.Owner == model.Id));
         }
     }
 }

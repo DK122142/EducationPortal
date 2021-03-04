@@ -20,6 +20,10 @@ namespace EducationPortal.Prompt.Infrastructure
                 new AccountController(ServiceModule.ServiceProvider.GetRequiredService<IAccountService>()));
             Services.AddTransient(s =>
                 new ArticleController(ServiceModule.ServiceProvider.GetRequiredService<IArticleService>()));
+            Services.AddTransient(s =>
+                new BookController(ServiceModule.ServiceProvider.GetRequiredService<IBookService>()));
+            Services.AddTransient(s =>
+                new VideoController(ServiceModule.ServiceProvider.GetRequiredService<IVideoService>()));
 
             ServiceProvider = Services.BuildServiceProvider();
         }

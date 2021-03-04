@@ -5,6 +5,8 @@ using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Home;
 using EducationPortal.Prompt.Views.Material;
 using EducationPortal.Prompt.Views.Material.Article;
+using EducationPortal.Prompt.Views.Material.Book;
+using EducationPortal.Prompt.Views.Material.Video;
 using EducationPortal.Prompt.Views.Shared.Components;
 
 namespace EducationPortal.Prompt.Views.Account.Profile
@@ -19,8 +21,8 @@ namespace EducationPortal.Prompt.Views.Account.Profile
                 Menu.LogOut,
                 Menu.Exit,
                 Option.AddArticle,
-                // Option.AddBook,
-                // Option.AddVideo,
+                Option.AddBook,
+                Option.AddVideo,
                 Option.ViewMyMaterials,
                 // Option.ViewMyCourses,
                 // Option.ViewAllCourses,
@@ -35,6 +37,8 @@ namespace EducationPortal.Prompt.Views.Account.Profile
                 delegate { SessionStorage.AuthorizedUser = null; },
                 delegate { Environment.Exit(0); },
                 delegate { AddArticle.View(); },
+                delegate { AddBook.View(); },
+                delegate { AddVideo.View(); },
                 delegate { MaterialsOf.View(SessionStorage.AuthorizedUser); }
             };
             
