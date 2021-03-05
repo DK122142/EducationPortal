@@ -1,6 +1,11 @@
-﻿using EducationPortal.DAL.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using EducationPortal.DAL.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EducationPortal.DAL.EF
 {
@@ -25,7 +30,49 @@ namespace EducationPortal.DAL.EF
             Database.EnsureCreated();
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
-        
+            builder.Entity<Book>()
+                .Property(b => b.Authors)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, null),
+                    v => JsonSerializer.Deserialize<IEnumerable<string>>(v, null),
+                    new ValueComparer<IEnumerable<string>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode()))
+                    )
+                );
+
+            builder.Entity<Material>()
+                .HasOne<Profile>(m => m.AddedBy)
+                .WithMany(p => p.AddedMaterials);
+
+            builder.Entity<Course>()
+                .HasOne<Profile>(c => c.Creator)
+                .WithMany(p => p.CreatedCourses);
+            
+            builder.Entity<Course>()
+                .HasMany<Profile>(c => c.JoinedProfiles)
+                .WithMany(p => p.JoinedCourses);
+
+            builder.Entity<Course>()
+                .HasMany<Profile>(c => c.CompletedProfiles)
+                .WithMany(p => p.CompletedCourses);
+
+            builder.Entity<ProfileSkill>()
+                .HasKey(ps => new { ps.ProfileId, ps.SkillId });
+            
+            builder.Entity<ProfileSkill>()
+                .HasOne(ps => ps.Profile)
+                .WithMany(p => p.ProfileSkills)
+                .HasForeignKey(ps => ps.ProfileId);
+
+            builder.Entity<ProfileSkill>()
+                .HasOne(ps => ps.Skill)
+                .WithMany(s => s.ProfileSkills)
+                .HasForeignKey(ps => ps.SkillId);
+        }
     }
 }

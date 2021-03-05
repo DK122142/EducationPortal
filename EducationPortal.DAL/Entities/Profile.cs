@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +13,8 @@ namespace EducationPortal.DAL.Entities
         public string Name { get; set; }
 
         public IList<ProfileSkill> ProfileSkills { get; set; }
+
+        public IEnumerable<Material> AddedMaterials { get; set; }
 
         public ICollection<Material> PassedMaterials { get; set; }
         

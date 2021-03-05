@@ -10,9 +10,7 @@ namespace EducationPortal.DAL.Entities
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        public Guid CreatorId { get; set; }
-
+        
         public Profile Creator { get; set; }
         
         public IList<Material> Materials { get; set; }
