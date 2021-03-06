@@ -11,7 +11,7 @@ namespace EducationPortal.DAL.EF
 {
     public class EducationPortalContext : IdentityDbContext<Account>
     {
-        public DbSet<Account> Accounts { get; set; }
+        // public DbSet<Account> Accounts { get; set; }
 
         public DbSet<Profile> Profiles { get; set; }
         

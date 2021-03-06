@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace EducationPortal.BLL.DTO
+﻿namespace EducationPortal.BLL.DTO
 {
-    public abstract class EntityDTO
+    public abstract class EntityDto
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

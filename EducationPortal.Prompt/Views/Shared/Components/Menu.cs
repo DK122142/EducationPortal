@@ -14,7 +14,7 @@ namespace EducationPortal.Prompt.Views.Shared.Components
 
         public static string Exit => "Exit";
 
-        public static string Profile => $"{SessionStorage.AuthorizedUser.Login} (Profile)";
+        public static string Profile => $"{SessionStorage.AuthorizedUser.UserName} (Profile)";
 
         public static string LogOut => "Log out";
     }

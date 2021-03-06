@@ -62,7 +62,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
         }
 
         /// <summary>
-        /// Create Storage(directory)
+        /// Add Storage(directory)
         /// </summary>
         public void Create()
         {
@@ -101,7 +101,8 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
         public bool Exists() => Directory.Exists(this.name);
 
 
-        public IEnumerable<T> GetAll<T>() where T : Entity
+        public IEnumerable<T> GetAll<T>()
+            // where T : Entity
         {
             foreach (var file in Directory.EnumerateFiles(this.DirectoryPath<T>()))
             {
@@ -109,7 +110,8 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
 
-        public T Get<T>(Guid id) where T : Entity
+        public T Get<T>(Guid id)
+            // where T : Entity
         {
             if (this.FileExists<T>(id))
             {
@@ -124,12 +126,14 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             return default;
         }
 
-        public IEnumerable<T> Find<T>(Expression<Func<T, bool>> predicate) where T : Entity
+        public IEnumerable<T> Find<T>(Expression<Func<T, bool>> predicate) 
+            // where T : Entity
         {
             return this.GetAll<T>().Where(predicate.Compile());
         }
 
-        public async Task CreateAsync<T>(T item) where T : Entity
+        public async Task CreateAsync<T>(T item)
+            // where T : Entity
         {
             using (var fileStream = new FileStream(this.FilePathFor(item), FileMode.Create))
             {
@@ -138,7 +142,8 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
 
-        public async Task UpdateAsync<T>(T updatedItem) where T : Entity
+        public async Task UpdateAsync<T>(T updatedItem)
+            // where T : Entity
         {
             if (this.FileExists<T>((updatedItem as Entity).Id))
             {
@@ -150,7 +155,8 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
         
-        public void Delete<T>(Guid id) where T : Entity
+        public void Delete<T>(Guid id)
+            // where T : Entity
         {
             if (this.FileExists<T>(id))
             {
@@ -158,19 +164,19 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
 
-        public bool Any<T>(Expression<Func<T, bool>> predicate) where T : Entity
+        public bool Any<T>(Expression<Func<T, bool>> predicate)
+            // where T : Entity
         {
             return this.Find(predicate).Any();
         }
 
-        public string FilePathFor<T>(T entity) where T : Entity =>
-            $"{this.name}/{typeof(T).Name}/{(entity as Entity).Id}.json";
+        public string FilePathFor<T>(T entity) => $"{this.name}/{typeof(T).Name}/{(entity as Entity).Id}.json";
 
-        public string FilePathById<T>(Guid id) where T : Entity => $"{this.name}/{typeof(T).Name}/{id}.json";
+        public string FilePathById<T>(Guid id) => $"{this.name}/{typeof(T).Name}/{id}.json";
 
-        public bool FileExists<T>(Guid id) where T : Entity => File.Exists(this.FilePathById<T>(id));
+        public bool FileExists<T>(Guid id) => File.Exists(this.FilePathById<T>(id));
 
-        public string DirectoryPath<T>() where T : Entity => $"{this.name}/{typeof(T).Name}";
+        public string DirectoryPath<T>() => $"{this.name}/{typeof(T).Name}";
 
         public Guid IdByFileName(string fileName)
         {

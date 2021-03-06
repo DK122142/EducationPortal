@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EducationPortal.BLL.DTO
 {
-    public class CourseDTO : EntityDTO
+    public class CourseDTO : EntityDto
     {
         public string Name { get; set; }
 

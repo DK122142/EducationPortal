@@ -1,5 +1,4 @@
 ﻿using System;
-using EducationPortal.DAL.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;

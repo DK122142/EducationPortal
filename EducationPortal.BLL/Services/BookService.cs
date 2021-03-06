@@ -5,10 +5,11 @@ using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.BLL.Services
 {
-    public class BookService : MaterialService<Book, BookDTO>, IBookService
+    public class BookService 
+        // : MaterialService<Book, BookDTO>, IBookService
     {
-        public BookService(IUnitOfWork uow) : base(uow)
-        {
-        }
+        // public BookService(IUnitOfWork uow) : base(uow)
+        // {
+        // }
     }
 }

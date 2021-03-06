@@ -2,7 +2,7 @@
 
 namespace EducationPortal.BLL.DTO
 {
-    public abstract class MaterialDTO : EntityDTO
+    public abstract class MaterialDTO : EntityDto
     {
         public string Name { get; set; }
 
