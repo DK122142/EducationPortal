@@ -1,54 +1,46 @@
 ﻿using System;
+using System.IO;
 using EducationPortal.DAL.Entities;
-using EducationPortal.DAL.FileStorage.Core;
-using EducationPortal.DAL.FileStorage.Core.Internal;
-using EducationPortal.DAL.FileStorage.Core.Internal.Interfaces;
-using EducationPortal.DAL.FS;
-using EducationPortal.DAL.FS.Interfaces;
-using EducationPortal.DAL.Identity;
 using EducationPortal.DAL.Interfaces;
-using EducationPortal.DAL.Repositories.FileStorageRepositories;
-using Microsoft.EntityFrameworkCore;
+using EducationPortal.DAL.Repositories;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.DAL.Infrastructure
 {
-    public static class Startup
+    public class Startup
     {
-        public static IServiceCollection Services { get; }
+        public IServiceCollection Services { get; private set; }
 
-        public static IServiceProvider ServiceProvider { get; }
+        public IServiceProvider ServiceProvider { get; private set; }
+
+        public IConfiguration Configuration { get; }
         
-        static Startup()
+        public Startup()
         {
-            Services = new ServiceCollection();
+            this.Configuration = new ConfigurationBuilder()
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory()))
+                .AddJsonFile("appsettings.json")
+                .Build();
+        }
 
-            Services.AddDbContext<EF.EducationPortalContext>(options =>
-                options.UseSqlServer(Config.GetConnectionString("DefaultConnection")));
-            
-            Services.AddSingleton<IFileStorageSetInitializer, FileStorageSetInitializer>();
-            Services.AddTransient<FSContext>();
+        public IServiceProvider ConfigureServices()
+        {
+            this.Services = new ServiceCollection();
 
-            Services.AddTransient<IIdentityContext>(s =>
-                new IdentityContext(s.GetRequiredService<IFileStorageSetInitializer>(),
-                    Config.GetConnectionString("FileStorage")));
-            Services.AddSingleton<IEducationPortalContext>(s =>
-                new EducationPortalContext(s.GetRequiredService<IFileStorageSetInitializer>(),
-                    Config.GetConnectionString("FileStorage")));
+            this.Services.AddDbContext<EF.EducationPortalContext>();
 
-            Services.AddTransient<AccountManager>();
-            
-            Services.AddSingleton<IRepository<Article>, ArticleRepository>();
-            Services.AddSingleton<IRepository<Book>, BookRepository>();
-            Services.AddSingleton<IRepository<Course>, CourseRepository>();
-            Services.AddSingleton<IRepository<Profile>, ProfileRepository>();
-            Services.AddSingleton<IRepository<Role>, RoleRepository>();
-            Services.AddSingleton<IRepository<Skill>, SkillRepository>();
-            Services.AddSingleton<IRepository<Video>, VideoRepository>();
+            this.Services.AddScoped<IUnitOfWork<Account>, UnitOfWork<Account>>();
+            this.Services.AddScoped<IUnitOfWork<Article>, UnitOfWork<Article>>();
+            this.Services.AddScoped<IUnitOfWork<Book>, UnitOfWork<Book>>();
+            this.Services.AddScoped<IUnitOfWork<Course>, UnitOfWork<Course>>();
+            this.Services.AddScoped<IUnitOfWork<Material>, UnitOfWork<Material>>();
+            this.Services.AddScoped<IUnitOfWork<Profile>, UnitOfWork<Profile>>();
+            this.Services.AddScoped<IUnitOfWork<ProfileSkill>, UnitOfWork<ProfileSkill>>();
+            this.Services.AddScoped<IUnitOfWork<Skill>, UnitOfWork<Skill>>();
+            this.Services.AddScoped<IUnitOfWork<Video>, UnitOfWork<Video>>();
 
-            Services.AddScoped<IUnitOfWork, FSUnitOfWork>();
-
-            ServiceProvider = Services.BuildServiceProvider();
+            return this.ServiceProvider = this.Services.BuildServiceProvider();
         }
     }
 }
