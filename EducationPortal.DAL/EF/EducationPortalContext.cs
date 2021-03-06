@@ -27,7 +27,6 @@ namespace EducationPortal.DAL.EF
 
         public EducationPortalContext(DbContextOptions<EducationPortalContext> options) : base(options)
         {
-            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
