@@ -1,11 +1,12 @@
-﻿using EducationPortal.DAL.Entities;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace EducationPortal.DAL.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork<T> : IDisposable where T : class
     {
-        TRepository GetRepository<TRepository>() where TRepository : IRepository<Entity>;
+        IRepository<T> Repository { get; }
 
-        IRepository<TEntity> GetRepositoryOfEntity<TEntity>() where TEntity : Entity;
+        Task Commit();
     }
 }
