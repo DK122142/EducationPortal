@@ -6,8 +6,8 @@ namespace EducationPortal.BLL.Interfaces
 {
     public interface IAccountService
     {
-        Task<OperationDetails> RegisterAccount(AccountDTO accountDto);
+        public Task<OperationDetails> RegisterAccount(string username, string password);
 
-        AccountDTO Authenticate(AccountDTO userDto);
+        public Task<AccountDto> Authenticate(string username, string password);
     }
 }

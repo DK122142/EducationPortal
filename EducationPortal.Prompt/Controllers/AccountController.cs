@@ -17,16 +17,16 @@ namespace EducationPortal.Prompt.Controllers
         {
             this.accountService = service;
             
-            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<AccountDTO, AccountModel>().ReverseMap()).CreateMapper();
+            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<AccountDto, AccountModel>().ReverseMap()).CreateMapper();
         }
 
-        public void Login(AccountModel model)
+        public async Task Login(AccountModel model)
         {
-            var authAcc = this.accountService.Authenticate(this.mapper.Map<AccountModel, AccountDTO>(model));
+            var authAcc = await this.accountService.Authenticate(model.UserName, model.Password);
 
             if (authAcc != null)
             {
-                SessionStorage.AuthorizedUser = this.mapper.Map<AccountDTO, AccountModel>(authAcc);
+                SessionStorage.AuthorizedUser = this.mapper.Map<AccountDto, AccountModel>(authAcc);
             }
 
             IndexPage.View(SessionStorage.AuthorizedUser);
@@ -34,11 +34,11 @@ namespace EducationPortal.Prompt.Controllers
 
         public async Task Register(AccountModel model)
         {
-            var operationDetails = await this.accountService.RegisterAccount(this.mapper.Map<AccountModel, AccountDTO>(model));
+            var operationDetails = await this.accountService.RegisterAccount(model.UserName, model.Password);
 
             if (operationDetails.Succeeded)
             {
-                this.Login(model);
+                await this.Login(model);
             }
         }
 

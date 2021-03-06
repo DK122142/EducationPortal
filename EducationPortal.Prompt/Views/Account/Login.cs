@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Interfaces;
@@ -12,7 +13,7 @@ namespace EducationPortal.Prompt.Views.Account
 {
     public class Login : IView
     {
-        public static void View(EntityModel model = default(EntityModel))
+        public static async Task View(EntityModel model = default)
         {
             var clickable = new List<string>
             {
@@ -32,9 +33,9 @@ namespace EducationPortal.Prompt.Views.Account
             Console.Write("Input your password: ");
             var password = Console.ReadLine();
 
-            Startup.ServiceProvider.GetRequiredService<AccountController>().Login(new AccountModel
+            await SessionStorage.ServiceProvider.GetRequiredService<AccountController>().Login(new AccountModel
             {
-                Login = login,
+                UserName = login,
                 Password = password
             });
         }

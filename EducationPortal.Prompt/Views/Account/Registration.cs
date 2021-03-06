@@ -11,7 +11,7 @@ namespace EducationPortal.Prompt.Views.Account
 {
     public static class Registration
     {
-        public static async void View(EntityModel model = default(EntityModel))
+        public static async void View(EntityModel model = default)
         {
             var clickable = new List<string>
             {
@@ -31,9 +31,9 @@ namespace EducationPortal.Prompt.Views.Account
             Console.Write("Input your password: ");
             var password = Console.ReadLine();
             
-            await Startup.ServiceProvider.GetRequiredService<AccountController>().Register(new AccountModel
+            await SessionStorage.ServiceProvider.GetRequiredService<AccountController>().Register(new AccountModel
             {
-                Login = login,
+                UserName = login,
                 Password = password
             });
         }
