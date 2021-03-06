@@ -12,18 +12,18 @@ namespace EducationPortal.DAL.Entities
 
         public string Name { get; set; }
 
-        public IList<ProfileSkill> ProfileSkills { get; set; }
+        public virtual IList<ProfileSkill> ProfileSkills { get; set; }
 
-        public IEnumerable<Material> AddedMaterials { get; set; }
+        public virtual IEnumerable<Material> AddedMaterials { get; set; }
 
-        public ICollection<Material> PassedMaterials { get; set; }
+        public virtual ICollection<Material> PassedMaterials { get; set; }
         
-        public IList<Course> CreatedCourses { get; set; }
+        public virtual IList<Course> CreatedCourses { get; set; }
         
-        public ICollection<Course> CompletedCourses { get; set; }
+        public virtual ICollection<Course> CompletedCourses { get; set; }
 
-        public ICollection<Course> JoinedCourses { get; set; }
+        public virtual ICollection<Course> JoinedCourses { get; set; }
 
-        public Account Account { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

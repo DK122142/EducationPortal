@@ -4,6 +4,6 @@ namespace EducationPortal.DAL.Entities
 {
     public class Account : IdentityUser
     {
-        public Profile Profile { get; set; }
+        public virtual Profile Profile { get; set; }
     }
 }
