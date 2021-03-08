@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Interfaces;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Home;
 using EducationPortal.Prompt.Views.Shared.Components;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.Prompt.Views.Material.Video
 {
@@ -38,16 +36,16 @@ namespace EducationPortal.Prompt.Views.Material.Video
             Console.Write("Input video quality: ");
             var quality = Console.ReadLine();
                   
-            Startup.ServiceProvider.GetRequiredService<VideoController>().AddVideo(
-                new VideoModel
-                {
-                    Id = Guid.NewGuid(),
-                    Duration = duration,
-                    Name = name,
-                    Owner = SessionStorage.AuthorizedUser.Id,
-                    Quality = quality,
-                    Source = link
-                });
+            // Startup.ServiceProvider.GetRequiredService<VideoController>().AddVideo(
+            //     new VideoModel
+            //     {
+            //         Id = string.Newstring(),
+            //         Duration = duration,
+            //         Name = name,
+            //         OwnerId = SessionStorage.AuthorizedUser.Id,
+            //         Quality = quality,
+            //         Source = link
+            //     });
         }
     }
 }

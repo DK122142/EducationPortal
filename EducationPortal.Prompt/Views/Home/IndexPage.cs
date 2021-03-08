@@ -33,7 +33,7 @@ namespace EducationPortal.Prompt.Views.Home
 
                 actions.AddRange(new Action[]
                 {
-                    async delegate { await Login.View(); },
+                    delegate { Login.View(); },
                     delegate { Registration.View(); }
                 });
             }

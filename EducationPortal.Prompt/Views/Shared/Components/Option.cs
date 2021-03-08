@@ -10,7 +10,7 @@
 
         public static string AddArticle => "Add article";
 
-        public static string CreateNewCourse => "Create course";
+        public static string CreateNewCourse => "Add course";
 
         public static string ViewAllCourses => "View courses";
         

@@ -27,14 +27,13 @@ namespace EducationPortal.Prompt.Views.Material.Article
                 delegate { Environment.Exit(0); },
             };
 
-            var article = Startup.ServiceProvider.GetRequiredService<ArticleController>().GetById(model.Id);
+            var article = SessionStorage.ServiceProvider.GetRequiredService<ArticleController>().GetById(model.Id);
             var strBuild = new StringBuilder();
 
             strBuild.AppendLine($"Name: {article.Name}");
-            strBuild.AppendLine($"Type: {article.MaterialType}");
-            strBuild.AppendLine($"Article of: {article.Owner}");
+            // strBuild.AppendLine($"Article of: {article.OwnerId}");
             strBuild.AppendLine($"Link: {article.Source}");
-            strBuild.AppendLine($"Published: {article.Published}");
+            strBuild.AppendLine($"PublicationYear: {article.Published}");
 
             ClickableElements.Show(clickable, actions);
 

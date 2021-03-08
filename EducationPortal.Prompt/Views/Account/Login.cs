@@ -13,7 +13,7 @@ namespace EducationPortal.Prompt.Views.Account
 {
     public class Login : IView
     {
-        public static async Task View(EntityModel model = default)
+        public static void View(EntityModel model = default)
         {
             var clickable = new List<string>
             {
@@ -33,9 +33,9 @@ namespace EducationPortal.Prompt.Views.Account
             Console.Write("Input your password: ");
             var password = Console.ReadLine();
 
-            await SessionStorage.ServiceProvider.GetRequiredService<AccountController>().Login(new AccountModel
+            SessionStorage.ServiceProvider.GetRequiredService<AccountController>().Login(new AccountModel
             {
-                UserName = login,
+                Login = login,
                 Password = password
             });
         }

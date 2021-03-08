@@ -33,7 +33,7 @@ namespace EducationPortal.Prompt.Views.Account
             
             await SessionStorage.ServiceProvider.GetRequiredService<AccountController>().Register(new AccountModel
             {
-                UserName = login,
+                Login = login,
                 Password = password
             });
         }

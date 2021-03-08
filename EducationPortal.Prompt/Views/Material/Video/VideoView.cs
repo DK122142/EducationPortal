@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Interfaces;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Home;
 using EducationPortal.Prompt.Views.Shared.Components;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.Prompt.Views.Material.Video
 {
@@ -27,13 +25,13 @@ namespace EducationPortal.Prompt.Views.Material.Video
                 delegate { Environment.Exit(0); },
             };
 
-            var video = Startup.ServiceProvider.GetRequiredService<VideoController>().GetById(model.Id);
+            // var video = Startup.ServiceProvider.GetRequiredService<VideoController>().GetById(model.Id);
             var strBuild = new StringBuilder();
 
-            strBuild.AppendLine($"Name: {video.Name}");
-            strBuild.AppendLine($"Type: {video.MaterialType}");
-            strBuild.AppendLine($"Video of: {video.Owner}");
-            strBuild.AppendLine($"Link: {video.Source}");
+            // strBuild.AppendLine($"Name: {video.Name}");
+            // strBuild.AppendLine($"Type: {video.MaterialType}");
+            // strBuild.AppendLine($"Video of: {video.OwnerId}");
+            // strBuild.AppendLine($"Link: {video.Source}");
 
             ClickableElements.Show(clickable, actions);
 

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Interfaces;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Home;
 using EducationPortal.Prompt.Views.Shared.Components;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.Prompt.Views.Material.Book
 {
@@ -27,16 +25,16 @@ namespace EducationPortal.Prompt.Views.Material.Book
                 delegate { Environment.Exit(0); },
             };
 
-            var book = Startup.ServiceProvider.GetRequiredService<BookController>().GetById(model.Id);
+            // var book = Startup.ServiceProvider.GetRequiredService<BookController>().GetById(model.Id);
             var strBuild = new StringBuilder();
 
-            strBuild.AppendLine($"Name: {book.Name}");
-            strBuild.AppendLine($"Type: {book.MaterialType}");
-            strBuild.AppendLine($"Book of: {book.Owner}");
-            strBuild.AppendLine($"Link: {book.Source}");
-            strBuild.AppendLine($"Pages: {book.PageCount}");
-            strBuild.AppendLine($"Authors: {string.Join(",", book.Authors)}");
-            strBuild.AppendLine($"Format: {book.Format}");
+            // strBuild.AppendLine($"Name: {book.Name}");
+            // strBuild.AppendLine($"Type: {book.MaterialType}");
+            // strBuild.AppendLine($"Book of: {book.OwnerId}");
+            // strBuild.AppendLine($"Link: {book.Source}");
+            // strBuild.AppendLine($"Pages: {book.PageCount}");
+            // strBuild.AppendLine($"Authors: {string.Join(",", book.Authors)}");
+            // strBuild.AppendLine($"Format: {book.Format}");
 
             ClickableElements.Show(clickable, actions);
 

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Interfaces;
 using EducationPortal.Prompt.Models;
 using EducationPortal.Prompt.Views.Home;
 using EducationPortal.Prompt.Views.Shared.Components;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.Prompt.Views.Material.Book
 {
@@ -42,18 +39,18 @@ namespace EducationPortal.Prompt.Views.Material.Book
             Console.Write("Format: ");
             var format = Console.ReadLine();
 
-            Startup.ServiceProvider.GetRequiredService<BookController>().AddBook(
-                new BookModel
-                {
-                    Id = Guid.NewGuid(), 
-                    Name = name,
-                    Source = link, 
-                    Owner = SessionStorage.AuthorizedUser.Id,
-                    Published = DateTime.Now,
-                    PageCount = Convert.ToInt32(pages),
-                    Authors = authors.Split(",").ToList(),
-                    Format = format
-                });
+            // Startup.ServiceProvider.GetRequiredService<BookController>().AddBook(
+            //     new BookModel
+            //     {
+            //         Id = string.Newstring(), 
+            //         Name = name,
+            //         Source = link, 
+            //         OwnerId = SessionStorage.AuthorizedUser.Id,
+            //         Published = DateTime.Now,
+            //         PageCount = Convert.ToInt32(pages),
+            //         Authors = authors.Split(",").ToList(),
+            //         Format = format
+            //     });
         }
     }
 }

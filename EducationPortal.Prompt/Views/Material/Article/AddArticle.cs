@@ -32,14 +32,14 @@ namespace EducationPortal.Prompt.Views.Material.Article
             Console.Write("Link to article: ");
             var link = Console.ReadLine();
 
-            Startup.ServiceProvider.GetRequiredService<ArticleController>().AddArticle(
+            SessionStorage.ServiceProvider.GetRequiredService<ArticleController>().AddArticle(
                 new ArticleModel
                 {
-                    Id = Guid.NewGuid(), 
+                    Id = Guid.NewGuid().ToString(), 
                     Name = name,
                     Source = link, 
-                    Owner = SessionStorage.AuthorizedUser.Id,
-                    Published = DateTime.Now
+                    // OwnerId = model.Id,
+                    Published = DateTime.Now.ToString()
                 });
         }
     }
