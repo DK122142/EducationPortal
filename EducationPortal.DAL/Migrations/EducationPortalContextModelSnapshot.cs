@@ -141,7 +141,7 @@ namespace EducationPortal.DAL.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNeAccounts");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Course", b =>
@@ -170,8 +170,9 @@ namespace EducationPortal.DAL.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AddedById")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -181,9 +182,9 @@ namespace EducationPortal.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddedById");
-
                     b.ToTable("Materials");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Material");
                 });
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Profile", b =>
@@ -320,7 +321,7 @@ namespace EducationPortal.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNeAccountClaims");
+                    b.ToTable("AspNetUserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -342,7 +343,7 @@ namespace EducationPortal.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNeAccountLogins");
+                    b.ToTable("AspNetUserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -357,7 +358,7 @@ namespace EducationPortal.DAL.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNeAccountRoles");
+                    b.ToTable("AspNetUserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -376,7 +377,7 @@ namespace EducationPortal.DAL.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNeAccountTokens");
+                    b.ToTable("AspNetUserTokens");
                 });
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Article", b =>
@@ -386,7 +387,7 @@ namespace EducationPortal.DAL.Migrations
                     b.Property<DateTime>("Published")
                         .HasColumnType("datetime2");
 
-                    b.ToTable("Articles");
+                    b.HasDiscriminator().HasValue("Article");
                 });
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Book", b =>
@@ -405,7 +406,7 @@ namespace EducationPortal.DAL.Migrations
                     b.Property<int>("PublicationYear")
                         .HasColumnType("int");
 
-                    b.ToTable("Books");
+                    b.HasDiscriminator().HasValue("Book");
                 });
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Video", b =>
@@ -418,7 +419,7 @@ namespace EducationPortal.DAL.Migrations
                     b.Property<string>("Quality")
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Videos");
+                    b.HasDiscriminator().HasValue("Video");
                 });
 
             modelBuilder.Entity("CourseMaterial", b =>
@@ -488,15 +489,6 @@ namespace EducationPortal.DAL.Migrations
                         .HasForeignKey("CreatorId");
 
                     b.Navigation("Creator");
-                });
-
-            modelBuilder.Entity("EducationPortal.DAL.Entities.Material", b =>
-                {
-                    b.HasOne("EducationPortal.DAL.Entities.Profile", "AddedBy")
-                        .WithMany("AddedMaterials")
-                        .HasForeignKey("AddedById");
-
-                    b.Navigation("AddedBy");
                 });
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Profile", b =>
@@ -595,33 +587,6 @@ namespace EducationPortal.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EducationPortal.DAL.Entities.Article", b =>
-                {
-                    b.HasOne("EducationPortal.DAL.Entities.Material", null)
-                        .WithOne()
-                        .HasForeignKey("EducationPortal.DAL.Entities.Article", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EducationPortal.DAL.Entities.Book", b =>
-                {
-                    b.HasOne("EducationPortal.DAL.Entities.Material", null)
-                        .WithOne()
-                        .HasForeignKey("EducationPortal.DAL.Entities.Book", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EducationPortal.DAL.Entities.Video", b =>
-                {
-                    b.HasOne("EducationPortal.DAL.Entities.Material", null)
-                        .WithOne()
-                        .HasForeignKey("EducationPortal.DAL.Entities.Video", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("EducationPortal.DAL.Entities.Account", b =>
                 {
                     b.Navigation("Profile");
@@ -629,8 +594,6 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Profile", b =>
                 {
-                    b.Navigation("AddedMaterials");
-
                     b.Navigation("CreatedCourses");
 
                     b.Navigation("ProfileSkills");

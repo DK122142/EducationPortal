@@ -22,7 +22,7 @@ namespace EducationPortal.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNeAccounts",
+                name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -43,7 +43,28 @@ namespace EducationPortal.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNeAccounts", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Materials",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Published = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PageCount = table.Column<int>(type: "int", nullable: true),
+                    Authors = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Format = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PublicationYear = table.Column<int>(type: "int", nullable: true),
+                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quality = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Materials", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,7 +102,7 @@ namespace EducationPortal.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNeAccountClaims",
+                name: "AspNetUserClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -92,17 +113,17 @@ namespace EducationPortal.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNeAccountClaims", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNeAccountClaims_AspNeAccounts_UserId",
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNeAccounts",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNeAccountLogins",
+                name: "AspNetUserLogins",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -112,17 +133,17 @@ namespace EducationPortal.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNeAccountLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_AspNeAccountLogins_AspNeAccounts_UserId",
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNeAccounts",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNeAccountRoles",
+                name: "AspNetUserRoles",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -130,23 +151,23 @@ namespace EducationPortal.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNeAccountRoles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_AspNeAccountRoles_AspNetRoles_RoleId",
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNeAccountRoles_AspNeAccounts_UserId",
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNeAccounts",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNeAccountTokens",
+                name: "AspNetUserTokens",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -156,11 +177,11 @@ namespace EducationPortal.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNeAccountTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_AspNeAccountTokens_AspNeAccounts_UserId",
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNeAccounts",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -176,9 +197,9 @@ namespace EducationPortal.DAL.Migrations
                 {
                     table.PrimaryKey("PK_Profiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Profiles_AspNeAccounts_Id",
+                        name: "FK_Profiles_AspNetUsers_Id",
                         column: x => x.Id,
-                        principalTable: "AspNeAccounts",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -204,23 +225,27 @@ namespace EducationPortal.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Materials",
+                name: "MaterialProfile",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddedById = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    PassedByUsersId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PassedMaterialsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Materials", x => x.Id);
+                    table.PrimaryKey("PK_MaterialProfile", x => new { x.PassedByUsersId, x.PassedMaterialsId });
                     table.ForeignKey(
-                        name: "FK_Materials_Profiles_AddedById",
-                        column: x => x.AddedById,
+                        name: "FK_MaterialProfile_Materials_PassedMaterialsId",
+                        column: x => x.PassedMaterialsId,
+                        principalTable: "Materials",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MaterialProfile_Profiles_PassedByUsersId",
+                        column: x => x.PassedByUsersId,
                         principalTable: "Profiles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,6 +269,30 @@ namespace EducationPortal.DAL.Migrations
                         name: "FK_ProfileSkill_Skills_SkillId",
                         column: x => x.SkillId,
                         principalTable: "Skills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CourseMaterial",
+                columns: table => new
+                {
+                    IncludedInId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MaterialsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseMaterial", x => new { x.IncludedInId, x.MaterialsId });
+                    table.ForeignKey(
+                        name: "FK_CourseMaterial_Courses_IncludedInId",
+                        column: x => x.IncludedInId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CourseMaterial_Materials_MaterialsId",
+                        column: x => x.MaterialsId,
+                        principalTable: "Materials",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -320,112 +369,6 @@ namespace EducationPortal.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Articles",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Published = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Articles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Articles_Materials_Id",
-                        column: x => x.Id,
-                        principalTable: "Materials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Books",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PageCount = table.Column<int>(type: "int", nullable: false),
-                    Authors = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Format = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PublicationYear = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Books", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Books_Materials_Id",
-                        column: x => x.Id,
-                        principalTable: "Materials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CourseMaterial",
-                columns: table => new
-                {
-                    IncludedInId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    MaterialsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CourseMaterial", x => new { x.IncludedInId, x.MaterialsId });
-                    table.ForeignKey(
-                        name: "FK_CourseMaterial_Courses_IncludedInId",
-                        column: x => x.IncludedInId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CourseMaterial_Materials_MaterialsId",
-                        column: x => x.MaterialsId,
-                        principalTable: "Materials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MaterialProfile",
-                columns: table => new
-                {
-                    PassedByUsersId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PassedMaterialsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MaterialProfile", x => new { x.PassedByUsersId, x.PassedMaterialsId });
-                    table.ForeignKey(
-                        name: "FK_MaterialProfile_Materials_PassedMaterialsId",
-                        column: x => x.PassedMaterialsId,
-                        principalTable: "Materials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MaterialProfile_Profiles_PassedByUsersId",
-                        column: x => x.PassedByUsersId,
-                        principalTable: "Profiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Videos",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quality = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Videos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Videos_Materials_Id",
-                        column: x => x.Id,
-                        principalTable: "Materials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -439,28 +382,28 @@ namespace EducationPortal.DAL.Migrations
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNeAccountClaims_UserId",
-                table: "AspNeAccountClaims",
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNeAccountLogins_UserId",
-                table: "AspNeAccountLogins",
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNeAccountRoles_RoleId",
-                table: "AspNeAccountRoles",
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                table: "AspNeAccounts",
+                table: "AspNetUsers",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                table: "AspNeAccounts",
+                table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
@@ -496,11 +439,6 @@ namespace EducationPortal.DAL.Migrations
                 column: "PassedMaterialsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Materials_AddedById",
-                table: "Materials",
-                column: "AddedById");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProfileSkill_SkillId",
                 table: "ProfileSkill",
                 column: "SkillId");
@@ -509,25 +447,19 @@ namespace EducationPortal.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Articles");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
-                name: "AspNeAccountClaims");
+                name: "AspNetUserClaims");
 
             migrationBuilder.DropTable(
-                name: "AspNeAccountLogins");
+                name: "AspNetUserLogins");
 
             migrationBuilder.DropTable(
-                name: "AspNeAccountRoles");
+                name: "AspNetUserRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNeAccountTokens");
-
-            migrationBuilder.DropTable(
-                name: "Books");
+                name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
                 name: "CourseMaterial");
@@ -548,25 +480,22 @@ namespace EducationPortal.DAL.Migrations
                 name: "ProfileSkill");
 
             migrationBuilder.DropTable(
-                name: "Videos");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Courses");
 
             migrationBuilder.DropTable(
-                name: "Skills");
+                name: "Materials");
 
             migrationBuilder.DropTable(
-                name: "Materials");
+                name: "Skills");
 
             migrationBuilder.DropTable(
                 name: "Profiles");
 
             migrationBuilder.DropTable(
-                name: "AspNeAccounts");
+                name: "AspNetUsers");
         }
     }
 }
