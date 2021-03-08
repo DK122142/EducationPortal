@@ -20,14 +20,9 @@ namespace EducationPortal.Prompt
             this.Services = bll.Services;
 
             this.Services.AddScoped<AccountController>();
-
-            // Services.AddTransient(s =>
-            //     new ArticleController(BLL.Startup.ServiceProvider.GetRequiredService<IArticleService>()));
-            // Services.AddTransient(s =>
-            //     new BookController(BLL.Startup.ServiceProvider.GetRequiredService<IBookService>()));
-            // Services.AddTransient(s =>
-            //     new VideoController(BLL.Startup.ServiceProvider.GetRequiredService<IVideoService>()));
-
+            this.Services.AddScoped<ArticleController>();
+            this.Services.AddScoped<MaterialController>();
+            
             return this.ServiceProvider = Services.BuildServiceProvider();
         }
     }
