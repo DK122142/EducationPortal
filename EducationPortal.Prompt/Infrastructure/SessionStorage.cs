@@ -7,6 +7,6 @@ namespace EducationPortal.Prompt.Infrastructure
     {
         public static AccountModel AuthorizedUser { get; set; }
 
-        public static IServiceProvider ServiceProvider = new Startup().ConfigureServices();
+        public static readonly IServiceProvider ServiceProvider = new Startup().ConfigureServices();
     }
 }

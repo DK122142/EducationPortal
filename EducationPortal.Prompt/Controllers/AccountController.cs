@@ -22,7 +22,7 @@ namespace EducationPortal.Prompt.Controllers
 
         public async Task Login(AccountModel model)
         {
-            var authAcc = await this.accountService.Authenticate(model.UserName, model.Password);
+            var authAcc = await this.accountService.Authenticate(model.Login, model.Password);
 
             if (authAcc != null)
             {
@@ -34,7 +34,7 @@ namespace EducationPortal.Prompt.Controllers
 
         public async Task Register(AccountModel model)
         {
-            var operationDetails = await this.accountService.RegisterAccount(model.UserName, model.Password);
+            var operationDetails = await this.accountService.RegisterAccount(model.Login, model.Password);
 
             if (operationDetails.Succeeded)
             {

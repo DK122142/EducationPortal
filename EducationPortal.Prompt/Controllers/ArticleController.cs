@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
@@ -16,24 +17,25 @@ namespace EducationPortal.Prompt.Controllers
         {
             this.service = service;
 
-            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<ArticleDTO, ArticleModel>().ReverseMap())
+            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<ArticleDto, ArticleModel>().ReverseMap())
                 .CreateMapper();
         }
 
-        public void AddArticle(ArticleModel model)
+        public async Task AddArticle(ArticleModel model)
         {
-            this.service.Add(this.mapper.Map<ArticleModel, ArticleDTO>(model));
+            var tmp = this.mapper.Map<ArticleDto>(model);
+            await this.service.Add(tmp);
         }
 
-        public ArticleModel GetById(Guid id)
+        public ArticleModel GetById(string id)
         {
-            return this.mapper.Map<ArticleDTO, ArticleModel>(this.service.GetById(id));
+            return this.mapper.Map<ArticleModel>(this.service.GetById(id));
         }
 
-        public IEnumerable<ArticleModel> GetArticlesOf(AccountModel model)
-        {
-            return this.mapper.Map<IEnumerable<ArticleDTO>, IEnumerable<ArticleModel>>(
-                this.service.Find(a => a.Owner == model.Id));
-        }
+        // public IEnumerable<ArticleModel> GetArticlesOf(AccountModel model)
+        // {
+        //     return this.mapper.Map<IEnumerable<ArticleDto>, IEnumerable<ArticleModel>>(
+        //         this.service.Where(a => a.OwnerId == model.ProfileId));
+        // }
     }
 }

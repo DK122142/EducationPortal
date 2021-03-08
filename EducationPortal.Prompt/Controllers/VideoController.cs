@@ -16,24 +16,24 @@ namespace EducationPortal.Prompt.Controllers
         {
             this.videoService = videoService;
 
-            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<VideoDTO, VideoModel>().ReverseMap())
+            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<VideoDto, VideoModel>().ReverseMap())
                 .CreateMapper();
         }
 
-        public VideoModel GetById(Guid id)
+        public VideoModel GetById(string id)
         {
-            return this.mapper.Map<VideoDTO, VideoModel>(this.videoService.GetById(id));
+            return this.mapper.Map<VideoModel>(this.videoService.GetById(id));
         }
 
         public void AddVideo(VideoModel model)
         {
-            this.videoService.Add(this.mapper.Map<VideoModel, VideoDTO>(model));
+            this.videoService.Add(this.mapper.Map<VideoModel, VideoDto>(model));
         }
         
-        public IEnumerable<VideoModel> GetVideosOf(AccountModel model)
-        {
-            return this.mapper.Map<IEnumerable<VideoDTO>, IEnumerable<VideoModel>>(
-                this.videoService.Find(a => a.Owner == model.Id));
-        }
+        // public IEnumerable<VideoModel> GetVideosOf(AccountModel model)
+        // {
+        //     return this.mapper.Map<IEnumerable<VideoDto>, IEnumerable<VideoModel>>(
+        //         this.videoService.Where(a => a.OwnerId == ""));
+        // }
     }
 }

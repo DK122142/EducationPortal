@@ -20,9 +20,9 @@ namespace EducationPortal.Prompt.Controllers
                 .CreateMapper();
         }
 
-        public BookModel GetById(Guid id)
+        public BookModel GetById(string id)
         {
-            return this.mapper.Map<BookDTO, BookModel>(this.service.GetById(id));
+            return this.mapper.Map<BookModel>(this.service.GetById(id));
         }
 
         public void AddBook(BookModel model)
@@ -30,10 +30,10 @@ namespace EducationPortal.Prompt.Controllers
             this.service.Add(this.mapper.Map<BookModel, BookDTO>(model));
         }
         
-        public IEnumerable<BookModel> GetBooksOf(AccountModel model)
-        {
-            return this.mapper.Map<IEnumerable<BookDTO>, IEnumerable<BookModel>>(
-                this.service.Find(a => a.Owner == model.Id));
-        }
+        // public IEnumerable<BookModel> GetBooksOf(AccountModel model)
+        // {
+        //     return this.mapper.Map<IEnumerable<BookDTO>, IEnumerable<BookModel>>(
+        //         this.service.Where(a => a.OwnerId == ""));
+        // }
     }
 }
