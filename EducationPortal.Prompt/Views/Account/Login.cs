@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Interfaces;

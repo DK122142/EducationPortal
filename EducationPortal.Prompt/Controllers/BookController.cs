@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.Prompt.Models;

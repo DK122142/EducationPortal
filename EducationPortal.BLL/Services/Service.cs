@@ -4,10 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.Extensions.ExpressionMapping;
-using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
-using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 

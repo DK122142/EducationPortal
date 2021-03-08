@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using EducationPortal.Prompt.Controllers;
-using EducationPortal.Prompt.Infrastructure;
-using EducationPortal.Prompt.Models;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.Threading.Tasks;
 
 namespace EducationPortal.Prompt
 {

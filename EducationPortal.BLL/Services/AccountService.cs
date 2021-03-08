@@ -3,7 +3,6 @@ using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
-using EducationPortal.DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace EducationPortal.BLL.Services

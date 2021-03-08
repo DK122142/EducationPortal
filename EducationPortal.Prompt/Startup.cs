@@ -1,5 +1,4 @@
 ﻿using System;
-using EducationPortal.BLL.Interfaces;
 using EducationPortal.Prompt.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 

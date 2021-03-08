@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EducationPortal.DAL.EF;
 using EducationPortal.DAL.Interfaces;
 

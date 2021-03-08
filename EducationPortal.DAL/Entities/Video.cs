@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace EducationPortal.DAL.Entities
+﻿namespace EducationPortal.DAL.Entities
 {
     public class Video : Material
     {
