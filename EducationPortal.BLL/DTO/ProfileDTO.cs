@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace EducationPortal.BLL.DTO
+﻿namespace EducationPortal.BLL.DTO
 {
-    public class ProfileDTO
+    public class ProfileDto
     {
         public string Name { get; set; }
 
-        //List<Material>
-        public List<Guid> PassedMaterials { get; set; }
-        
-        // Maybe change to Dictionary<Course, @status>
-        public List<Guid> CompletedCourses { get; set; }
-
-        public List<Guid> InProgressCourses { get; set; }
-
-        //Dictionary<Skill, int>
-        public Dictionary<Guid, int> SkillsLevels { get; set; }
+        public string AccountUserName { get; set; }
     }
 }

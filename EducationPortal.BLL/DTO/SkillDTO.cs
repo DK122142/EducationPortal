@@ -1,6 +1,6 @@
 ﻿namespace EducationPortal.BLL.DTO
 {
-    public class SkillDTO
+    public class SkillDto
     {
         public string Name { get; set; }
 
