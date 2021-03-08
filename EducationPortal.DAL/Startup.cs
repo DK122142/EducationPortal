@@ -36,8 +36,7 @@ namespace EducationPortal.DAL
 
             this.Services.AddDbContext<EducationPortalContext>(
                 options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
-
-            // var builder = 
+            
             this.Services.AddIdentityCore<Account>()
                 .AddEntityFrameworkStores<EducationPortalContext>();
 
@@ -59,25 +58,20 @@ namespace EducationPortal.DAL
             this.Services.TryAddScoped<SignInManager<Account>>();
             this.Services.TryAddScoped<RoleManager<Role>>();
 
-            // var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            //
-            // identityBuilder.AddEntityFrameworkStores<EducationPortalContext>();
-            // identityBuilder.AddUserManager<UserManager<Account>>();
-            // identityBuilder.AddSignInManager<SignInManager<Account>>();
-            // identityBuilder.AddRoles<Role>();
-            // identityBuilder.AddRoleManager<RoleManager<Role>>();
-            // identityBuilder.AddRoleStore<RoleStore<Role>>();
+            this.Services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequiredUniqueChars = 1;
 
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            });
 
-            this.Services.AddScoped<IUnitOfWork<Account>, UnitOfWork<Account>>();
-            this.Services.AddScoped<IUnitOfWork<Article>, UnitOfWork<Article>>();
-            this.Services.AddScoped<IUnitOfWork<Book>, UnitOfWork<Book>>();
-            this.Services.AddScoped<IUnitOfWork<Course>, UnitOfWork<Course>>();
-            this.Services.AddScoped<IUnitOfWork<Material>, UnitOfWork<Material>>();
-            this.Services.AddScoped<IUnitOfWork<Profile>, UnitOfWork<Profile>>();
-            this.Services.AddScoped<IUnitOfWork<ProfileSkill>, UnitOfWork<ProfileSkill>>();
-            this.Services.AddScoped<IUnitOfWork<Skill>, UnitOfWork<Skill>>();
-            this.Services.AddScoped<IUnitOfWork<Video>, UnitOfWork<Video>>();
+            this.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return this.ServiceProvider = this.Services.BuildServiceProvider();
         }

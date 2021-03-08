@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace EducationPortal.DAL.Interfaces
 {
-    public interface IUnitOfWork<T> : IDisposable where T : class
+    public interface IUnitOfWork : IDisposable
     {
-        IRepository<T> Repository { get; }
+        IRepository<T> Repository<T>() where T : class, IEntity;
 
         Task Commit();
     }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EducationPortal.DAL.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class, IEntity
     {
         private DbSet<T> table;
 
@@ -24,7 +24,7 @@ namespace EducationPortal.DAL.Repositories
 
         public async Task<IList<T>> All() => await this.table.AsNoTracking().ToListAsync();
 
-        public async Task<T> GetById(string id) => await this.table.FindAsync(id);
+        public async Task<T> GetById(string id) => await this.table.SingleAsync(x => x.Id.Equals(id));
 
         public void Update(T entity) => this.table.Update(entity);
 

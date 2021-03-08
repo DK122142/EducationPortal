@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EducationPortal.DAL.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class, IEntity
     {
         Task Add(T entity);
 

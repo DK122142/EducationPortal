@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using EducationPortal.DAL.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace EducationPortal.DAL.Entities
 {
-    public class Role : IdentityRole
+    public class Role : IdentityRole, IEntity
     {
     }
 }

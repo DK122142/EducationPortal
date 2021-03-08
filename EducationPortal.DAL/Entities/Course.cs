@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Entities
 {
-    public class Course
+    public class Course : IEntity
     {
         public string Id { get; set; }
 

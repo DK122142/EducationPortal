@@ -4,16 +4,18 @@ using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Repositories
 {
-    public class UnitOfWork<T> : IUnitOfWork<T> where T : class
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly EducationPortalContext context;
-
-        public IRepository<T> Repository { get; }
 
         public UnitOfWork(EducationPortalContext context)
         {
             this.context = context;
-            this.Repository = new Repository<T>(context);
+        }
+
+        public IRepository<T> Repository<T>() where T : class, IEntity
+        {
+            return new Repository<T>(this.context);
         }
 
         public async Task Commit()
