@@ -17,7 +17,6 @@ namespace EducationPortal.BLL.Mapping
                 .Include<Article, ArticleDto>()
                 .Include<Book, BookDTO>()
                 .Include<Video, VideoDto>()
-                .ForMember(m => m.OwnerId, c => c.MapFrom(m => m.AddedBy.Id))
                 .ReverseMap();
 
             CreateMap<Course, CourseDto>()

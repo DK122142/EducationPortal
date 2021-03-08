@@ -2,7 +2,7 @@
 
 namespace EducationPortal.BLL.Interfaces
 {
-    public interface IBookService : IMaterialService<BookDTO>
+    public interface IBookService : IService<BookDTO>
     {
         
     }

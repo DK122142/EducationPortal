@@ -1,15 +1,15 @@
-﻿using EducationPortal.BLL.DTO;
+﻿using AutoMapper;
+using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.BLL.Services
 {
-    public class ArticleService
-        // : MaterialService<Article, ArticleDTO>, IArticleService
+    public class ArticleService : Service<Article, ArticleDto>, IArticleService
     {
-        // public ArticleService(IUnitOfWork uow) : base(uow)
-        // {
-        // }
+        public ArticleService(IUnitOfWork uow, IMapper mapper) : base(uow, mapper)
+        {
+        }
     }
 }

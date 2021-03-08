@@ -2,7 +2,7 @@
 
 namespace EducationPortal.BLL.Interfaces
 {
-    public interface IArticleService : IMaterialService<ArticleDTO>
+    public interface IArticleService : IService<ArticleDto>
     {
         
     }

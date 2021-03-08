@@ -3,6 +3,7 @@ using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
+using EducationPortal.DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace EducationPortal.BLL.Services
@@ -23,11 +24,19 @@ namespace EducationPortal.BLL.Services
             
             var newAccount = new Account
             {
-                UserName = username
+                UserName = username,
             };
 
-            var result = await this.userManager.CreateAsync(newAccount, password);
+            var profile = new Profile
+            {
+                Account = newAccount,
+                Name = newAccount.UserName,
+            };
+            
+            newAccount.Profile = profile;
 
+            var result = await this.userManager.CreateAsync(newAccount, password);
+            
             if (result.Succeeded)
             {
                 return new OperationDetails(true, $"Registration successful", string.Join(";", result.Errors));
