@@ -1,12 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
-using Profile = EducationPortal.DAL.Entities.Profile;
 
 namespace EducationPortal.BLL.Services
 {
@@ -14,20 +11,17 @@ namespace EducationPortal.BLL.Services
     {        
         private readonly UserManager<Account> userManager;
         private readonly SignInManager<Account> signInManager;
-        private IMapper mapper;
 
         public AccountService(UserManager<Account> userManager, SignInManager<Account> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            
-            this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<Account, AccountDto>().ReverseMap()).CreateMapper();
         }
         
         public async Task<OperationDetails> RegisterAccount(string username, string password)
         {
             
-            Account newAccount = new Account
+            var newAccount = new Account
             {
                 UserName = username
             };
@@ -36,7 +30,7 @@ namespace EducationPortal.BLL.Services
 
             if (result.Succeeded)
             {
-                return new OperationDetails(true, $"Registration succeeded", "");
+                return new OperationDetails(true, $"Registration successful", string.Join(";", result.Errors));
             }
             else
             {
@@ -48,15 +42,17 @@ namespace EducationPortal.BLL.Services
         {
             var account = await this.userManager.FindByNameAsync(username);
 
-            var result = await this.signInManager.CheckPasswordSignInAsync(account, password, false);
-
-            if (result.Succeeded)
+            if (account != null)
             {
-                return new AccountDto
+                var result = await this.signInManager.CheckPasswordSignInAsync(account, password, false);
+
+                if (result.Succeeded)
                 {
-                    Id = account.Id,
-                    UserName = account.UserName
-                };
+                    return new AccountDto
+                    {
+                        Login = account.UserName
+                    };
+                }
             }
 
             return default;

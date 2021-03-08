@@ -1,5 +1,6 @@
 ﻿using System;
 using EducationPortal.BLL.Interfaces;
+using EducationPortal.BLL.Mapping;
 using EducationPortal.BLL.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +18,9 @@ namespace EducationPortal.BLL
             dal.ConfigureServices();
 
             this.Services = dal.Services;
-            
+
+            this.Services.AddAutoMapper(mc => mc.AddProfile(new MappingProfile()));
+
             Services.AddTransient<IAccountService, AccountService>();
             // Services.AddTransient<IArticleService, ArticleService>();
             // Services.AddTransient<IBookService, BookService>();
