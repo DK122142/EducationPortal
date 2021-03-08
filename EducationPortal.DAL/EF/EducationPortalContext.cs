@@ -11,8 +11,6 @@ namespace EducationPortal.DAL.EF
 {
     public class EducationPortalContext : IdentityDbContext<Account>
     {
-        // public DbSet<Account> Accounts { get; set; }
-
         public DbSet<Profile> Profiles { get; set; }
         
         public DbSet<Material> Materials { get; set; }
@@ -45,10 +43,6 @@ namespace EducationPortal.DAL.EF
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode()))
                     )
                 );
-
-            builder.Entity<Material>()
-                .HasOne<Profile>(m => m.AddedBy)
-                .WithMany(p => p.AddedMaterials);
 
             builder.Entity<Course>()
                 .HasOne<Profile>(c => c.Creator)

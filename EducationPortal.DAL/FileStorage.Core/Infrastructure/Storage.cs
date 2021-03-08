@@ -6,8 +6,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
-using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.FileStorage.Core.Infrastructure.Interfaces;
+using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
 {
@@ -110,7 +110,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
 
-        public T Get<T>(Guid id)
+        public T Get<T>(string id)
             // where T : Entity
         {
             if (this.FileExists<T>(id))
@@ -145,9 +145,9 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
         public async Task UpdateAsync<T>(T updatedItem)
             // where T : Entity
         {
-            if (this.FileExists<T>((updatedItem as Entity).Id))
+            if (this.FileExists<T>((updatedItem as IEntity).Id))
             {
-                using (var fileStream = new FileStream(this.FilePathById<T>((updatedItem as Entity).Id), FileMode.Create))
+                using (var fileStream = new FileStream(this.FilePathById<T>((updatedItem as IEntity).Id), FileMode.Create))
                 {
                     await JsonSerializer.SerializeAsync(fileStream, updatedItem);
                     fileStream.Close();
@@ -155,7 +155,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
         
-        public void Delete<T>(Guid id)
+        public void Delete<T>(string id)
             // where T : Entity
         {
             if (this.FileExists<T>(id))
@@ -170,20 +170,20 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             return this.Find(predicate).Any();
         }
 
-        public string FilePathFor<T>(T entity) => $"{this.name}/{typeof(T).Name}/{(entity as Entity).Id}.json";
+        public string FilePathFor<T>(T entity) => $"{this.name}/{typeof(T).Name}/{(entity as IEntity).Id}.json";
 
-        public string FilePathById<T>(Guid id) => $"{this.name}/{typeof(T).Name}/{id}.json";
+        public string FilePathById<T>(string id) => $"{this.name}/{typeof(T).Name}/{id}.json";
 
-        public bool FileExists<T>(Guid id) => File.Exists(this.FilePathById<T>(id));
+        public bool FileExists<T>(string id) => File.Exists(this.FilePathById<T>(id));
 
         public string DirectoryPath<T>() => $"{this.name}/{typeof(T).Name}";
 
-        public Guid IdByFileName(string fileName)
+        public string IdByFileName(string fileName)
         {
             string reversed = new string(fileName.Reverse().ToArray()).Substring(5,36);
             string result = new string(reversed.Reverse().ToArray());
 
-            return Guid.Parse(result);
+            return result;
         }
     }
 }
