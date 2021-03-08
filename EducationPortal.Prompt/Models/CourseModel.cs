@@ -9,12 +9,12 @@ namespace EducationPortal.Prompt.Models
 
         public string Description { get; set; }
 
-        public Guid Owner { get; set; }
+        public string Owner { get; set; }
 
         // List<Material>
-        public List<Guid> Materials { get; set; }
+        public List<string> Materials { get; set; }
 
         // List<Skill>
-        public List<Guid> Skills { get; set; }
+        public List<string> Skills { get; set; }
     }
 }

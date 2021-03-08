@@ -2,7 +2,6 @@
 
 namespace EducationPortal.DAL.Entities
 {
-    [Table("Videos")]
     public class Video : Material
     {
         public string Duration { get; set; }

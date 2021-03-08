@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EducationPortal.DAL.Entities
 {
-    [Table("Books")]
     public class Book : Material
     {
         public int PageCount { get; set; }

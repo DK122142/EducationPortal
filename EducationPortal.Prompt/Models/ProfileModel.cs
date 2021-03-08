@@ -8,17 +8,17 @@ namespace EducationPortal.Prompt.Models
         public string Name { get; set; }
 
         //Account
-        public Guid Owner { get; set; }
+        public string Owner { get; set; }
 
         //List<Material>
-        public List<Guid> PassedMaterials { get; set; }
+        public List<string> PassedMaterials { get; set; }
         
         // Maybe change to Dictionary<Course, @status>
-        public List<Guid> CompletedCourses { get; set; }
+        public List<string> CompletedCourses { get; set; }
 
-        public List<Guid> InProgressCourses { get; set; }
+        public List<string> InProgressCourses { get; set; }
 
         //Dictionary<Skill, int>
-        public Dictionary<Guid, int> SkillsLevels { get; set; }
+        public Dictionary<string, int> SkillsLevels { get; set; }
     }
 }
