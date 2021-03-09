@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using EducationPortal.DAL.EF;
+using EducationPortal.DAL.DbContexts;
 using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Repositories

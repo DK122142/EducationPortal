@@ -10,8 +10,6 @@ namespace EducationPortal.DAL.Entities
         public string Name { get; set; }
 
         public string Source { get; set; }
-        
-        // public virtual string AddedBy { get; set; }
 
         public virtual IEnumerable<Profile> PassedByUsers { get; set; }
 

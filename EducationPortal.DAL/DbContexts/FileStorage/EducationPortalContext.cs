@@ -1,10 +1,10 @@
-﻿using EducationPortal.DAL.Entities;
+﻿using EducationPortal.DAL.DbContexts.FileStorage.Interfaces;
+using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.FileStorage.Core;
 using EducationPortal.DAL.FileStorage.Core.Infrastructure.Interfaces;
 using EducationPortal.DAL.FileStorage.Core.Internal.Interfaces;
-using EducationPortal.DAL.FS.Interfaces;
 
-namespace EducationPortal.DAL.FS
+namespace EducationPortal.DAL.DbContexts.FileStorage
 {
     public class EducationPortalContext : FSContext, IEducationPortalContext
     {

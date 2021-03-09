@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace EducationPortal.DAL.EF
+namespace EducationPortal.DAL.DbContexts
 {
     public class EducationPortalContextFactory : IDesignTimeDbContextFactory<EducationPortalContext>
     {

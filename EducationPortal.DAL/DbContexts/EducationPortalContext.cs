@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace EducationPortal.DAL.EF
+namespace EducationPortal.DAL.DbContexts
 {
     public class EducationPortalContext : IdentityDbContext<Account>
     {

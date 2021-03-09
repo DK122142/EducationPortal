@@ -1,7 +1,7 @@
 ﻿using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.FileStorage.Core;
 
-namespace EducationPortal.DAL.FS.Interfaces
+namespace EducationPortal.DAL.DbContexts.FileStorage.Interfaces
 {
     public interface IIdentityContext : IContext
     {

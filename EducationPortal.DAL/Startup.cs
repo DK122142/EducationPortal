@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using EducationPortal.DAL.EF;
+using EducationPortal.DAL.DbContexts;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.Interfaces;
 using EducationPortal.DAL.Repositories;
@@ -71,6 +71,8 @@ namespace EducationPortal.DAL
                 options.SignIn.RequireConfirmedPhoneNumber = false;
             });
 
+            // this.Services.AddScoped<IRepository<Article>, Repository<Article>>();
+            // this.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             this.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return this.ServiceProvider = this.Services.BuildServiceProvider();

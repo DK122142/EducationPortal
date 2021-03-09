@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using EducationPortal.DAL.EF;
+using EducationPortal.DAL.DbContexts;
 using EducationPortal.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
