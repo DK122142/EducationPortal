@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EducationPortal.BLL.DTO;
 using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Interfaces;
@@ -32,7 +33,7 @@ namespace EducationPortal.Prompt.Views.Material.Article
             Console.Write("Link to article: ");
             var link = Console.ReadLine();
 
-            SessionStorage.ServiceProvider.GetRequiredService<ArticleController>().AddArticle(
+            SessionStorage.ServiceProvider.GetRequiredService<MaterialController>().Add<ArticleModel, ArticleDto>(
                 new ArticleModel
                 {
                     Id = Guid.NewGuid().ToString(), 

@@ -29,11 +29,8 @@ namespace EducationPortal.BLL
             });
 
             this.Services.AddScoped<IAuthService, AuthService>();
-            this.Services.AddScoped<IArticleService, ArticleService>();
             this.Services.AddScoped<IMaterialService, MaterialService>();
-
-            // Services.AddTransient<IBookService, BookService>();
-            // Services.AddTransient<IVideoService, VideoService>();
+            
 
             return this.ServiceProvider = Services.BuildServiceProvider();
         }

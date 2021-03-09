@@ -19,7 +19,6 @@ namespace EducationPortal.Prompt
             this.Services = bll.Services;
 
             this.Services.AddScoped<AccountController>();
-            this.Services.AddScoped<ArticleController>();
             this.Services.AddScoped<MaterialController>();
             
             return this.ServiceProvider = Services.BuildServiceProvider();

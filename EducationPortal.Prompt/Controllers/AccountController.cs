@@ -10,19 +10,19 @@ namespace EducationPortal.Prompt.Controllers
 {
     public class AccountController
     {
-        private IAccountService accountService;
+        private IAuthService service;
         private IMapper mapper;
 
-        public AccountController(IAccountService service)
+        public AccountController(IAuthService service)
         {
-            this.accountService = service;
+            this.service = service;
             
             this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<AccountDto, AccountModel>().ReverseMap()).CreateMapper();
         }
 
         public async Task Login(AccountModel model)
         {
-            var authAcc = await this.accountService.Authenticate(model.Login, model.Password);
+            var authAcc = await this.service.Authenticate(model.Login, model.Password);
 
             if (authAcc != null)
             {
@@ -34,7 +34,7 @@ namespace EducationPortal.Prompt.Controllers
 
         public async Task Register(AccountModel model)
         {
-            var operationDetails = await this.accountService.RegisterAccount(model.Login, model.Password);
+            var operationDetails = await this.service.RegisterAccount(model.Login, model.Password);
 
             if (operationDetails.Succeeded)
             {
