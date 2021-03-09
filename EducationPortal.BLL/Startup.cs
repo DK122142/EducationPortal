@@ -20,7 +20,7 @@ namespace EducationPortal.BLL
 
             this.Services = dal.Services;
 
-            this.Services.AddAutoMapper(typeof(Startup));
+            // this.Services.AddAutoMapper(typeof(Startup));
 
             this.Services.AddAutoMapper(mc =>
             {
@@ -28,7 +28,7 @@ namespace EducationPortal.BLL
                 mc.AddExpressionMapping();
             });
 
-            this.Services.AddScoped<IAccountService, AccountService>();
+            this.Services.AddScoped<IAuthService, AuthService>();
             this.Services.AddScoped<IArticleService, ArticleService>();
             this.Services.AddScoped<IMaterialService, MaterialService>();
 

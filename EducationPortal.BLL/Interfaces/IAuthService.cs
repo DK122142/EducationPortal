@@ -4,7 +4,7 @@ using EducationPortal.BLL.Infrastructure;
 
 namespace EducationPortal.BLL.Interfaces
 {
-    public interface IAccountService
+    public interface IAuthService
     {
         public Task<OperationDetails> RegisterAccount(string username, string password);
 

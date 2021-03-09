@@ -2,7 +2,7 @@
 
 namespace EducationPortal.BLL.DTO
 {
-    public class BookDTO : MaterialDto
+    public class BookDto : MaterialDto
     {
         public int PageCount { get; set; }
 

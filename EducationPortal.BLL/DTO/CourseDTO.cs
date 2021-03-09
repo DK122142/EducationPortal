@@ -10,7 +10,7 @@ namespace EducationPortal.BLL.DTO
 
         public string CreatorId { get; set; }
 
-        public List<string> MaterialNames { get; set; }
+        public List<string> MaterialIds { get; set; }
 
         public List<string> SkillNames { get; set; }
     }

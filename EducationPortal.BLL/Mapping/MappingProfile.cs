@@ -15,13 +15,13 @@ namespace EducationPortal.BLL.Mapping
 
             CreateMap<Material, MaterialDto>()
                 .Include<Article, ArticleDto>()
-                .Include<Book, BookDTO>()
+                .Include<Book, BookDto>()
                 .Include<Video, VideoDto>()
                 .ReverseMap();
 
             CreateMap<Course, CourseDto>()
                 .ForMember(c => c.CreatorId, conf => conf.MapFrom(c => c.Creator.Id))
-                .ForMember(c => c.MaterialNames, conf => conf.MapFrom(c => c.Materials.Select(m => m.Name)))
+                .ForMember(c => c.MaterialIds, conf => conf.MapFrom(c => c.Materials.Select(m => m.Id)))
                 .ForMember(c => c.SkillNames, conf => conf.MapFrom(c => c.Skills.Select(s => s.Name)))
                 .ReverseMap();
 
@@ -35,7 +35,7 @@ namespace EducationPortal.BLL.Mapping
                 .ForMember(a => a.Published, c => c.MapFrom(a => a.Published.ToString()))
                 .ReverseMap();
 
-            CreateMap<Book, BookDTO>().ReverseMap();
+            CreateMap<Book, BookDto>().ReverseMap();
 
             CreateMap<Video, VideoDto>().ReverseMap();
 

@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EducationPortal.BLL.Services
 {
-    public class AccountService : IAccountService
+    public class AuthService : IAuthService
     {        
         private readonly UserManager<Account> userManager;
         private readonly SignInManager<Account> signInManager;
 
-        public AccountService(UserManager<Account> userManager, SignInManager<Account> signInManager)
+        public AuthService(UserManager<Account> userManager, SignInManager<Account> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
