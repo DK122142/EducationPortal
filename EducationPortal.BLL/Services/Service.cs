@@ -15,11 +15,13 @@ namespace EducationPortal.BLL.Services
         where TDto : class, new()
     {
         private readonly IUnitOfWork uow;
+        private readonly IRepository<TEntity> repository;
         private readonly IMapper mapper;
 
         public Service(IUnitOfWork uow, IMapper mapper)
         {
             this.uow = uow;
+            this.repository = this.uow.Repository<TEntity>();
             this.mapper = new Startup().ConfigureServices().GetRequiredService<IMapper>();
         }
 
@@ -32,49 +34,54 @@ namespace EducationPortal.BLL.Services
                 newEntity.Id = Guid.NewGuid().ToString();
             }
 
-            await this.uow.Repository<TEntity>().Add(newEntity);
+            await this.repository.Add(newEntity);
             await this.uow.Commit();
         }
 
-        public Task Add(IEnumerable<TDto> items)
+        public async Task Add(IEnumerable<TDto> items)
         {
-            throw new NotImplementedException();
+            await this.repository.Add(this.mapper.Map<IEnumerable<TEntity>>(items));
+            await this.uow.Commit();
         }
 
-        public Task<IList<TDto>> All()
+        public async Task<IList<TDto>> All()
         {
-            throw new NotImplementedException();
+            return this.mapper.Map<IList<TDto>>(await this.repository.All());
         }
 
         public async Task<TDto> GetById(string id)
         {
-            var result = await this.uow.Repository<TEntity>().GetById(id);
-            return this.mapper.Map<TDto>(result);
+            return this.mapper.Map<TDto>(await this.repository.GetById(id));
         }
 
-        void IService<TDto>.Update(TDto entity)
+        public async Task Update(TDto entity)
         {
-            throw new NotImplementedException();
+            this.repository.Update(this.mapper.Map<TEntity>(entity));
+            await this.uow.Commit();
         }
 
-        public void Update(IEnumerable<TDto> items)
+        public async Task Update(IEnumerable<TDto> items)
         {
-            throw new NotImplementedException();
+            this.repository.Update(this.mapper.Map<IEnumerable<TEntity>>(items));
+            await this.uow.Commit();
         }
 
         public void Delete(TDto entity)
         {
-            throw new NotImplementedException();
+            this.repository.Delete(this.mapper.Map<TEntity>(entity));
+            this.uow.Commit();
         }
 
         public void Delete(IEnumerable<TDto> entities)
         {
-            throw new NotImplementedException();
+            this.repository.Delete(this.mapper.Map<IEnumerable<TEntity>>(entities));
+            this.uow.Commit();
         }
 
         public IQueryable<TDto> Where(Expression<Func<TDto, bool>> expression)
         {
-            throw new NotImplementedException();
+            return this.mapper.Map<IQueryable<TDto>>(
+                this.repository.Where(this.mapper.Map<Expression<Func<TEntity, bool>>>(expression)));
         }
     }
 }

@@ -16,9 +16,9 @@ namespace EducationPortal.BLL.Interfaces
 
         Task<TDto> GetById(string id);
 
-        void Update(TDto entity);
+        Task Update(TDto entity);
 
-        void Update(IEnumerable<TDto> items);
+        Task Update(IEnumerable<TDto> items);
 
         void Delete(TDto entity);
 
