@@ -4,6 +4,7 @@ using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Models;
+using EducationPortal.Prompt.ViewModels;
 using EducationPortal.Prompt.Views.Home;
 
 namespace EducationPortal.Prompt.Controllers
@@ -20,7 +21,7 @@ namespace EducationPortal.Prompt.Controllers
             this.mapper = new MapperConfiguration(cfg => cfg.CreateMap<AccountDto, AccountModel>().ReverseMap()).CreateMapper();
         }
 
-        public async Task Login(AccountModel model)
+        public async Task Login(AuthViewModel model)
         {
             var authAcc = await this.service.Login(model.Login, model.Password);
 
@@ -32,7 +33,7 @@ namespace EducationPortal.Prompt.Controllers
             IndexPage.View(SessionStorage.AuthorizedUser);
         }
 
-        public async Task Register(AccountModel model)
+        public async Task Register(AuthViewModel model)
         {
             var operationDetails = await this.service.Register(model.Login, model.Password);
 

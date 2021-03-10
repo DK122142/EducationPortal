@@ -29,7 +29,6 @@ namespace EducationPortal.BLL
             this.Services.AddScoped<IAuthService, AuthService>();
             this.Services.AddScoped<IMaterialService, MaterialService>();
             
-
             return this.ServiceProvider = Services.BuildServiceProvider();
         }
     }

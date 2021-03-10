@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EducationPortal.BLL.Infrastructure
+﻿namespace EducationPortal.BLL.Infrastructure
 {
     public class OperationDetails<T> where T : class
     {

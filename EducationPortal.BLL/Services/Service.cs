@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.BLL.Services
 {

@@ -1,5 +1,7 @@
 ﻿using System;
+using AutoMapper.Extensions.ExpressionMapping;
 using EducationPortal.Prompt.Controllers;
+using EducationPortal.Prompt.Mapping;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.Prompt
@@ -16,6 +18,12 @@ namespace EducationPortal.Prompt
             bll.ConfigureServices();
 
             this.Services = bll.Services;
+
+            this.Services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<MappingProfile>();
+                cfg.AddExpressionMapping();
+            });
 
             this.Services.AddScoped<AuthController>();
             this.Services.AddScoped<MaterialController>();

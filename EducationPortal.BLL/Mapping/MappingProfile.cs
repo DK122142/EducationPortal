@@ -13,24 +13,16 @@ namespace EducationPortal.BLL.Mapping
                 .ForMember(a => a.ProfileId, c => c.MapFrom(a => a.Profile.Id))
                 .ReverseMap();
 
+            CreateMap<Profile, ProfileDto>()
+                .ForMember(p => p.AccountUserName, c => c.MapFrom(p => p.Account.UserName))
+                .ReverseMap();
+
             CreateMap<Material, MaterialDto>()
                 .Include<Article, ArticleDto>()
                 .Include<Book, BookDto>()
                 .Include<Video, VideoDto>()
                 .ReverseMap();
-
-            CreateMap<Course, CourseDto>()
-                .ForMember(c => c.CreatorId, conf => conf.MapFrom(c => c.Creator.Id))
-                .ForMember(c => c.MaterialIds, conf => conf.MapFrom(c => c.Materials.Select(m => m.Id)))
-                .ForMember(c => c.SkillNames, conf => conf.MapFrom(c => c.Skills.Select(s => s.Name)))
-                .ReverseMap();
-
-            CreateMap<Profile, ProfileDto>()
-                .ForMember(p => p.AccountUserName, c => c.MapFrom(p => p.Account.UserName))
-                .ReverseMap();
-
-            CreateMap<Skill, SkillDto>();
-
+            
             CreateMap<Article, ArticleDto>()
                 .ForMember(a => a.Published, c => c.MapFrom(a => a.Published.ToString()))
                 .ReverseMap();
@@ -38,6 +30,14 @@ namespace EducationPortal.BLL.Mapping
             CreateMap<Book, BookDto>().ReverseMap();
 
             CreateMap<Video, VideoDto>().ReverseMap();
+
+            CreateMap<Course, CourseDto>()
+                .ForMember(c => c.CreatorId, conf => conf.MapFrom(c => c.Creator.Id))
+                .ForMember(c => c.MaterialIds, conf => conf.MapFrom(c => c.Materials.Select(m => m.Id)))
+                .ForMember(c => c.SkillNames, conf => conf.MapFrom(c => c.Skills.Select(s => s.Name)))
+                .ReverseMap();
+
+            CreateMap<Skill, SkillDto>();
 
             CreateMap<ProfileSkill, ProfileSkillDto>()
                 .ForMember(ps => ps.SkillName, c => c.MapFrom(ps => ps.Skill.Name));
