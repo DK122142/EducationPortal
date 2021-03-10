@@ -1,6 +1,6 @@
 ﻿namespace EducationPortal.Prompt.Models
 {
-    public class MaterialModel : EntityModel
+    public class MaterialModel
     {
         public string Id { get; set; }
 
@@ -8,6 +8,6 @@
 
         public string Source { get; set; }
         
-        public string Discriminator { get; set; }
+        public string Discriminator { get; }
     }
 }

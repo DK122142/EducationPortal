@@ -19,12 +19,10 @@ namespace EducationPortal.BLL
             dal.ConfigureServices();
 
             this.Services = dal.Services;
-
-            // this.Services.AddAutoMapper(typeof(Startup));
-
+            
             this.Services.AddAutoMapper(mc =>
             {
-                mc.AddProfile(typeof(MappingProfile));
+                mc.AddProfile<MappingProfile>();
                 mc.AddExpressionMapping();
             });
 

@@ -8,6 +8,6 @@
 
         public string Source { get; set; }
         
-        public string Discriminator { get; set; }
+        public string Discriminator { get; }
     }
 }

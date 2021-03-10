@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
+using Profile = EducationPortal.DAL.Entities.Profile;
 
 namespace EducationPortal.BLL.Services
 {
@@ -11,42 +13,43 @@ namespace EducationPortal.BLL.Services
     {        
         private readonly UserManager<Account> userManager;
         private readonly SignInManager<Account> signInManager;
+        private readonly IMapper mapper;
 
-        public AuthService(UserManager<Account> userManager, SignInManager<Account> signInManager)
+        public AuthService(UserManager<Account> userManager, SignInManager<Account> signInManager, IMapper mapper)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.mapper = mapper;
         }
         
-        public async Task<OperationDetails> RegisterAccount(string username, string password)
+        public async Task<OperationDetails<AccountDto>> Register(string username, string password)
         {
-            
-            var newAccount = new Account
+            var account = new Account
             {
                 UserName = username,
             };
 
             var profile = new Profile
             {
-                Account = newAccount,
-                Name = newAccount.UserName,
+                Account = account,
+                Name = account.UserName,
             };
             
-            newAccount.Profile = profile;
+            account.Profile = profile;
 
-            var result = await this.userManager.CreateAsync(newAccount, password);
+            var result = await this.userManager.CreateAsync(account, password);
             
             if (result.Succeeded)
             {
-                return new OperationDetails(true, $"Registration successful", string.Join(";", result.Errors));
+                return new OperationDetails<AccountDto>(true, value: this.mapper.Map<AccountDto>(account));
             }
             else
             {
-                return new OperationDetails(false, $"Registration failed", string.Join(";", result.Errors));
+                return new OperationDetails<AccountDto>(false, property: string.Join(";", result.Errors));
             }
         }
 
-        public async Task<AccountDto> Authenticate(string username, string password)
+        public async Task<OperationDetails<AccountDto>> Login(string username, string password)
         {
             var account = await this.userManager.FindByNameAsync(username);
 
@@ -56,10 +59,11 @@ namespace EducationPortal.BLL.Services
 
                 if (result.Succeeded)
                 {
-                    return new AccountDto
+                    return new OperationDetails<AccountDto>(true, value: new AccountDto
                     {
-                        Login = account.UserName
-                    };
+                        Login = account.UserName,
+                        ProfileId = account.Profile.Id
+                    });
                 }
             }
 

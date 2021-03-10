@@ -6,8 +6,10 @@ namespace EducationPortal.BLL.Interfaces
 {
     public interface IAuthService
     {
-        public Task<OperationDetails> RegisterAccount(string username, string password);
+        public Task<OperationDetails<AccountDto>> Register(string username, string password);
 
-        public Task<AccountDto> Authenticate(string username, string password);
+        public Task<OperationDetails<AccountDto>> Login(string username, string password);
+
+        public Task LogOut();
     }
 }

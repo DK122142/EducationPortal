@@ -15,6 +15,6 @@ namespace EducationPortal.DAL.Entities
 
         public virtual IEnumerable<Course> IncludedIn { get; set; }
 
-        public string Discriminator { get; set; }
+        public string Discriminator { get; }
     }
 }

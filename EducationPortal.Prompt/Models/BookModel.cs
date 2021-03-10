@@ -7,10 +7,10 @@ namespace EducationPortal.Prompt.Models
     {
         public int PageCount { get; set; }
 
-        public List<string> Authors { get; set; }
+        public IEnumerable<string> Authors { get; set; }
 
         public string Format { get; set; }
         
-        public DateTime Published { get; set; }
+        public int PublicationYear { get; set; }
     }
 }

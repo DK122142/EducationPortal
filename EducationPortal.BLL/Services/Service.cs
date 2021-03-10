@@ -18,11 +18,11 @@ namespace EducationPortal.BLL.Services
         private readonly IRepository<TEntity> repository;
         private readonly IMapper mapper;
 
-        public Service(IUnitOfWork uow, IMapper mapper)
+        protected Service(IUnitOfWork uow, IMapper mapper)
         {
             this.uow = uow;
             this.repository = this.uow.Repository<TEntity>();
-            this.mapper = new Startup().ConfigureServices().GetRequiredService<IMapper>();
+            this.mapper = mapper;
         }
 
         public async Task Add(TDto entity)

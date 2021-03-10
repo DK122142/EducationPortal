@@ -10,7 +10,6 @@ namespace EducationPortal.Prompt
 
         public IServiceProvider ServiceProvider { get; private set; }
         
-        
         public IServiceProvider ConfigureServices()
         {
             var bll = new BLL.Startup();
@@ -18,7 +17,7 @@ namespace EducationPortal.Prompt
 
             this.Services = bll.Services;
 
-            this.Services.AddScoped<AccountController>();
+            this.Services.AddScoped<AuthController>();
             this.Services.AddScoped<MaterialController>();
             
             return this.ServiceProvider = Services.BuildServiceProvider();

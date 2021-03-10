@@ -8,12 +8,12 @@ using EducationPortal.Prompt.Views.Home;
 
 namespace EducationPortal.Prompt.Controllers
 {
-    public class AccountController
+    public class AuthController
     {
         private IAuthService service;
         private IMapper mapper;
 
-        public AccountController(IAuthService service)
+        public AuthController(IAuthService service)
         {
             this.service = service;
             
@@ -22,11 +22,11 @@ namespace EducationPortal.Prompt.Controllers
 
         public async Task Login(AccountModel model)
         {
-            var authAcc = await this.service.Authenticate(model.Login, model.Password);
+            var authAcc = await this.service.Login(model.Login, model.Password);
 
-            if (authAcc != null)
+            if (authAcc.Value != null)
             {
-                SessionStorage.AuthorizedUser = this.mapper.Map<AccountDto, AccountModel>(authAcc);
+                SessionStorage.AuthorizedUser = this.mapper.Map<AccountDto, AccountModel>(authAcc.Value);
             }
 
             IndexPage.View(SessionStorage.AuthorizedUser);
@@ -34,16 +34,17 @@ namespace EducationPortal.Prompt.Controllers
 
         public async Task Register(AccountModel model)
         {
-            var operationDetails = await this.service.RegisterAccount(model.Login, model.Password);
+            var operationDetails = await this.service.Register(model.Login, model.Password);
 
-            if (operationDetails.Succeeded)
+            if (operationDetails.IsSucceeded)
             {
                 await this.Login(model);
             }
         }
 
-        public void Logout()
+        public async Task Logout()
         {
+            await this.service.LogOut();
             SessionStorage.AuthorizedUser = null;
             IndexPage.View(SessionStorage.AuthorizedUser);
         }
