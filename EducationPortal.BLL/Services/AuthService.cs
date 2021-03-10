@@ -55,7 +55,7 @@ namespace EducationPortal.BLL.Services
 
             if (account != null)
             {
-                var result = await this.signInManager.CheckPasswordSignInAsync(account, password, false);
+                var result = await this.signInManager.PasswordSignInAsync(account, password, true, false);
 
                 if (result.Succeeded)
                 {
