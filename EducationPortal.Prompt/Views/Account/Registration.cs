@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
 using EducationPortal.Prompt.Models;
+using EducationPortal.Prompt.ViewModels;
 using EducationPortal.Prompt.Views.Home;
 using EducationPortal.Prompt.Views.Shared.Components;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +32,7 @@ namespace EducationPortal.Prompt.Views.Account
             Console.Write("Input your password: ");
             var password = Console.ReadLine();
             
-            await SessionStorage.ServiceProvider.GetRequiredService<AccountController>().Register(new AccountModel
+            await SessionStorage.ServiceProvider.GetRequiredService<AuthController>().Register(new AuthViewModel
             {
                 Login = login,
                 Password = password

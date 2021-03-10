@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
 using EducationPortal.Prompt.Controllers;
@@ -15,12 +15,24 @@ namespace EducationPortal.Prompt
             // new Start();
 
             var c = SessionStorage.ServiceProvider.GetRequiredService<MaterialController>();
-            await c.Add<ArticleModel, ArticleDto>(new ArticleModel
+            await c.Add<BookModel, BookDto>(new BookModel
             {
                 Name = "another one",
-                Published = DateTime.Now.ToString(),
-                Source = "link.com"
+                PublicationYear = 1984,
+                Source = "abracadabra.com",
+                Authors = new List<string>()
+                {
+                    "first", "second", "third"
+                },
+                Format = "epub",
+                PageCount = 12
             });
+            // await c.Add<ArticleModel, ArticleDto>(new ArticleModel
+            // {
+            //     Name = "another new one",
+            //     Published = DateTime.Now.ToString(),
+            //     Source = "abracadabra.com"
+            // });
         }
     }
 }

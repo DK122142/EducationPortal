@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
 using EducationPortal.Prompt.Controllers;
 using EducationPortal.Prompt.Infrastructure;
@@ -13,7 +14,7 @@ namespace EducationPortal.Prompt.Views.Material.Article
 {
     public class AddArticle : IView
     {
-        public static void View(EntityModel model = default)
+        public static async Task View(EntityModel model = default)
         {
             var clickable = new List<string>
             {
@@ -33,7 +34,7 @@ namespace EducationPortal.Prompt.Views.Material.Article
             Console.Write("Link to article: ");
             var link = Console.ReadLine();
 
-            SessionStorage.ServiceProvider.GetRequiredService<MaterialController>().Add<ArticleModel, ArticleDto>(
+            await SessionStorage.ServiceProvider.GetRequiredService<MaterialController>().Add<ArticleModel, ArticleDto>(
                 new ArticleModel
                 {
                     Id = Guid.NewGuid().ToString(), 
