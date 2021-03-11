@@ -38,7 +38,7 @@ namespace EducationPortal.WEB.MVC
                     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             
-            services.AddIdentity<Account, Role>()
+            services.AddIdentity<Account, IdentityRole>()
                 .AddEntityFrameworkStores<EducationPortalContext>();
 
             

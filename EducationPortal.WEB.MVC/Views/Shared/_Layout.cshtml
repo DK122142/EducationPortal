@@ -26,12 +26,26 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">Registration</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">    
+                                <form method="post" asp-controller="Auth" asp-action="Logout">
+                                    <input type="submit" value="Logout" />
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">Registration</a>
+                            </li>
+                        }
                         @* <li class="nav-item mx-2"> *@
                         @*     <button class="btn btn-info" type="button" asp-area="" asp-controller="Auth" asp-action="Login">Registration</button> *@
                         @* </li> *@

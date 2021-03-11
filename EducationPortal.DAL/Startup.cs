@@ -57,16 +57,16 @@ namespace EducationPortal.DAL
             services.TryAddScoped<IPasswordValidator<Account>, PasswordValidator<Account>>();
             services.TryAddScoped<IPasswordHasher<Account>, PasswordHasher<Account>>();
             services.TryAddScoped<ILookupNormalizer, UpperInvariantLookupNormalizer>();
-            services.TryAddScoped<IRoleValidator<Role>, RoleValidator<Role>>();
+            services.TryAddScoped<IRoleValidator<IdentityRole>, RoleValidator<IdentityRole>>();
             // No interface for the error describer so we can add errors without rev'ing the interface
             services.TryAddScoped<IdentityErrorDescriber>();
             services.TryAddScoped<ISecurityStampValidator, SecurityStampValidator<Account>>();
             services.TryAddScoped<ITwoFactorSecurityStampValidator, TwoFactorSecurityStampValidator<Account>>();
-            services.TryAddScoped<IUserClaimsPrincipalFactory<Account>, UserClaimsPrincipalFactory<Account, Role>>();
+            services.TryAddScoped<IUserClaimsPrincipalFactory<Account>, UserClaimsPrincipalFactory<Account, IdentityRole>>();
             services.TryAddScoped<IUserStore<Account>, UserStore<Account>>();
             services.TryAddScoped<UserManager<Account>>();
             services.TryAddScoped<SignInManager<Account>>();
-            services.TryAddScoped<RoleManager<Role>>();
+            services.TryAddScoped<RoleManager<IdentityRole>>();
 
             services.Configure<IdentityOptions>(options =>
             {

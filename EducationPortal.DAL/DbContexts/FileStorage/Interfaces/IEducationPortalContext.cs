@@ -17,6 +17,6 @@ namespace EducationPortal.DAL.DbContexts.FileStorage.Interfaces
 
         public FSSet<Profile> Profiles { get; set; }
 
-        public FSSet<Role> Roles { get; set; }
+        // public FSSet<Role> Roles { get; set; }
     }
 }

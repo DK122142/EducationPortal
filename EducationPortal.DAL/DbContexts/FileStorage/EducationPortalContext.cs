@@ -15,7 +15,7 @@ namespace EducationPortal.DAL.DbContexts.FileStorage
         public FSSet<Course> Courses { get; set; }
         public FSSet<Skill> Skills { get; set; }
         public FSSet<Profile> Profiles { get; set; }
-        public FSSet<Role> Roles { get; set; }
+        // public FSSet<Role> Roles { get; set; }
 
         public EducationPortalContext(IFileStorageSetInitializer initializer, string storageName = null) : base(initializer, storageName)
         {
