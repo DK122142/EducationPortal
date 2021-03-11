@@ -46,6 +46,7 @@ namespace EducationPortal.BLL.Services
             }
         }
 
+        //TODO update skill level
         public async Task<OperationDetails> CompleteCourse(string userId, string courseId)
         {
             var courseRepository = this.uow.Repository<Course>();

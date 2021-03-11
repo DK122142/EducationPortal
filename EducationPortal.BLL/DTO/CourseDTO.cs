@@ -14,6 +14,6 @@ namespace EducationPortal.BLL.DTO
 
         public IEnumerable<string> MaterialIds { get; set; }
 
-        public IEnumerable<string> SkillNames { get; set; }
+        public IEnumerable<string> SkillIds { get; set; }
     }
 }
