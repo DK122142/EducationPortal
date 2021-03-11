@@ -25,10 +25,10 @@ namespace EducationPortal.Prompt.Controllers
         {
             var authAcc = await this.service.Login(model.Login, model.Password);
 
-            if (authAcc.Value != null)
-            {
-                SessionStorage.AuthorizedUser = this.mapper.Map<AccountDto, AccountModel>(authAcc.Value);
-            }
+            // if (authAcc.Value != null)
+            // {
+            //     SessionStorage.AuthorizedUser = this.mapper.Map<AccountDto, AccountModel>(authAcc.Value);
+            // }
 
             IndexPage.View(SessionStorage.AuthorizedUser);
         }
@@ -37,10 +37,10 @@ namespace EducationPortal.Prompt.Controllers
         {
             var operationDetails = await this.service.Register(model.Login, model.Password);
 
-            if (operationDetails.IsSucceeded)
-            {
-                await this.Login(model);
-            }
+            // if (operationDetails.IsSucceeded)
+            // {
+            //     await this.Login(model);
+            // }
         }
 
         public async Task Logout()

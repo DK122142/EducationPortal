@@ -20,7 +20,7 @@ namespace EducationPortal.Prompt.Views.Account.Profile
                 Menu.Home(Menu.Profile),
                 Menu.LogOut,
                 Menu.Exit,
-                Option.AddArticle,
+                // Option.AddArticle,
                 Option.AddBook,
                 Option.AddVideo,
                 Option.ViewMyMaterials,
@@ -36,7 +36,7 @@ namespace EducationPortal.Prompt.Views.Account.Profile
                 delegate { IndexPage.View(); },
                 delegate { SessionStorage.AuthorizedUser = null; },
                 delegate { Environment.Exit(0); },
-                delegate { AddArticle.View(); },
+                // delegate { AddArticle.View(); },
                 delegate { AddBook.View(); },
                 delegate { AddVideo.View(); },
                 delegate { MaterialsOf.View(SessionStorage.AuthorizedUser); }

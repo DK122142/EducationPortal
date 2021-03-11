@@ -14,6 +14,7 @@ using EducationPortal.DAL.DbContexts;
 using EducationPortal.DAL.Entities;
 using EducationPortal.WEB.MVC.DependencyInjection;
 using EducationPortal.WEB.MVC.Mapping;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EducationPortal.WEB.MVC
@@ -39,6 +40,20 @@ namespace EducationPortal.WEB.MVC
             
             services.AddIdentity<Account, Role>()
                 .AddEntityFrameworkStores<EducationPortalContext>();
+
+            
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequiredUniqueChars = 1;
+
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            });
 
             services.IncludeBLL();
 

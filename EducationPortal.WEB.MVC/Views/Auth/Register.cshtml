@@ -1,0 +1,30 @@
+﻿@model EducationPortal.WEB.MVC.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Registration";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <form method="post" asp-controller="Auth" asp-action="Register">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div>
+            <label asp-for="Login"></label><br />
+            <input asp-for="Login" />
+            <span asp-validation-for="Login"></span>
+        </div>
+        <div>
+            <label asp-for="Password"></label><br />
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div>
+            <label asp-for="ConfirmPassword"></label><br />
+            <input asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword"></span>
+        </div>
+        <div>
+            <input type="submit" value="Register" />
+        </div>
+    </form>
+</div>

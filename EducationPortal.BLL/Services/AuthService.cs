@@ -22,7 +22,7 @@ namespace EducationPortal.BLL.Services
             this.mapper = mapper;
         }
         
-        public async Task<OperationDetails<AccountDto>> Register(string username, string password)
+        public async Task<IdentityResult> Register(string username, string password)
         {
             var account = new Account
             {
@@ -37,42 +37,21 @@ namespace EducationPortal.BLL.Services
             
             account.Profile = profile;
 
-            var result = await this.userManager.CreateAsync(account, password);
-            
-            if (result.Succeeded)
-            {
-                return new OperationDetails<AccountDto>(true, value: this.mapper.Map<AccountDto>(account));
-            }
-            else
-            {
-                return new OperationDetails<AccountDto>(false, property: string.Join(";", result.Errors));
-            }
+            return await this.userManager.CreateAsync(account, password);
         }
 
-        public async Task<OperationDetails<AccountDto>> Login(string username, string password)
+        public async Task<SignInResult> Login(string username, string password, bool rememberMe = false)
         {
             var account = await this.userManager.FindByNameAsync(username);
 
             if (account != null)
             {
-                var result = await this.signInManager.PasswordSignInAsync(account, password, true, false);
-
-                if (result.Succeeded)
-                {
-                    return new OperationDetails<AccountDto>(true, value: new AccountDto
-                    {
-                        Login = account.UserName,
-                        ProfileId = account.Profile.Id
-                    });
-                }
+                return await this.signInManager.PasswordSignInAsync(account, password, rememberMe, false);
             }
 
             return default;
         }
 
-        public async Task LogOut()
-        {
-            await this.signInManager.SignOutAsync();
-        }
+        public async Task LogOut() => await this.signInManager.SignOutAsync();
     }
 }

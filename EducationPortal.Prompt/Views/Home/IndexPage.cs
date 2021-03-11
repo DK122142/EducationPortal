@@ -27,13 +27,13 @@ namespace EducationPortal.Prompt.Views.Home
             {
                 clickable.AddRange(new []
                 {
-                    Menu.Login,
+                    // Menu.Login,
                     Menu.Registration,
                 });
 
                 actions.AddRange(new Action[]
                 {
-                    delegate { Login.View(); },
+                    // delegate { Login.View(); },
                     delegate { Registration.View(); }
                 });
             }
