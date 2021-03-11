@@ -1,0 +1,20 @@
+﻿@model EducationPortal.WEB.MVC.ViewModels.UserViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+<h1>@ViewData["Title"]</h1>
+<h3>@Model.Profile.Name</h3>
+
+<div>
+    <div>
+        <div>
+            <form method="post" asp-controller="User" asp-action="CreateCourse">
+                <div>
+                    <input type="submit" value="Create new course" class="btn btn-secondary"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Infrastructure;
+using EducationPortal.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace EducationPortal.BLL.Interfaces
 {

@@ -28,22 +28,28 @@
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@User.Identity.Name</a>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile">@User.Identity.Name</a>
                             </li>
-                            <li class="nav-item">    
+                            <li class="nav-item mx-2">
                                 <form method="post" asp-controller="Auth" asp-action="Logout">
-                                    <input type="submit" value="Logout" />
+                                    <input type="submit" value="Logout" class="btn btn-outline-danger" />
                                 </form>
                             </li>
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                            <li class="nav-item mx-2">
+                                <form method="post" asp-controller="Auth" asp-action="Login">
+                                    <input type="submit" value="LogIn" class="btn btn-primary" />
+                                </form>
+                                @* <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a> *@
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">Registration</a>
+                            <li class="nav-item mx-2">
+                                <form method="post" asp-controller="Auth" asp-action="Register">
+                                    <input type="submit" value="Register" class="btn btn-outline-primary" />
+                                </form>
+                                @* <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">Registration</a> *@
                             </li>
                         }
                         @* <li class="nav-item mx-2"> *@
