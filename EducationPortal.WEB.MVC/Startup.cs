@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper.Extensions.ExpressionMapping;
+using EducationPortal.WEB.MVC.Mapping;
 
 namespace EducationPortal.WEB.MVC
 {
@@ -23,6 +25,17 @@ namespace EducationPortal.WEB.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var bll = new BLL.Startup();
+            bll.ConfigureServices();
+
+            services.ToList().AddRange(bll.Services);
+
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<MappingProfile>();
+                cfg.AddExpressionMapping();
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -44,6 +57,7 @@ namespace EducationPortal.WEB.MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
