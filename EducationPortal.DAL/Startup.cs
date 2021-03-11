@@ -35,7 +35,12 @@ namespace EducationPortal.DAL
             this.Services = new ServiceCollection();
 
             this.Services.AddDbContext<EducationPortalContext>(
-                options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
+                options =>
+                {
+                    options
+                        .UseLazyLoadingProxies()
+                        .UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
+                });
             
             this.Services.AddIdentityCore<Account>()
                 .AddEntityFrameworkStores<EducationPortalContext>();
