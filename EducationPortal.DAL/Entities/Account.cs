@@ -1,17 +1,10 @@
-﻿using System;
+﻿using EducationPortal.DAL.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace EducationPortal.DAL.Entities
 {
-    public class Account : Entity
+    public class Account : IdentityUser, IEntity
     {
-        public string Login { get; set; }
-        
-        public string Password { get; set; }
-
-        // Profile
-        public Guid Profile { get; set; }
-
-        // Role
-        public Guid Role { get; set; }
+        public virtual Profile Profile { get; set; }
     }
 }

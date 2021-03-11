@@ -2,15 +2,15 @@
 {
     public class OperationDetails
     {
-        public bool Succeeded { get; }
+        public bool IsSucceeded { get; }
 
         public string Message { get; }
 
         public string Property { get; }
 
-        public OperationDetails(bool succeeded, string message, string property)
+        public OperationDetails(bool isSucceeded, string message = "", string property = "")
         {
-            this.Succeeded = succeeded;
+            this.IsSucceeded = isSucceeded;
             this.Message = message;
             this.Property = property;
         }

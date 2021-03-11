@@ -1,21 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Entities
 {
-    public class Course : Entity
+    public class Course : IEntity
     {
-        // Changed illogical inheritance from Material
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
+        
+        public virtual Profile Creator { get; set; }
+        
+        public virtual IList<Material> Materials { get; set; }
+        
+        public virtual ICollection<Skill> Skills { get; set; }
 
-        public Guid Owner { get; set; }
+        public virtual IList<Profile> JoinedProfiles { get; set; }
 
-        // List<Material>
-        public List<Guid> Materials { get; set; }
-
-        // List<Skill>
-        public List<Guid> Skills { get; set; }
+        public virtual IList<Profile> CompletedProfiles { get; set; }
     }
 }

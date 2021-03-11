@@ -1,11 +1,7 @@
-﻿using System;
-
-namespace EducationPortal.BLL.DTO
+﻿namespace EducationPortal.BLL.DTO
 {
-    public class ArticleDTO : MaterialDTO
+    public class ArticleDto : MaterialDto
     {
-        public DateTime Published { get; set; }
-
-        public override string MaterialType => "Article";
+        public string Published { get; set; }
     }
 }

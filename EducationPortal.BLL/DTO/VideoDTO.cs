@@ -1,11 +1,9 @@
 ﻿namespace EducationPortal.BLL.DTO
 {
-    public class VideoDTO : MaterialDTO
+    public class VideoDto : MaterialDto
     {
         public string Duration { get; set; }
 
         public string Quality { get; set; }
-
-        public override string MaterialType => "Video";
     }
 }

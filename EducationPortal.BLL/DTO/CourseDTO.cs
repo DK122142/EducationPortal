@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace EducationPortal.BLL.DTO
 {
-    public class CourseDTO : EntityDTO
+    public class CourseDto
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public Guid Owner { get; set; }
+        public string CreatorId { get; set; }
 
-        // List<Material>
-        public List<Guid> Materials { get; set; }
+        public IEnumerable<string> MaterialIds { get; set; }
 
-        // List<Skill>
-        public List<Guid> Skills { get; set; }
+        public IEnumerable<string> SkillIds { get; set; }
     }
 }

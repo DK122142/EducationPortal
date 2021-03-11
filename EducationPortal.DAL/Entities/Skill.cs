@@ -1,9 +1,18 @@
-﻿namespace EducationPortal.DAL.Entities
+﻿using System.Collections.Generic;
+using EducationPortal.DAL.Interfaces;
+
+namespace EducationPortal.DAL.Entities
 {
-    public class Skill : Entity
+    public class Skill : IEntity
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public virtual IList<ProfileSkill> ProfileSkills { get; set; }
+
+        public virtual IEnumerable<Course> Courses { get; set; }
     }
 }

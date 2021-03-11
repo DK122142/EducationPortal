@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace EducationPortal.Prompt.Models
 {
@@ -7,12 +6,10 @@ namespace EducationPortal.Prompt.Models
     {
         public int PageCount { get; set; }
 
-        public List<string> Authors { get; set; }
+        public IEnumerable<string> Authors { get; set; }
 
         public string Format { get; set; }
         
-        public DateTime Published { get; set; }
-
-        public override string MaterialType => "Book";
+        public int PublicationYear { get; set; }
     }
 }

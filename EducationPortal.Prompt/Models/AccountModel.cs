@@ -1,15 +1,9 @@
-﻿using System;
-
-namespace EducationPortal.Prompt.Models
+﻿namespace EducationPortal.Prompt.Models
 {
-    public class AccountModel : EntityModel
+    public class AccountModel
     {
         public string Login { get; set; }
-        
-        public string Password { get; set; }
-        
-        public Guid Profile { get; set; }
 
-        public Guid Role { get; set; }
+        public string ProfileId { get; set; }
     }
 }

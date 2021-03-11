@@ -1,75 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
 using EducationPortal.Prompt.Infrastructure;
+using EducationPortal.Prompt.Interfaces;
 using EducationPortal.Prompt.Models;
-using EducationPortal.Prompt.Views.Account;
-using EducationPortal.Prompt.Views.Shared;
+using EducationPortal.Prompt.Views.Home;
+using EducationPortal.Prompt.Views.Shared.Components;
 
 namespace EducationPortal.Prompt.Views.Material.Video
 {
-    public static class AddVideo
+    public class AddVideo : IView
     {
-        public static void Show(string msg = null)
+        public static void View(EntityModel model = default)
         {
-            string name;
-            string link;
-            string duration = "test";
-            string quality = "test";
-            
-            Console.Clear();
-            Header.Show();
-            
-            if (msg != null)
+            var clickable = new List<string>
             {
-                Console.WriteLine("========");
-                Console.WriteLine($"message: {msg}");
-                Console.WriteLine("========");
-            }
+                Menu.Home(Option.AddVideo),
+            };
 
-            Console.WriteLine("(2)Add new video \n" +
-                              "(3)Profile \n" +
-                              "(4)Log Out. \n" +
-                              "(5)Exit");
-
-            int.TryParse(Console.ReadLine(), out var option);
-
-            Console.Clear();
-
-            switch (option)
+            var actions = new List<Action>
             {
-                case 2:
-                    Console.WriteLine("Input video name: ");
-                    name = Console.ReadLine();
+                delegate { IndexPage.View(); },
+            };
+            
+            ClickableElements.Show(clickable, actions);
 
-                    Console.WriteLine("Input video link: ");
-                    link = Console.ReadLine();
+            Console.Write("Input video name: ");
+            var name = Console.ReadLine();
+            
+            Console.Write("Input video link: ");
+            var link = Console.ReadLine();
 
-                    SessionProvider.VideoController.AddVideo(new VideoModel
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = name,
-                        Owner = SessionProvider.AuthorizedUser.Id,
-                        Source = link,
-                        Duration = duration,
-                        Quality = quality
-                    });
-                    break;
-                case 3:
-                    Profile.Show();
-                    break;
-                case 4:
-                    SessionProvider.AuthorizedUser = null;
-                    break;
-                case 5:
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.WriteLine("Wrong option");
-                    break;
-            }
+            Console.Write("Input video duration: ");
+            var duration = Console.ReadLine();
 
-            Console.Clear();
-
-            Home.Home.Show();
+            Console.Write("Input video quality: ");
+            var quality = Console.ReadLine();
+                  
+            // Startup.ServiceProvider.GetRequiredService<VideoController>().AddVideo(
+            //     new VideoModel
+            //     {
+            //         Id = string.Newstring(),
+            //         Duration = duration,
+            //         Name = name,
+            //         OwnerId = SessionStorage.AuthorizedUser.Id,
+            //         Quality = quality,
+            //         Source = link
+            //     });
         }
     }
 }

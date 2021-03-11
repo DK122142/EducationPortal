@@ -1,9 +1,9 @@
-﻿namespace EducationPortal.DAL.Entities
-{
-    public class Role : Entity
-    {
-        public string Name { get; set; }
+﻿using EducationPortal.DAL.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
-        public string Description { get; set; }
+namespace EducationPortal.DAL.Entities
+{
+    public class Role : IdentityRole, IEntity
+    {
     }
 }
