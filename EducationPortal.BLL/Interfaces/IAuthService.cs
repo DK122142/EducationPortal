@@ -1,6 +1,4 @@
 ﻿using System.Threading.Tasks;
-using EducationPortal.BLL.DTO;
-using EducationPortal.BLL.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 
 namespace EducationPortal.BLL.Interfaces

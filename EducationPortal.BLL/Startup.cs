@@ -3,7 +3,6 @@ using AutoMapper.Extensions.ExpressionMapping;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.BLL.Mapping;
 using EducationPortal.BLL.Services;
-using EducationPortal.DAL;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.BLL

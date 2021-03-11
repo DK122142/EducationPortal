@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EducationPortal.DAL.Interfaces;
+﻿using EducationPortal.DAL.Interfaces;
 using EducationPortal.DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 

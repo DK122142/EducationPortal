@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
@@ -9,7 +7,6 @@ using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using Profile = EducationPortal.DAL.Entities.Profile;
 
 namespace EducationPortal.BLL.Services

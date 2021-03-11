@@ -1,5 +1,3 @@
-using System;
-
 namespace EducationPortal.WEB.MVC.Models
 {
     public class ErrorViewModel
