@@ -11,7 +11,7 @@ namespace EducationPortal.Prompt.Views.Home
 {
     public class IndexPage : IView
     {
-        public static void View(EntityModel model = default)
+        public static void View(AccountModel model = default)
         {
             var clickable = new List<string>
             {

@@ -1,6 +1,6 @@
 ﻿namespace EducationPortal.Prompt.Models
 {
-    public class AccountModel : EntityModel
+    public class AccountModel
     {
         public string Login { get; set; }
 
