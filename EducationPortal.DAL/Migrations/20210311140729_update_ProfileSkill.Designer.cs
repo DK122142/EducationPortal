@@ -4,14 +4,16 @@ using EducationPortal.DAL.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EducationPortal.DAL.Migrations
 {
     [DbContext(typeof(EducationPortalContext))]
-    partial class EducationPortalContextModelSnapshot : ModelSnapshot
+    [Migration("20210311140729_update_ProfileSkill")]
+    partial class update_ProfileSkill
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
