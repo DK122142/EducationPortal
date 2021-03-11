@@ -14,56 +14,61 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace EducationPortal.DAL
 {
-    public class Startup
+    public static class Startup
     {
-        public IServiceCollection Services { get; private set; }
+        public static IServiceProvider ServiceProvider { get; private set; }
 
-        public IServiceProvider ServiceProvider { get; private set; }
-
-        public IConfiguration Configuration { get; }
+        public static IConfiguration Configuration { get; }
         
-        public Startup()
+        static Startup()
         {
-            this.Configuration = new ConfigurationBuilder()
+            Configuration = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory()))
                 .AddJsonFile("appsettings.json")
                 .Build();
         }
 
-        public IServiceProvider ConfigureServices()
+        public static IServiceProvider ConfigureServices()
         {
-            this.Services = new ServiceCollection();
+            IServiceCollection services = new ServiceCollection();
 
-            this.Services.AddDbContext<EducationPortalContext>(
+            services.IncludeServices();
+
+            return ServiceProvider = services.BuildServiceProvider();
+        }
+
+        public static void IncludeServices(this IServiceCollection services)
+        {
+            services.AddDbContext<EducationPortalContext>(
                 options =>
                 {
                     options
                         .UseLazyLoadingProxies()
-                        .UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
+                        .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 });
             
-            this.Services.AddIdentityCore<Account>()
+            services.AddIdentityCore<Account>()
                 .AddEntityFrameworkStores<EducationPortalContext>();
 
-            this.Services.AddHttpContextAccessor();
-            this.Services.TryAddScoped<IAuthenticationSchemeProvider, AuthenticationSchemeProvider>();
+            services.AddHttpContextAccessor();
+            services.TryAddScoped<IAuthenticationSchemeProvider, AuthenticationSchemeProvider>();
             // Identity services
-            this.Services.TryAddScoped<IUserValidator<Account>, UserValidator<Account>>();
-            this.Services.TryAddScoped<IPasswordValidator<Account>, PasswordValidator<Account>>();
-            this.Services.TryAddScoped<IPasswordHasher<Account>, PasswordHasher<Account>>();
-            this.Services.TryAddScoped<ILookupNormalizer, UpperInvariantLookupNormalizer>();
-            this.Services.TryAddScoped<IRoleValidator<Role>, RoleValidator<Role>>();
+            services.TryAddScoped<IUserValidator<Account>, UserValidator<Account>>();
+            services.TryAddScoped<IPasswordValidator<Account>, PasswordValidator<Account>>();
+            services.TryAddScoped<IPasswordHasher<Account>, PasswordHasher<Account>>();
+            services.TryAddScoped<ILookupNormalizer, UpperInvariantLookupNormalizer>();
+            services.TryAddScoped<IRoleValidator<Role>, RoleValidator<Role>>();
             // No interface for the error describer so we can add errors without rev'ing the interface
-            this.Services.TryAddScoped<IdentityErrorDescriber>();
-            this.Services.TryAddScoped<ISecurityStampValidator, SecurityStampValidator<Account>>();
-            this.Services.TryAddScoped<ITwoFactorSecurityStampValidator, TwoFactorSecurityStampValidator<Account>>();
-            this.Services.TryAddScoped<IUserClaimsPrincipalFactory<Account>, UserClaimsPrincipalFactory<Account, Role>>();
-            this.Services.TryAddScoped<IUserStore<Account>, UserStore<Account>>();
-            this.Services.TryAddScoped<UserManager<Account>>();
-            this.Services.TryAddScoped<SignInManager<Account>>();
-            this.Services.TryAddScoped<RoleManager<Role>>();
+            services.TryAddScoped<IdentityErrorDescriber>();
+            services.TryAddScoped<ISecurityStampValidator, SecurityStampValidator<Account>>();
+            services.TryAddScoped<ITwoFactorSecurityStampValidator, TwoFactorSecurityStampValidator<Account>>();
+            services.TryAddScoped<IUserClaimsPrincipalFactory<Account>, UserClaimsPrincipalFactory<Account, Role>>();
+            services.TryAddScoped<IUserStore<Account>, UserStore<Account>>();
+            services.TryAddScoped<UserManager<Account>>();
+            services.TryAddScoped<SignInManager<Account>>();
+            services.TryAddScoped<RoleManager<Role>>();
 
-            this.Services.Configure<IdentityOptions>(options =>
+            services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -76,11 +81,7 @@ namespace EducationPortal.DAL
                 options.SignIn.RequireConfirmedPhoneNumber = false;
             });
 
-            // this.Services.AddScoped<IRepository<Article>, Repository<Article>>();
-            // this.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            this.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            return this.ServiceProvider = this.Services.BuildServiceProvider();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
     }
 }

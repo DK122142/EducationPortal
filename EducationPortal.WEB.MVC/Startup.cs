@@ -9,7 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper.Extensions.ExpressionMapping;
+using EducationPortal.BLL;
+using EducationPortal.DAL.DbContexts;
+using EducationPortal.DAL.Entities;
+using EducationPortal.WEB.MVC.DependencyInjection;
 using EducationPortal.WEB.MVC.Mapping;
+using Microsoft.EntityFrameworkCore;
 
 namespace EducationPortal.WEB.MVC
 {
@@ -25,14 +30,21 @@ namespace EducationPortal.WEB.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var bll = new BLL.Startup();
-            bll.ConfigureServices();
+            services.AddDbContext<EducationPortalContext>(opt =>
+            {
+                opt
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            
+            services.AddIdentity<Account, Role>()
+                .AddEntityFrameworkStores<EducationPortalContext>();
 
-            services.ToList().AddRange(bll.Services);
+            services.IncludeBLL();
 
             services.AddAutoMapper(cfg =>
             {
-                cfg.AddProfile<MappingProfile>();
+                cfg.AddProfile<ModelMappingProfile>();
                 cfg.AddExpressionMapping();
             });
 

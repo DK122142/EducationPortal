@@ -14,10 +14,10 @@ namespace EducationPortal.Prompt
         
         public IServiceProvider ConfigureServices()
         {
-            var bll = new BLL.Startup();
-            bll.ConfigureServices();
-
-            this.Services = bll.Services;
+        //     var bll = new BLL.Startup();
+        //     bll.ConfigureServices();
+        //
+        //     this.Services = bll.Services;
 
             this.Services.AddAutoMapper(cfg =>
             {

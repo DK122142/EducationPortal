@@ -4,9 +4,9 @@ using EducationPortal.WEB.MVC.Models;
 
 namespace EducationPortal.WEB.MVC.Mapping
 {
-    public class MappingProfile : Profile
+    public class ModelMappingProfile : Profile
     {
-        public MappingProfile()
+        public ModelMappingProfile()
         {
             CreateMap<ProfileDto, ProfileModel>().ReverseMap();
 

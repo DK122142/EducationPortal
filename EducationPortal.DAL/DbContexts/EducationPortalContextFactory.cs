@@ -11,7 +11,7 @@ namespace EducationPortal.DAL.DbContexts
         {
             var optionsBuilder = new DbContextOptionsBuilder<EducationPortalContext>();
 
-            var connectionString = new Startup().Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = Startup.Configuration.GetConnectionString("DefaultConnection");
 
             optionsBuilder.UseSqlServer(connectionString,
                 opts => opts.CommandTimeout((int) TimeSpan.FromMinutes(10).TotalSeconds));

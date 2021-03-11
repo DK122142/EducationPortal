@@ -13,7 +13,7 @@ namespace EducationPortal.BLL.Services
 {
     public class UserService : Service<Profile, ProfileDto>, IUserService
     {
-        public UserService(IUnitOfWork uow, IMapper mapper, IUserService userService) : base(uow, mapper)
+        public UserService(IUnitOfWork uow, IMapper mapper) : base(uow, mapper)
         {
         }
 

@@ -4,9 +4,9 @@ using EducationPortal.DAL.Entities;
 
 namespace EducationPortal.BLL.Mapping
 {
-    public class MappingProfile : AutoMapper.Profile
+    public class DtoMappingProfile : AutoMapper.Profile
     {
-        public MappingProfile()
+        public DtoMappingProfile()
         {
             CreateMap<Account, AccountDto>()
                 .ForMember(a => a.Login, c => c.MapFrom(a => a.UserName))

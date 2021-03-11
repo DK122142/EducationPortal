@@ -1,29 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using AutoMapper.Extensions.ExpressionMapping;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.BLL.Mapping;
 using EducationPortal.BLL.Services;
-using EducationPortal.DAL;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EducationPortal.BLL
+namespace EducationPortal.WEB.MVC.DependencyInjection
 {
-    public static class Startup
+    public static class BLL
     {
-        public static IServiceProvider ServiceProvider { get; private set; }
-
-        public static IServiceProvider ConfigureServices()
+        public static void IncludeBLL(this IServiceCollection services)
         {
-            IServiceCollection services = new ServiceCollection();
-            
-            services.IncludeServices();
-
-            return ServiceProvider = services.BuildServiceProvider();
-        }
-
-        public static void IncludeServices(this IServiceCollection services)
-        {
-            DAL.Startup.IncludeServices(services);
+            services.IncludeDAL();
 
             services.AddAutoMapper(mc =>
             {
