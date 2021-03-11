@@ -37,10 +37,15 @@ namespace EducationPortal.BLL.Mapping
                 .ForMember(c => c.SkillIds, conf => conf.MapFrom(c => c.Skills.Select(s => s.Id)))
                 .ReverseMap();
 
-            CreateMap<Skill, SkillDto>();
+            CreateMap<Skill, SkillDto>()
+                // .ForMember(s => s.Name, c => c.MapFrom(s => s.Name))
+                // .ForMember(s => s.Description, c => c.MapFrom(s => s.Description))
+                .ReverseMap();
+
 
             CreateMap<ProfileSkill, ProfileSkillDto>()
-                .ForMember(ps => ps.SkillName, c => c.MapFrom(ps => ps.Skill.Name));
+                .ForMember(ps => ps.SkillName, c => c.MapFrom(ps => ps.Skill.Name))
+                .ReverseMap();
         }
     }
 }

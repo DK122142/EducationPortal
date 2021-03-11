@@ -27,5 +27,7 @@ namespace EducationPortal.DAL.Interfaces
         IQueryable<T> Where(Expression<Func<T, bool>> expression);
 
         Task<IEnumerable<T>> GetPage(int skip, int take);
+
+        Task<int> TotalCount();
     }
 }

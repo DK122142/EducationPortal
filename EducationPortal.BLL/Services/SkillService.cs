@@ -8,7 +8,7 @@ namespace EducationPortal.BLL.Services
 {
     public class SkillService : Service<Skill, SkillDto>, ISkillService
     {
-        protected SkillService(IUnitOfWork uow, IMapper mapper) : base(uow, mapper)
+        public SkillService(IUnitOfWork uow, IMapper mapper) : base(uow, mapper)
         {
         }
     }

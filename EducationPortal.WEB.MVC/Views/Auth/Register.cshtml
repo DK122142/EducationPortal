@@ -9,22 +9,22 @@
     <form method="post" asp-controller="Auth" asp-action="Register">
         <div asp-validation-summary="ModelOnly"></div>
         <div>
-            <label asp-for="Login"></label><br />
-            <input asp-for="Login" />
-            <span asp-validation-for="Login"></span>
+            <label asp-for="Login" class="control-label"></label>
+            <input asp-for="Login" class="form-control" />
+            <span asp-validation-for="Login" class="text-danger"></span>
         </div>
         <div>
-            <label asp-for="Password"></label><br />
-            <input asp-for="Password" />
-            <span asp-validation-for="Password"></span>
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <div>
-            <label asp-for="ConfirmPassword"></label><br />
-            <input asp-for="ConfirmPassword" />
-            <span asp-validation-for="ConfirmPassword"></span>
+            <label asp-for="ConfirmPassword" class="control-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
         <div>
-            <input type="submit" value="Register" class="btn btn-primary"/>
+            <input type="submit" value="Register" class="btn btn-primary" />
         </div>
     </form>
 </div>

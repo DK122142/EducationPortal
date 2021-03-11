@@ -7,13 +7,29 @@
 <h3>@Model.Profile.Name</h3>
 
 <div>
-    <div>
-        <div>
-            <form method="post" asp-controller="User" asp-action="CreateCourse">
-                <div>
-                    <input type="submit" value="Create new course" class="btn btn-secondary"/>
-                </div>
-            </form>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form method="post" asp-controller="Course" asp-action="Create">
+                    <div>
+                        <input type="submit" value="Create course" class="btn btn-secondary" />
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <form method="post" asp-controller="Material" asp-action="Create">
+                    <div>
+                        <input type="submit" value="Add material" class="btn btn-secondary" />
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <form method="get" asp-controller="Skill" asp-action="Create">
+                    <div>
+                        <input type="submit" value="Add skill" class="btn btn-secondary" />
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

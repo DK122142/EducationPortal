@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -35,5 +32,14 @@ namespace EducationPortal.WEB.MVC.Controllers
                 Profile = this.mapper.Map<ProfileModel>(profile)
             });
         }
+        
+        [HttpPost]
+        public IActionResult CreateCourse() => RedirectToAction("Create", "Course");
+        
+        [HttpPost]
+        public IActionResult AddMaterial() => RedirectToAction("Create", "Material");
+        
+        [HttpPost]
+        public IActionResult CreateSkill() => RedirectToAction("Create", "Skill");
     }
 }

@@ -18,10 +18,11 @@ namespace EducationPortal.WEB.MVC.DependencyInjection
                 mc.AddExpressionMapping();
             });
 
-            services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<IMaterialService, MaterialService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<ICourseService, CourseService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IMaterialService, MaterialService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ISkillService, SkillService>();
         }
     }
 }

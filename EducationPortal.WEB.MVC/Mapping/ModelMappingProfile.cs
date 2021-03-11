@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EducationPortal.BLL.DTO;
 using EducationPortal.WEB.MVC.Models;
+using EducationPortal.WEB.MVC.ViewModels;
 
 namespace EducationPortal.WEB.MVC.Mapping
 {
@@ -21,8 +22,9 @@ namespace EducationPortal.WEB.MVC.Mapping
             CreateMap<VideoDto, VideoModel>().ReverseMap();
 
             CreateMap<CourseDto, CourseModel>().ReverseMap();
-
+            
             CreateMap<SkillDto, SkillModel>().ReverseMap();
+            CreateMap<SkillDto, SkillViewModel>().ReverseMap();
 
             CreateMap<ProfileSkillDto, ProfileSkillModel>().ReverseMap();
         }
