@@ -7,6 +7,6 @@ namespace EducationPortal.DAL.Interfaces
     {
         IRepository<T> Repository<T>() where T : class, IEntity;
 
-        Task Commit();
+        Task<int> Commit();
     }
 }

@@ -25,5 +25,7 @@ namespace EducationPortal.DAL.Interfaces
         void Delete(IEnumerable<T> entities);
 
         IQueryable<T> Where(Expression<Func<T, bool>> expression);
+
+        Task<IEnumerable<T>> GetPage(int skip, int take);
     }
 }

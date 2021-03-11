@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace EducationPortal.Prompt.Models
+﻿namespace EducationPortal.Prompt.Models
 {
     public class ProfileModel
     {

@@ -35,5 +35,7 @@ namespace EducationPortal.DAL.Repositories
         public void Delete(IEnumerable<T> entities) => this.table.RemoveRange(entities);
 
         public IQueryable<T> Where(Expression<Func<T, bool>> expression) => this.table.Where(expression);
+
+        public async Task<IEnumerable<T>> GetPage(int skip, int take) => await this.table.Skip(skip).Take(take).ToListAsync();
     }
 }

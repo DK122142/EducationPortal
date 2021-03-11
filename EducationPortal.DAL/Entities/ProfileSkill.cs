@@ -1,12 +1,14 @@
-﻿namespace EducationPortal.DAL.Entities
+﻿using EducationPortal.DAL.Interfaces;
+
+namespace EducationPortal.DAL.Entities
 {
-    public class ProfileSkill
+    public class ProfileSkill : IEntity
     {
         public string ProfileId { get; set; }
 
         public virtual Profile Profile { get; set; }
 
-        public string SkillId { get; set; }
+        public string Id { get; set; }
 
         public virtual Skill Skill { get; set; }
 

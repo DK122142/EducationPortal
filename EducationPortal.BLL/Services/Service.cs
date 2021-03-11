@@ -13,9 +13,9 @@ namespace EducationPortal.BLL.Services
         where TEntity : class, IEntity, new()
         where TDto : class, new()
     {
-        private readonly IUnitOfWork uow;
-        private readonly IRepository<TEntity> repository;
-        private readonly IMapper mapper;
+        protected readonly IUnitOfWork uow;
+        protected readonly IRepository<TEntity> repository;
+        protected readonly IMapper mapper;
 
         protected Service(IUnitOfWork uow, IMapper mapper)
         {
@@ -77,10 +77,11 @@ namespace EducationPortal.BLL.Services
             this.uow.Commit();
         }
 
-        public IQueryable<TDto> Where(Expression<Func<TDto, bool>> expression)
-        {
-            return this.mapper.Map<IQueryable<TDto>>(
+        public IQueryable<TDto> Where(Expression<Func<TDto, bool>> expression) =>
+            this.mapper.Map<IQueryable<TDto>>(
                 this.repository.Where(this.mapper.Map<Expression<Func<TEntity, bool>>>(expression)));
-        }
+
+        public async Task<IEnumerable<TDto>> GetPage(int skip, int take) =>
+            this.mapper.Map<IEnumerable<TDto>>(await this.repository.GetPage(skip, take));
     }
 }

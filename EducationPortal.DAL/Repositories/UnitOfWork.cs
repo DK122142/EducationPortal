@@ -12,7 +12,7 @@ namespace EducationPortal.DAL.Repositories
 
         public IRepository<T> Repository<T>() where T : class, IEntity => new Repository<T>(this.context);
 
-        public async Task Commit() => await this.context.SaveChangesAsync();
+        public async Task<int> Commit() => await this.context.SaveChangesAsync();
 
         public void Dispose() => this.context.Dispose();
     }
