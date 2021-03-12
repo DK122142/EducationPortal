@@ -37,7 +37,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         public IActionResult CreateCourse() => RedirectToAction("Create", "Course");
         
         [HttpPost]
-        public IActionResult AddMaterial() => RedirectToAction("Create", "Material");
+        public IActionResult AddMaterial() => RedirectToAction("Index", "Material");
         
         [HttpPost]
         public IActionResult CreateSkill() => RedirectToAction("Create", "Skill");

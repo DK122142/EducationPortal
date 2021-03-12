@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EducationPortal.WEB.MVC.Models
+namespace EducationPortal.WEB.MVC.ViewModels
 {
-    public class CourseModel
+    public class CourseViewModel
     {
         public string Id { get; set; }
 

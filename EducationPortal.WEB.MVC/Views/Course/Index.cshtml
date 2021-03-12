@@ -1,1 +1,36 @@
-﻿
+﻿@model EducationPortal.WEB.MVC.ViewModels.IndexCoursesViewModel
+
+@addTagHelper *, EducationPortal.WEB.MVC
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            <div class="my-2">
+                <form method="get" asp-controller="Course" asp-action="Create">
+                    <div>
+                        <input type="submit" value="Create new skill" class="btn btn-secondary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+    <div>
+        <table class="table">
+            <tr><th>Name</th><th>Description</th></tr>
+            @foreach (var item in Model.Courses)
+            {
+                <tr><td>@item.Name</td><td>@item.Description</td></tr>
+            }
+        </table>
+    </div>
+    <div>
+        <page-link page-model="Model.PageViewModel" page-action="Index"></page-link>
+    </div>
+</div>
