@@ -1,1 +1,48 @@
-﻿
+﻿@model EducationPortal.WEB.MVC.ViewModels.BookViewModel
+
+@{
+    ViewData["Title"] = "Create book";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <div>
+        <form asp-action="CreateBook">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Source" class="control-label"></label>
+                <input asp-for="Source" class="form-control" />
+                <span asp-validation-for="Source" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="PublicationYear" class="control-label"></label>
+                <input asp-for="PublicationYear" class="form-control" />
+                <span asp-validation-for="PublicationYear" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="PageCount" class="control-label"></label>
+                <input asp-for="PageCount" class="form-control" />
+                <span asp-validation-for="PageCount" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Format" class="control-label"></label>
+                <input asp-for="Format" class="form-control" />
+                <span asp-validation-for="Format" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Authors" class="control-label"></label>
+                <input asp-for="Authors" class="form-control" />
+                <span asp-validation-for="Authors" class="text-danger"></span>
+            </div>
+            <div>
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>

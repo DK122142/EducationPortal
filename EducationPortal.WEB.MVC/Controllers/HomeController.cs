@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using EducationPortal.WEB.MVC.ViewModels;
 
 namespace EducationPortal.WEB.MVC.Controllers
 {

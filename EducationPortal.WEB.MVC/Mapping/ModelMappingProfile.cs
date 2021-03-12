@@ -10,7 +10,7 @@ namespace EducationPortal.WEB.MVC.Mapping
         public ModelMappingProfile()
         {
             CreateMap<ProfileDto, ProfileModel>().ReverseMap();
-
+            
             CreateMap<MaterialDto, MaterialModel>()
                 .Include<ArticleDto, ArticleModel>()
                 .Include<BookDto, BookModel>()
@@ -20,6 +20,16 @@ namespace EducationPortal.WEB.MVC.Mapping
             CreateMap<ArticleDto, ArticleModel>().ReverseMap();
             CreateMap<BookDto, BookModel>().ReverseMap();
             CreateMap<VideoDto, VideoModel>().ReverseMap();
+
+            CreateMap<MaterialDto, MaterialViewModel>()
+                .Include<ArticleDto, ArticleViewModel>()
+                .Include<BookDto, BookViewModel>()
+                .Include<VideoDto, VideoViewModel>()
+                .ReverseMap();
+            
+            CreateMap<ArticleDto, ArticleViewModel>().ReverseMap();
+            CreateMap<BookDto, BookViewModel>().ReverseMap();
+            CreateMap<VideoDto, VideoViewModel>().ReverseMap();
 
             CreateMap<CourseDto, CourseModel>().ReverseMap();
             

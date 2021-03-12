@@ -1,1 +1,54 @@
-﻿
+﻿@model EducationPortal.WEB.MVC.ViewModels.IndexMaterialsViewModel
+
+@addTagHelper *, EducationPortal.WEB.MVC
+
+@{
+    ViewData["Title"] = "Materials";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            <div class="container m-2">
+                <div class="row">
+                    <div class="col">
+                        <form method="get" asp-controller="Material" asp-action="CreateArticle">
+                            <div>
+                                <input type="submit" value="Add article" class="btn btn-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form method="get" asp-controller="Material" asp-action="CreateBook">
+                            <div>
+                                <input type="submit" value="Add book" class="btn btn-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form method="get" asp-controller="Material" asp-action="CreateVideo">
+                            <div>
+                                <input type="submit" value="Add video" class="btn btn-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        <table class="table">
+            <tr><th>Name</th><th>Type</th><th>Link</th></tr>
+            @foreach (var item in Model.Materials)
+            {
+                <tr><td>@item.Name</td><td>@item.Discriminator</td><td>@item.Source</td></tr>
+            }
+        </table>
+    </div>
+    <div>
+        <page-link page-model="Model.PageViewModel" page-action="Index"></page-link>
+    </div>
+</div>
