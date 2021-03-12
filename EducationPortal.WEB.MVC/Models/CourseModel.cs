@@ -10,7 +10,7 @@ namespace EducationPortal.WEB.MVC.Models
 
         public string Description { get; set; }
 
-        public string CreatorId { get; set; }
+        // public string CreatorId { get; set; }
 
         public IEnumerable<string> MaterialIds { get; set; }
 

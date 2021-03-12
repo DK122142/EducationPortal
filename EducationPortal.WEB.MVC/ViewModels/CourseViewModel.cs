@@ -8,16 +8,12 @@ namespace EducationPortal.WEB.MVC.ViewModels
 {
     public class CourseViewModel
     {
-        public string Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public string CreatorId { get; set; }
+        public string Materials { get; set; }
 
-        public IEnumerable<string> MaterialIds { get; set; }
-
-        public IEnumerable<string> SkillIds { get; set; }
+        public string Skills { get; set; }
     }
 }

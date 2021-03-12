@@ -17,7 +17,7 @@ namespace EducationPortal.DAL.Entities
 
         public virtual ICollection<Material> PassedMaterials { get; set; }
         
-        public virtual IList<Course> CreatedCourses { get; set; }
+        // public virtual IList<Course> CreatedCourses { get; set; }
         
         public virtual ICollection<Course> CompletedCourses { get; set; }
 

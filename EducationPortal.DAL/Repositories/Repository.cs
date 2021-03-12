@@ -36,6 +36,8 @@ namespace EducationPortal.DAL.Repositories
 
         public IQueryable<T> Where(Expression<Func<T, bool>> expression) => this.table.Where(expression);
 
+        public async Task<T> Single(Expression<Func<T, bool>> expression) => await this.table.SingleAsync(expression);
+
         public async Task<IEnumerable<T>> GetPage(int skip, int take) => await this.table.Skip(skip).Take(take).ToListAsync();
         
         public async Task<int> TotalCount() => await this.table.CountAsync();

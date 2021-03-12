@@ -11,7 +11,7 @@ namespace EducationPortal.DAL.Entities
 
         public string Description { get; set; }
         
-        public virtual Profile Creator { get; set; }
+        // public virtual Profile Creator { get; set; }
         
         public virtual IList<Material> Materials { get; set; }
         

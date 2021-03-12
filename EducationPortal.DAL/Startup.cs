@@ -81,6 +81,7 @@ namespace EducationPortal.DAL
                 options.SignIn.RequireConfirmedPhoneNumber = false;
             });
 
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
     }

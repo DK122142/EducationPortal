@@ -81,6 +81,12 @@ namespace EducationPortal.BLL.Services
             this.mapper.Map<IQueryable<TDto>>(
                 this.repository.Where(this.mapper.Map<Expression<Func<TEntity, bool>>>(expression)));
 
+        public async Task<TDto> Single(Expression<Func<TDto, bool>> expression)
+        {
+            return this.mapper.Map<TDto>(
+                await this.repository.Single(this.mapper.Map<Expression<Func<TEntity, bool>>>(expression)));
+        }
+
         public async Task<IEnumerable<TDto>> GetPage(int skip, int take) =>
             this.mapper.Map<IEnumerable<TDto>>(await this.repository.GetPage(skip, take));
 

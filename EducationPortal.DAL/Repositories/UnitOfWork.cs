@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using EducationPortal.DAL.DbContexts;
 using EducationPortal.DAL.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.DAL.Repositories
 {
@@ -10,7 +11,11 @@ namespace EducationPortal.DAL.Repositories
 
         public UnitOfWork(EducationPortalContext context) => this.context = context;
 
-        public IRepository<T> Repository<T>() where T : class, IEntity => new Repository<T>(this.context);
+        public IRepository<T> Repository<T>() where T : class, IEntity
+        {
+            // return Startup.ConfigureServices().GetRequiredService<IRepository<T>>();
+            return new Repository<T>(this.context);
+        }
 
         public async Task<int> Commit() => await this.context.SaveChangesAsync();
 

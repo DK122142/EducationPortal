@@ -32,6 +32,7 @@ namespace EducationPortal.WEB.MVC.Mapping
             CreateMap<VideoDto, VideoViewModel>().ReverseMap();
 
             CreateMap<CourseDto, CourseModel>().ReverseMap();
+            CreateMap<CourseModel, CourseViewModel>().ReverseMap();
             
             CreateMap<SkillDto, SkillModel>().ReverseMap();
             CreateMap<SkillDto, SkillViewModel>().ReverseMap();

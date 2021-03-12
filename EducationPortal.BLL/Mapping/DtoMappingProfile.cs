@@ -32,7 +32,7 @@ namespace EducationPortal.BLL.Mapping
             CreateMap<Video, VideoDto>().ReverseMap();
 
             CreateMap<Course, CourseDto>()
-                .ForMember(c => c.CreatorId, conf => conf.MapFrom(c => c.Creator.Id))
+                // .ForMember(c => c.CreatorId, conf => conf.MapFrom(c => c.Creator.Id))
                 .ForMember(c => c.MaterialIds, conf => conf.MapFrom(c => c.Materials.Select(m => m.Id)))
                 .ForMember(c => c.SkillIds, conf => conf.MapFrom(c => c.Skills.Select(s => s.Id)))
                 .ReverseMap();

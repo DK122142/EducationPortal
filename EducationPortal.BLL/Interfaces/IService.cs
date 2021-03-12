@@ -26,6 +26,8 @@ namespace EducationPortal.BLL.Interfaces
 
         IQueryable<TDto> Where(Expression<Func<TDto, bool>> expression);
 
+        Task<TDto> Single(Expression<Func<TDto, bool>> expression);
+
         Task<IEnumerable<TDto>> GetPage(int skip, int take);
 
         Task<int> TotalCount();
