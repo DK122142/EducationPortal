@@ -10,14 +10,14 @@ namespace EducationPortal.WEB.MVC.Models
 
         public string AccountUserName { get; set; }
         
-        public virtual IEnumerable<string> SkillsId { get; set; }
+        public IEnumerable<string> SkillsId { get; set; }
 
-        public virtual IEnumerable<string> PassedMaterialsId { get; set; }
+        public IEnumerable<string> PassedMaterialsId { get; set; }
         
-        public virtual IEnumerable<string> CreatedCoursesId { get; set; }
-        
-        public virtual IEnumerable<string> CompletedCoursesId { get; set; }
+        // public virtual IEnumerable<string> CreatedCoursesId { get; set; }
 
-        public virtual IEnumerable<string> JoinedCoursesId { get; set; }
+        public IEnumerable<string> CompletedCoursesNames { get; set; }
+
+        public IEnumerable<string> JoinedCoursesNames { get; set; }
     }
 }

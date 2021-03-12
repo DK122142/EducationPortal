@@ -7,9 +7,9 @@ namespace EducationPortal.BLL.Interfaces
 {
     public interface IUserService : IService<ProfileDto>
     {
-        Task<OperationDetails> JoinToCourse(string userId, string courseId);
+        Task<OperationDetails> JoinToCourse(string userId, CourseDto courseToJoin);
 
-        Task<OperationDetails> CompleteCourse(string userId, string courseId);
+        Task<OperationDetails> CompleteCourse(string userId, CourseDto courseToComplete);
 
         Task<OperationDetails<IEnumerable<string>>> CompletedCourses(string userId);
         

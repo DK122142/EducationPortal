@@ -15,6 +15,8 @@ namespace EducationPortal.BLL.Mapping
 
             CreateMap<Profile, ProfileDto>()
                 .ForMember(p => p.AccountUserName, c => c.MapFrom(p => p.Account.UserName))
+                .ForMember(p=>p.JoinedCoursesNames,o=>o.MapFrom(p=>p.JoinedCourses.Select(c=>c.Name)))
+                .ForMember(p=>p.CompletedCoursesNames,o=>o.MapFrom(p=>p.CompletedCourses.Select(c=>c.Name)))
                 .ReverseMap();
 
             CreateMap<Material, MaterialDto>()
@@ -34,9 +36,10 @@ namespace EducationPortal.BLL.Mapping
             CreateMap<Video, VideoDto>().ReverseMap();
 
             CreateMap<Course, CourseDto>()
-                // .ForMember(c => c.CreatorId, conf => conf.MapFrom(c => c.Creator.Id))
                 .ForMember(c => c.MaterialNames, conf => conf.MapFrom(c => c.Materials.Select(m => m.Name)))
                 .ForMember(c => c.SkillNames, conf => conf.MapFrom(c => c.Skills.Select(s => s.Name)))
+                .ForMember(c=>c.JoinedProfilesId,o=>o.MapFrom(c=>c.JoinedProfiles.Select(p=>p.Id)))
+                .ForMember(c=>c.CompletedProfilesId,o=>o.MapFrom(c=>c.CompletedProfiles.Select(p=>p.Id)))
                 .ReverseMap();
 
             CreateMap<Skill, SkillDto>()

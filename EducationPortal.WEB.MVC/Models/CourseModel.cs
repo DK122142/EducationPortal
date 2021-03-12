@@ -15,5 +15,9 @@ namespace EducationPortal.WEB.MVC.Models
         public IEnumerable<string> MaterialNames { get; set; }
 
         public IEnumerable<string> SkillNames { get; set; }
+
+        public IEnumerable<string> JoinedProfilesId { get; set; }
+
+        public IEnumerable<string> CompletedProfilesId { get; set; }
     }
 }

@@ -28,6 +28,8 @@ namespace EducationPortal.DAL.Interfaces
 
         Task<T> Single(Expression<Func<T, bool>> expression);
 
+        Task<bool> Any(Expression<Func<T, bool>> expression);
+
         Task<IEnumerable<T>> GetPage(int skip, int take);
 
         Task<int> TotalCount();

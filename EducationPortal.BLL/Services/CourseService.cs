@@ -69,6 +69,16 @@ namespace EducationPortal.BLL.Services
             return res;
         }
 
+        public async Task<Course> GetByName(string courseName)
+        {
+            return await this.repository.Single(s => s.Name.Equals(courseName));
+        }
+
+        public void JoinToCourse(string userId, CourseDto course)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public OperationDetails AddMaterialToCourse(string courseId, string materialId)
         {
             throw new System.NotImplementedException();

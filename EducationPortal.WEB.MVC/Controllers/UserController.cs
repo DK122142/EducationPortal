@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.WEB.MVC.Models;
 using EducationPortal.WEB.MVC.ViewModels;
@@ -14,11 +16,13 @@ namespace EducationPortal.WEB.MVC.Controllers
     {
         private IMapper mapper;
         private IUserService userService;
+        private ICourseService courseService;
 
-        public UserController(IMapper mapper, IUserService userService)
+        public UserController(IMapper mapper, IUserService userService, ICourseService courseService)
         {
             this.mapper = mapper;
             this.userService = userService;
+            this.courseService = courseService;
         }
 
         [HttpGet]
@@ -31,6 +35,26 @@ namespace EducationPortal.WEB.MVC.Controllers
             {
                 Profile = this.mapper.Map<ProfileModel>(profile)
             });
+        }
+        
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> JoinToCourse(string id)
+        {
+            await this.userService.JoinToCourse(User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                await this.courseService.GetById(id));
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CompleteCourse(string id)
+        {
+            await this.userService.CompleteCourse(User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                await this.courseService.GetById(id));
+
+            return RedirectToAction("Index", "Home");
         }
         
         [HttpPost]

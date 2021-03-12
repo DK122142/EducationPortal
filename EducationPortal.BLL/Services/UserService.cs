@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -13,29 +14,30 @@ namespace EducationPortal.BLL.Services
 {
     public class UserService : Service<Profile, ProfileDto>, IUserService
     {
-        public UserService(IUnitOfWork uow, IMapper mapper) : base(uow, mapper)
+        private ICourseService courseService;
+
+        public UserService(IUnitOfWork uow, IMapper mapper, ICourseService courseService) : base(uow, mapper)
         {
+            this.courseService = courseService;
         }
 
-        public async Task<OperationDetails> JoinToCourse(string userId, string courseId)
+        public async Task<OperationDetails> JoinToCourse(string userId, CourseDto courseToJoin)
         {
-            var courseRepository = this.uow.Repository<Course>();
+            var course = await this.courseService.GetByName(courseToJoin.Name);
 
-            var course = await courseRepository.GetById(courseId);
+            var response = await this.JoinedCourses(userId);
+            var joinedCourses = response.Value;
 
-            var joinedCourses = await this.JoinedCourses(userId);
-
-            if (joinedCourses.Value.Contains(course.Id))
+            if (joinedCourses.Contains(course.Id))
             {
                 return new OperationDetails(false, $"User {userId} already joined to course {course.Name}",
                     $"{userId};{course.Id};{course.Name}");
             }
 
-            var user = await this.GetById(userId);
-            user.JoinedCoursesId.ToList().Add(course.Id);
-
-            this.repository.Update(this.mapper.Map<Profile>(user));
-
+            var user = await this.repository.GetById(userId);
+            user.JoinedCourses.Add(course);
+            course.JoinedProfiles.Add(user);
+            
             if (await this.uow.Commit() > 0)
             {
                 return new OperationDetails(true);
@@ -46,28 +48,28 @@ namespace EducationPortal.BLL.Services
             }
         }
 
+        
         //TODO update skill level
-        public async Task<OperationDetails> CompleteCourse(string userId, string courseId)
+        public async Task<OperationDetails> CompleteCourse(string userId, CourseDto courseToComplete)
         {
-            var courseRepository = this.uow.Repository<Course>();
+            var course = await this.courseService.GetByName(courseToComplete.Name);
 
-            var course = await courseRepository.GetById(courseId);
+            var response = await this.CompletedCourses(userId);
+            var completedCourses = response.Value;
 
-            var completedCourses = await this.CompletedCourses(userId);
-
-            if (completedCourses.Value.Contains(course.Id))
+            if (completedCourses.Contains(course.Id))
             {
                 return new OperationDetails(false, $"User {userId} already completed course {course.Name}",
                     $"{userId};{course.Id};{course.Name}");
             }
+            
+            var user = await this.repository.GetById(userId);
 
-            var user = await this.GetById(userId);
-            user.JoinedCoursesId.ToList().Remove(course.Id);
-            user.CompletedCoursesId.ToList().Add(course.Id);
+            user.JoinedCourses.Remove(course);
+            user.CompletedCourses.Add(course);
 
-            this.repository.Update(this.mapper.Map<Profile>(user));
-
-            await this.uow.Commit();
+            course.JoinedProfiles.Remove(user);
+            course.CompletedProfiles.Add(user);
             
             if (await this.uow.Commit() > 0)
             {
@@ -83,21 +85,22 @@ namespace EducationPortal.BLL.Services
         {
             var user = await this.GetById(userId);
 
-            return new OperationDetails<IEnumerable<string>>(true, value: user.CompletedCoursesId);
+            return new OperationDetails<IEnumerable<string>>(true, value: user.CompletedCoursesNames);
         }
 
         public async Task<OperationDetails<IEnumerable<string>>> JoinedCourses(string userId)
         {
             var user = await this.GetById(userId);
 
-            return new OperationDetails<IEnumerable<string>>(true, value: user.JoinedCoursesId);
+            return new OperationDetails<IEnumerable<string>>(true, value: user.JoinedCoursesNames);
         }
 
         public async Task<OperationDetails<IEnumerable<string>>> CreatedCourses(string userId)
         {
-            var user = await this.GetById(userId);
-
-            return new OperationDetails<IEnumerable<string>>(true, value: user.CreatedCoursesId);
+            throw new NotImplementedException();
+            // var user = await this.GetById(userId);
+            //
+            // return new OperationDetails<IEnumerable<string>>(true, value: user.CreatedCoursesId);
         }
 
         public async Task<OperationDetails<IEnumerable<ProfileSkillDto>>> SkillsLevel(string userId)

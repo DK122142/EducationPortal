@@ -14,10 +14,10 @@ namespace EducationPortal.BLL.DTO
 
         public virtual IEnumerable<string> PassedMaterialsId { get; set; }
         
-        public virtual IEnumerable<string> CreatedCoursesId { get; set; }
+        // public virtual IEnumerable<string> CreatedCoursesId { get; set; }
         
-        public virtual IEnumerable<string> CompletedCoursesId { get; set; }
+        public IEnumerable<string> CompletedCoursesNames { get; set; }
 
-        public virtual IEnumerable<string> JoinedCoursesId { get; set; }
+        public IEnumerable<string> JoinedCoursesNames { get; set; }
     }
 }
