@@ -40,12 +40,12 @@ namespace EducationPortal.BLL.Services
             
             foreach (var name in course.MaterialNames)
             {
-                courseMaterials.Add(await this.materialService.GetMaterialByName(name));
+                courseMaterials.Add(await this.materialService.GetMaterialByName(name.Trim()));
             }
 
             foreach (var name in course.SkillNames)
             {
-                courseSkills.Add(await this.skillService.GetSkillByName(name));
+                courseSkills.Add(await this.skillService.GetSkillByName(name.Trim()));
             }
 
             courseEntity.Materials = courseMaterials;
