@@ -8,6 +8,7 @@ using EducationPortal.DAL.DbContexts;
 using EducationPortal.DAL.Entities;
 using EducationPortal.WEB.MVC.DependencyInjection;
 using EducationPortal.WEB.MVC.Mapping;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,7 +58,12 @@ namespace EducationPortal.WEB.MVC
                 cfg.AddExpressionMapping();
             });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddFluentValidation(conf =>
+                {
+                    conf.RegisterValidatorsFromAssemblyContaining<Startup>();
+                    conf.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
