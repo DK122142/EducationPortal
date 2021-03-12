@@ -8,6 +8,7 @@ namespace EducationPortal.WEB.MVC.DependencyInjection
     {
         public static void IncludeDAL(this IServiceCollection services)
         {
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }

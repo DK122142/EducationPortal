@@ -40,13 +40,11 @@ namespace EducationPortal.DAL.Repositories
         
         public async Task<bool> Any(Expression<Func<T, bool>> expression) => await this.table.AnyAsync(expression);
 
-        public async Task<IEnumerable<T>> GetPage(int skip, int take) => await this.table.Skip(skip).Take(take).ToListAsync();
+        public async Task<IEnumerable<T>> GetPage(int skip, int take) =>
+            await this.table.OrderBy(e => e.Id).Skip(skip).Take(take).ToListAsync();
         
         public async Task<int> TotalCount() => await this.table.CountAsync();
 
-        public IQueryable<T> AsNoTracking()
-        {
-            return this.table.AsNoTracking();
-        }
+        public IQueryable<T> AsNoTracking() => this.table.AsNoTracking();
     }
 }

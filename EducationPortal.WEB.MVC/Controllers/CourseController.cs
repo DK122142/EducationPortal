@@ -31,7 +31,7 @@ namespace EducationPortal.WEB.MVC.Controllers
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            int pageSize = 10;
+            int pageSize = 3;
 
             var count = await this.courseService.TotalCount();
 

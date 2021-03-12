@@ -3,18 +3,20 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.WEB.MVC.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace EducationPortal.WEB.MVC.Controllers
 {
     public class AuthController : Controller
     {
         private IAuthService service;
-        private IMapper mapper;
+        private ILogger logger;
 
-        public AuthController(IAuthService service, IMapper mapper)
+        public AuthController(IAuthService service, ILogger<AuthController> logger)
         {
             this.service = service;
-            this.mapper = mapper;
+            this.logger = logger;
+
         }
 
         [HttpGet]
@@ -30,12 +32,14 @@ namespace EducationPortal.WEB.MVC.Controllers
 
                 if (result.Succeeded)
                 {
+                    this.logger.LogInformation($"User with name: {model.Login} registered");
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     foreach (var error in result.Errors)
                     {
+                        this.logger.LogError($"Error: {error.Code}. {error.Description}");
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
@@ -59,15 +63,18 @@ namespace EducationPortal.WEB.MVC.Controllers
                 {
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
+                        this.logger.LogInformation($"Login successful. User with name: {model.Login}");
                         return Redirect(model.ReturnUrl);
                     }
                     else
                     {
+                        this.logger.LogInformation($"Login successful. User with name: {model.Login}");
                         return RedirectToAction("Index", "Home");
                     }
                 }
                 else
                 {
+                    this.logger.LogInformation($"User with name: {model.Login}. Wrong password or username");
                     ModelState.AddModelError(string.Empty, "Wrong password or username");
                 }
             }
@@ -79,6 +86,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
+            this.logger.LogInformation($"Logout Username: {User.Identity.Name}");
             await this.service.LogOut();
             return RedirectToAction("Index", "Home");
         }

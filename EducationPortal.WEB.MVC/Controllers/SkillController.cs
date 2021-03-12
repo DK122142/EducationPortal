@@ -7,6 +7,7 @@ using EducationPortal.WEB.MVC.Models;
 using EducationPortal.WEB.MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace EducationPortal.WEB.MVC.Controllers
 {
@@ -14,17 +15,19 @@ namespace EducationPortal.WEB.MVC.Controllers
     {
         private IMapper mapper;
         private ISkillService service;
+        private ILogger logger;
 
-        public SkillController(IMapper mapper, ISkillService service)
+        public SkillController(IMapper mapper, ISkillService service, ILogger<SkillController> logger)
         {
             this.mapper = mapper;
             this.service = service;
+            this.logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1)
         {
-            int pageSize = 10;
+            int pageSize = 3;
 
             var skillsCount = await this.service.TotalCount();
 
@@ -37,6 +40,8 @@ namespace EducationPortal.WEB.MVC.Controllers
                 PageViewModel = pvm,
                 Skills = this.mapper.Map<IEnumerable<SkillModel>>(skills)
             };
+            
+            this.logger.LogInformation($"Opened page {page} of skills");
 
             return View(viewModel);
         }
@@ -51,6 +56,8 @@ namespace EducationPortal.WEB.MVC.Controllers
         public async Task<IActionResult> Create(SkillViewModel model)
         {
             await this.service.Add(this.mapper.Map<SkillDto>(model));
+
+            this.logger.LogInformation($"Added skill {model.Name}");
 
             return RedirectToAction("Index");
         }
