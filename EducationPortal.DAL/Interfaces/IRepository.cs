@@ -31,5 +31,7 @@ namespace EducationPortal.DAL.Interfaces
         Task<IEnumerable<T>> GetPage(int skip, int take);
 
         Task<int> TotalCount();
+
+        IQueryable<T> AsNoTracking();
     }
 }

@@ -41,5 +41,10 @@ namespace EducationPortal.DAL.Repositories
         public async Task<IEnumerable<T>> GetPage(int skip, int take) => await this.table.Skip(skip).Take(take).ToListAsync();
         
         public async Task<int> TotalCount() => await this.table.CountAsync();
+
+        public IQueryable<T> AsNoTracking()
+        {
+            return this.table.AsNoTracking();
+        }
     }
 }

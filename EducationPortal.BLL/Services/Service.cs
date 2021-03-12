@@ -87,9 +87,13 @@ namespace EducationPortal.BLL.Services
                 await this.repository.Single(this.mapper.Map<Expression<Func<TEntity, bool>>>(expression)));
         }
 
-        public async Task<IEnumerable<TDto>> GetPage(int skip, int take) =>
-            this.mapper.Map<IEnumerable<TDto>>(await this.repository.GetPage(skip, take));
+        public async Task<IEnumerable<TDto>> GetPage(int skip, int take)
+        {
+            return this.mapper.Map<IEnumerable<TDto>>(await this.repository.GetPage(skip, take));
+        }
 
         public async Task<int> TotalCount() => await this.repository.TotalCount();
+
+        public Task<int> Save() => this.uow.Commit();
     }
 }

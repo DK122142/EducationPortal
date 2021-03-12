@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -30,7 +31,6 @@ namespace EducationPortal.WEB.MVC.Controllers
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            
             int pageSize = 10;
 
             var count = await this.courseService.TotalCount();
@@ -58,27 +58,14 @@ namespace EducationPortal.WEB.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CourseViewModel model)
         {
-            var materials = new List<MaterialDto>();
+            var course = this.mapper.Map<CourseDto>(this.mapper.Map<CourseModel>(model));
 
-            foreach (var materialName in model.Materials.Split(","))
-            {
-                materials.Add(await this.materialService.Single(m=> m.Name.Equals(materialName)));
-            }
+            course.Id = Guid.NewGuid().ToString();
+            course.MaterialNames = model.Materials.Split(",");
+            course.SkillNames = model.Skills.Split(",");
 
-            var skills = new List<SkillDto>();
-
-            foreach (var skillName in model.Skills.Split(","))
-            {
-                skills.Add(await this.skillService.Single(m=> m.Name.Equals(skillName)));
-            }
-
-            var course = this.mapper.Map<CourseModel>(model);
-            course.MaterialIds = new List<string>(materials.Select(m => m.Id));
-            course.SkillIds = new List<string>(skills.Select(s => s.Id));
-            // course.CreatorId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            await this.courseService.Add(this.mapper.Map<CourseDto>(course));
-
+            await this.courseService.CreateCourse(course);
+            
             return RedirectToAction("Index");
         }
     }

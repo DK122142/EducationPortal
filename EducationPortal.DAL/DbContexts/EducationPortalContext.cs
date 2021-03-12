@@ -47,7 +47,7 @@ namespace EducationPortal.DAL.DbContexts
             // builder.Entity<Course>()
             //     .HasOne<Profile>(c => c.Creator)
             //     .WithMany(p => p.CreatedCourses);
-            
+
             builder.Entity<Course>()
                 .HasMany<Profile>(c => c.JoinedProfiles)
                 .WithMany(p => p.JoinedCourses);

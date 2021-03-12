@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.BLL.Interfaces
 {
@@ -31,5 +32,7 @@ namespace EducationPortal.BLL.Interfaces
         Task<IEnumerable<TDto>> GetPage(int skip, int take);
 
         Task<int> TotalCount();
+
+        Task<int> Save();
     }
 }
