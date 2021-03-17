@@ -6,7 +6,7 @@ using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Entities
 {
-    public class Profile : IEntity
+    public class Profile
     {
         [Key]
         [ForeignKey(nameof(Entities.Account))]

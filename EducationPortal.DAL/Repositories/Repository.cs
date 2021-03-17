@@ -6,49 +6,94 @@ using System.Threading.Tasks;
 using EducationPortal.DAL.DbContexts;
 using EducationPortal.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EducationPortal.DAL.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class, IEntity
+    public class Repository<T> : IRepository<T> where T : class
     {
         private readonly DbSet<T> table;
-        private DbContext context;
+        private readonly DbContext context;
 
         public Repository(EducationPortalContext context)
         {
-            this.table = context.Set<T>();
             this.context = context;
+            this.table = context.Set<T>();
         }
 
-        public async Task Add(T entity) => await this.table.AddAsync(entity);
-
-        public async Task Add(IEnumerable<T> items) => await this.table.AddRangeAsync(items);
-
-        public async Task<IList<T>> All() => await this.table.AsNoTracking().ToListAsync();
-
-        public async Task<T> GetById(string id) => await this.table.SingleAsync(x => x.Id.Equals(id));
-
-        public void Update(T entity) => this.table.Update(entity);
-
-        public void Update(IEnumerable<T> items) => this.table.UpdateRange(items);
-
-        public void Delete(T entity) => this.table.Remove(entity);
-
-        public void Delete(IEnumerable<T> entities) => this.table.RemoveRange(entities);
-
-        public IQueryable<T> Where(Expression<Func<T, bool>> expression) => this.table.Where(expression);
-
-        public async Task<T> Single(Expression<Func<T, bool>> expression) => await this.table.SingleAsync(expression);
+        public Task<List<T>> SkipTakeToListAsync(int skip, int take)
+        {
+            return this.table.Skip(skip).Take(take).ToListAsync();
+        }
         
-        public async Task<bool> Any(Expression<Func<T, bool>> expression) => await this.table.AnyAsync(expression);
+        public Task<int> CountAsync()
+        {
+            return this.table.CountAsync();
+        }
 
-        public async Task<IEnumerable<T>> GetPage(int skip, int take) =>
-            await this.table.OrderBy(e => e.Id).Skip(skip).Take(take).ToListAsync();
-        
-        public async Task<int> TotalCount() => await this.table.CountAsync();
+        public virtual Task SaveChangesAsync()
+        {
+            return this.context.SaveChangesAsync();
+        }
 
-        public IQueryable<T> AsNoTracking() => this.table.AsNoTracking();
-        
-        public async Task<int> Commit() => await this.context.SaveChangesAsync();
+        public virtual Task<T> FirstOrDefaultAsync()
+        {
+            return this.table.FirstOrDefaultAsync();
+        }
+
+        public IQueryable<T> GetAll()
+        {
+            return this.table.AsNoTracking();
+        }
+
+        public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
+        {
+            return this.table.Where(predicate);
+        }
+
+        public virtual Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
+        {
+            return this.table.AnyAsync(predicate);
+        }
+
+        public virtual ValueTask<T> FindAsync(params object[] keys)
+        {
+            return this.table.FindAsync(keys);
+        }
+
+        public virtual ValueTask<EntityEntry<T>> AddAsync(T entity)
+        {
+            return this.table.AddAsync(entity);
+        }
+
+        public virtual Task AddAsync(IEnumerable<T> entities)
+        {
+            return this.table.AddRangeAsync(entities);
+        }
+
+        public virtual void Delete(T entity)
+        {
+            this.table.Remove(entity);
+        }
+
+        public virtual void Delete(IEnumerable<T> entities)
+        {
+            this.table.RemoveRange(entities);
+        }
+
+        public virtual void Update(T entity)
+        {
+            context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public virtual IOrderedQueryable<T> OrderBy<K>(Expression<Func<T, K>> predicate)
+        {
+            return this.table.OrderBy(predicate);
+        }
+
+        public virtual IQueryable<IGrouping<K, T>> GroupBy<K>(Expression<Func<T, K>> predicate)
+        {
+            return this.table.GroupBy(predicate);
+        }
     }
 }

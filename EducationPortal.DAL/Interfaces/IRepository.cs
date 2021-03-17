@@ -3,38 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EducationPortal.DAL.Interfaces
 {
-    public interface IRepository<T> where T : class, IEntity
+    public interface IRepository<T> where T : class
     {
+        Task SaveChangesAsync();
 
-        Task Add(T entity);
+        Task<T> FirstOrDefaultAsync();
 
-        Task Add(IEnumerable<T> items);
-        
-        Task<IList<T>> All();
+        IQueryable<T> GetAll();
 
-        Task<T> GetById(Guid id);
+        IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
 
-        void Update(T entity);
+        Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
 
-        void Update(IEnumerable<T> items);
+        ValueTask<T> FindAsync(params object[] keys);
+
+        ValueTask<EntityEntry<T>> AddAsync(T entity);
+
+        Task AddAsync(IEnumerable<T> entities);
 
         void Delete(T entity);
 
         void Delete(IEnumerable<T> entities);
 
-        IQueryable<T> Where(Expression<Func<T, bool>> expression);
+        void Update(T entity);
 
-        Task<T> Single(Expression<Func<T, bool>> expression);
+        IOrderedQueryable<T> OrderBy<K>(Expression<Func<T, K>> predicate);
 
-        Task<bool> Any(Expression<Func<T, bool>> expression);
+        IQueryable<IGrouping<K, T>> GroupBy<K>(Expression<Func<T, K>> predicate);
 
-        Task<IEnumerable<T>> GetPage(int skip, int take);
+        Task<List<T>> SkipTakeToListAsync(int skip, int take);
 
-        Task<int> TotalCount();
-
-        IQueryable<T> AsNoTracking();
+        Task<int> CountAsync();
     }
 }

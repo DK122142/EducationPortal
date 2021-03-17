@@ -4,7 +4,7 @@ using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Entities
 {
-    public class Skill : IEntity
+    public class Skill
     {
         public Guid Id { get; set; }
 

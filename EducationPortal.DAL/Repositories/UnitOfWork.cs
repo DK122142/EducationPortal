@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using EducationPortal.DAL.DbContexts;
 using EducationPortal.DAL.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationPortal.DAL.Repositories
 {
@@ -13,7 +12,6 @@ namespace EducationPortal.DAL.Repositories
 
         public IRepository<T> Repository<T>() where T : class, IEntity
         {
-            // return Startup.ConfigureServices().GetRequiredService<IRepository<T>>();
             return new Repository<T>(this.context);
         }
 
