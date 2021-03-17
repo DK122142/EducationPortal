@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using EducationPortal.DAL.Entities;
 
 namespace EducationPortal.BLL.DTO
 {
