@@ -14,14 +14,14 @@ namespace EducationPortal.BLL.Services
 {
     public class UserService : Service<Profile, ProfileDto>, IUserService
     {
-        private ICourseService courseService;
+        private readonly ICourseService courseService;
 
         public UserService(IUnitOfWork uow, IMapper mapper, ICourseService courseService) : base(uow, mapper)
         {
             this.courseService = courseService;
         }
 
-        public async Task<OperationDetails> JoinToCourse(string userId, CourseDto courseToJoin)
+        public async Task<OperationDetails> JoinToCourse(Guid userId, CourseDto courseToJoin)
         {
             var course = await this.courseService.GetByName(courseToJoin.Name);
 
@@ -50,7 +50,7 @@ namespace EducationPortal.BLL.Services
 
         
         //TODO update skill level
-        public async Task<OperationDetails> CompleteCourse(string userId, CourseDto courseToComplete)
+        public async Task<OperationDetails> CompleteCourse(Guid userId, CourseDto courseToComplete)
         {
             var course = await this.courseService.GetByName(courseToComplete.Name);
 
@@ -81,21 +81,21 @@ namespace EducationPortal.BLL.Services
             }
         }
 
-        public async Task<OperationDetails<IEnumerable<string>>> CompletedCourses(string userId)
+        public async Task<OperationDetails<IEnumerable<Guid>>> CompletedCourses(Guid userId)
         {
             var user = await this.GetById(userId);
 
-            return new OperationDetails<IEnumerable<string>>(true, value: user.CompletedCoursesNames);
+            return new OperationDetails<IEnumerable<Guid>>(true, value: user.CompletedCoursesId);
         }
 
-        public async Task<OperationDetails<IEnumerable<string>>> JoinedCourses(string userId)
+        public async Task<OperationDetails<IEnumerable<Guid>>> JoinedCourses(Guid userId)
         {
             var user = await this.GetById(userId);
 
-            return new OperationDetails<IEnumerable<string>>(true, value: user.JoinedCoursesNames);
+            return new OperationDetails<IEnumerable<Guid>>(true, value: user.JoinedCoursesId);
         }
 
-        public async Task<OperationDetails<IEnumerable<string>>> CreatedCourses(string userId)
+        public Task<OperationDetails<IEnumerable<Guid>>> CreatedCourses(Guid userId)
         {
             throw new NotImplementedException();
             // var user = await this.GetById(userId);
@@ -103,7 +103,7 @@ namespace EducationPortal.BLL.Services
             // return new OperationDetails<IEnumerable<string>>(true, value: user.CreatedCoursesId);
         }
 
-        public async Task<OperationDetails<IEnumerable<ProfileSkillDto>>> SkillsLevel(string userId)
+        public async Task<OperationDetails<IEnumerable<ProfileSkillDto>>> SkillsLevel(Guid userId)
         {
             var user = await this.GetById(userId);
             var skills = user.SkillsId;
@@ -115,11 +115,11 @@ namespace EducationPortal.BLL.Services
                 value: this.mapper.Map<IEnumerable<ProfileSkillDto>>(skillsLevels));
         }
 
-        public async Task<OperationDetails<IEnumerable<string>>> PassedMaterials(string userId)
+        public async Task<OperationDetails<IEnumerable<Guid>>> PassedMaterials(Guid userId)
         {
             var user = await this.GetById(userId);
 
-            return new OperationDetails<IEnumerable<string>>(true, value: user.PassedMaterialsId);
+            return new OperationDetails<IEnumerable<Guid>>(true, value: user.PassedMaterialsId);
         }
     }
 }

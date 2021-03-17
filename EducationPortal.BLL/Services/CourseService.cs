@@ -15,7 +15,7 @@ namespace EducationPortal.BLL.Services
         private IMaterialService materialService;
         private ISkillService skillService;
 
-        public CourseService(IUnitOfWork uow, IMapper mapper, IMaterialService materialService, ISkillService skillService) : base(uow, mapper)
+        public CourseService(IMapper mapper,  IMaterialService materialService, ISkillService skillService) : base(uow, mapper)
         {
             this.materialService = materialService;
             this.skillService = skillService;

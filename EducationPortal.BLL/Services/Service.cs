@@ -13,14 +13,12 @@ namespace EducationPortal.BLL.Services
         where TEntity : class, IEntity, new()
         where TDto : class, new()
     {
-        protected readonly IUnitOfWork uow;
         protected readonly IRepository<TEntity> repository;
         protected readonly IMapper mapper;
 
-        protected Service(IUnitOfWork uow, IMapper mapper)
+        protected Service(IRepository<TEntity> repository, IMapper mapper)
         {
-            this.uow = uow;
-            this.repository = this.uow.Repository<TEntity>();
+            this.repository = repository;
             this.mapper = mapper;
         }
 
@@ -28,9 +26,9 @@ namespace EducationPortal.BLL.Services
         {
             var newEntity = this.mapper.Map<TEntity>(entity);
 
-            if (string.IsNullOrEmpty(newEntity.Id))
+            if (newEntity.Id != Guid.Empty)
             {
-                newEntity.Id = Guid.NewGuid().ToString();
+                newEntity.Id = Guid.NewGuid();
             }
 
             await this.repository.Add(newEntity);
@@ -39,7 +37,9 @@ namespace EducationPortal.BLL.Services
 
         public async Task Add(IEnumerable<TDto> items)
         {
-            await this.repository.Add(this.mapper.Map<IEnumerable<TEntity>>(items));
+            // TODO
+            // var enti
+            // await this.repository.Add();
             await this.uow.Commit();
         }
 
@@ -48,7 +48,7 @@ namespace EducationPortal.BLL.Services
             return this.mapper.Map<IList<TDto>>(await this.repository.All());
         }
 
-        public async Task<TDto> GetById(string id)
+        public async Task<TDto> GetById(Guid id)
         {
             return this.mapper.Map<TDto>(await this.repository.GetById(id));
         }

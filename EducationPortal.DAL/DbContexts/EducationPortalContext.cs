@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using EducationPortal.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EducationPortal.DAL.DbContexts
 {
-    public class EducationPortalContext : IdentityDbContext<Account>
+    public class EducationPortalContext : IdentityDbContext<Account, IdentityRole<Guid>, Guid>
     {
         public DbSet<Profile> Profiles { get; set; }
         
@@ -44,9 +45,9 @@ namespace EducationPortal.DAL.DbContexts
                     )
                 );
 
-            // builder.Entity<Course>()
-            //     .HasOne<Profile>(c => c.Creator)
-            //     .WithMany(p => p.CreatedCourses);
+            builder.Entity<Course>()
+                .HasOne<Profile>(c => c.Creator)
+                .WithMany(p => p.CreatedCourses);
 
             builder.Entity<Course>()
                 .HasMany<Profile>(c => c.JoinedProfiles)

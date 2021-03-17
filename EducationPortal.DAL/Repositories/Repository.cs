@@ -11,11 +11,13 @@ namespace EducationPortal.DAL.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class, IEntity
     {
-        private DbSet<T> table;
+        private readonly DbSet<T> table;
+        private DbContext context;
 
         public Repository(EducationPortalContext context)
         {
             this.table = context.Set<T>();
+            this.context = context;
         }
 
         public async Task Add(T entity) => await this.table.AddAsync(entity);
@@ -46,5 +48,7 @@ namespace EducationPortal.DAL.Repositories
         public async Task<int> TotalCount() => await this.table.CountAsync();
 
         public IQueryable<T> AsNoTracking() => this.table.AsNoTracking();
+        
+        public async Task<int> Commit() => await this.context.SaveChangesAsync();
     }
 }

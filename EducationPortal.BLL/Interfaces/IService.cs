@@ -15,7 +15,7 @@ namespace EducationPortal.BLL.Interfaces
         
         Task<IList<TDto>> All();
 
-        Task<TDto> GetById(string id);
+        Task<TDto> GetById(Guid id);
 
         Task Update(TDto entity);
 

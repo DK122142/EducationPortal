@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EducationPortal.BLL.DTO
 {
@@ -10,14 +11,14 @@ namespace EducationPortal.BLL.DTO
 
         public string AccountUserName { get; set; }
         
-        public virtual IEnumerable<string> SkillsId { get; set; }
+        public virtual IEnumerable<Guid> SkillsId { get; set; }
 
-        public virtual IEnumerable<string> PassedMaterialsId { get; set; }
+        public virtual IEnumerable<Guid> PassedMaterialsId { get; set; }
         
-        // public virtual IEnumerable<string> CreatedCoursesId { get; set; }
+        public virtual IEnumerable<Guid> CreatedCoursesId { get; set; }
         
-        public IEnumerable<string> CompletedCoursesNames { get; set; }
+        public IEnumerable<Guid> CompletedCoursesId { get; set; }
 
-        public IEnumerable<string> JoinedCoursesNames { get; set; }
+        public IEnumerable<Guid> JoinedCoursesId { get; set; }
     }
 }

@@ -8,13 +8,14 @@ namespace EducationPortal.DAL.Interfaces
 {
     public interface IRepository<T> where T : class, IEntity
     {
+
         Task Add(T entity);
 
         Task Add(IEnumerable<T> items);
         
         Task<IList<T>> All();
 
-        Task<T> GetById(string id);
+        Task<T> GetById(Guid id);
 
         void Update(T entity);
 
