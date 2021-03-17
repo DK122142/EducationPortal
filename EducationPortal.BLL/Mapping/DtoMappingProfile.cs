@@ -15,20 +15,25 @@ namespace EducationPortal.BLL.Mapping
 
             CreateMap<Profile, ProfileDto>()
                 .ForMember(p => p.AccountUserName, c => c.MapFrom(p => p.Account.UserName))
-                .ForMember(p=>p.JoinedCoursesNames,o=>o.MapFrom(p=>p.JoinedCourses.Select(c=>c.Name)))
-                .ForMember(p=>p.CompletedCoursesNames,o=>o.MapFrom(p=>p.CompletedCourses.Select(c=>c.Name)))
+                .ForMember(p => p.ProfileSkillsId, c => c.MapFrom(p => p.ProfileSkills.Select(ps => ps.SkillId)))
+                .ForMember(p => p.AddedMaterialsId, c => c.MapFrom(p => p.AddedMaterials.Select(m => m.Id)))
+                .ForMember(p => p.PassedMaterialsId, c => c.MapFrom(p => p.PassedMaterials.Select(m => m.Id)))
+                .ForMember(p => p.CreatedCoursesId, o => o.MapFrom(p => p.CreatedCourses.Select(c => c.Id)))
+                .ForMember(p => p.CompletedCoursesId, o => o.MapFrom(p => p.CompletedCourses.Select(c => c.Id)))
+                .ForMember(p => p.JoinedCoursesId, o => o.MapFrom(p => p.JoinedCourses.Select(c => c.Id)))
                 .ReverseMap();
 
             CreateMap<Material, MaterialDto>()
-                .ForMember(m=>m.IncludedInId,c=>c.MapFrom(m=>m.IncludedIn.Select(crs=>crs.Id)))
-                .ForMember(m=>m.PassedByUsersId,c=>c.MapFrom(m=>m.PassedByUsers.Select(p=>p.Id)))
+                .ForMember(m => m.AddedById, c => c.MapFrom(m => m.AddedBy.Id))
+                .ForMember(m => m.PassedByUsersId, c => c.MapFrom(m => m.PassedByUsers.Select(p => p.Id)))
+                .ForMember(m => m.IncludedInCoursesId, c => c.MapFrom(m => m.IncludedInCourses.Select(crs => crs.Id)))
                 .Include<Article, ArticleDto>()
                 .Include<Book, BookDto>()
                 .Include<Video, VideoDto>()
                 .ReverseMap();
             
             CreateMap<Article, ArticleDto>()
-                .ForMember(a => a.Published, c => c.MapFrom(a => a.Published.ToString()))
+                .ForMember(a => a.Published, c => c.MapFrom(a => a.Published.ToShortDateString()))
                 .ReverseMap();
 
             CreateMap<Book, BookDto>().ReverseMap();
@@ -36,21 +41,19 @@ namespace EducationPortal.BLL.Mapping
             CreateMap<Video, VideoDto>().ReverseMap();
 
             CreateMap<Course, CourseDto>()
-                .ForMember(c => c.MaterialNames, conf => conf.MapFrom(c => c.Materials.Select(m => m.Name)))
-                .ForMember(c => c.SkillNames, conf => conf.MapFrom(c => c.Skills.Select(s => s.Name)))
-                .ForMember(c=>c.JoinedProfilesId,o=>o.MapFrom(c=>c.JoinedProfiles.Select(p=>p.Id)))
-                .ForMember(c=>c.CompletedProfilesId,o=>o.MapFrom(c=>c.CompletedProfiles.Select(p=>p.Id)))
+                .ForMember(c => c.CreatorId, conf => conf.MapFrom(c => c.Creator.Id))
+                .ForMember(c => c.MaterialsId, conf => conf.MapFrom(c => c.Materials.Select(m => m.Id)))
+                .ForMember(c => c.SkillsId, conf => conf.MapFrom(c => c.Skills.Select(s => s.Id)))
+                .ForMember(c => c.JoinedProfilesId, o => o.MapFrom(c => c.JoinedProfiles.Select(p => p.Id)))
+                .ForMember(c => c.CompletedProfilesId, o => o.MapFrom(c => c.CompletedProfiles.Select(p => p.Id)))
                 .ReverseMap();
 
             CreateMap<Skill, SkillDto>()
+                .ForMember(s => s.ProfileSkillsId, c => c.MapFrom(ps => ps.ProfileSkills.Select(sk => sk.ProfileId)))
                 .ForMember(s => s.CoursesId, c => c.MapFrom(s => s.Courses.Select(crs => crs.Id)))
-                .ForMember(s => s.ProfileSkillsId, c => c.MapFrom(ps => ps.ProfileSkills.Select(sk => sk.Id)))
                 .ReverseMap();
 
-
-            CreateMap<ProfileSkill, ProfileSkillDto>()
-                .ForMember(ps => ps.SkillName, c => c.MapFrom(ps => ps.Skill.Name))
-                .ReverseMap();
+            CreateMap<ProfileSkill, ProfileSkillDto>().ReverseMap();
         }
     }
 }

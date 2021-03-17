@@ -11,6 +11,9 @@ namespace EducationPortal.BLL.DTO
 
         public string AccountUserName { get; set; }
         
+        /// <summary>
+        /// Id of Skills of this Profile
+        /// </summary>
         public IEnumerable<Guid> ProfileSkillsId { get; set; }
         
         public IEnumerable<Guid> AddedMaterialsId { get; set; }
