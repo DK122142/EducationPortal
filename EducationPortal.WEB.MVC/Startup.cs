@@ -1,12 +1,17 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper.Extensions.ExpressionMapping;
+using EducationPortal.BLL.Interfaces;
+using EducationPortal.BLL.Mapping;
+using EducationPortal.BLL.Services;
 using EducationPortal.DAL.DbContexts;
 using EducationPortal.DAL.Entities;
-using EducationPortal.WEB.MVC.DependencyInjection;
+using EducationPortal.DAL.Interfaces;
+using EducationPortal.DAL.Repositories;
 using EducationPortal.WEB.MVC.Mapping;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
@@ -33,10 +38,10 @@ namespace EducationPortal.WEB.MVC
                     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             
-            services.AddIdentity<Account, IdentityRole>()
+            // Identity
+            services.AddIdentity<Account, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<EducationPortalContext>();
 
-            
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -49,9 +54,25 @@ namespace EducationPortal.WEB.MVC
                 options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
             });
+            
+            // DAL
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.IncludeBLL();
+            // BLL
+            services.AddAutoMapper(mc =>
+            {
+                mc.AddProfile<DtoMappingProfile>();
+                mc.AddExpressionMapping();
+            });
 
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IMaterialService, MaterialService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ISkillService, SkillService>();
+
+            // PL
             services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<ModelMappingProfile>();
