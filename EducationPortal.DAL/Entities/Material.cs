@@ -12,6 +12,8 @@ namespace EducationPortal.DAL.Entities
 
         public string Source { get; set; }
 
+        public virtual Profile AddedBy { get; set; }
+
         public virtual IEnumerable<Profile> PassedByUsers { get; set; }
 
         public virtual IEnumerable<Course> IncludedIn { get; set; }

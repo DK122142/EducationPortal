@@ -15,6 +15,8 @@ namespace EducationPortal.DAL.Entities
         public string Name { get; set; }
 
         public virtual IList<ProfileSkill> ProfileSkills { get; set; }
+        
+        public virtual ICollection<Material> AddedMaterials { get; set; }
 
         public virtual ICollection<Material> PassedMaterials { get; set; }
         

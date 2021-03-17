@@ -69,6 +69,14 @@ namespace EducationPortal.DAL.DbContexts
                 .HasOne(ps => ps.Skill)
                 .WithMany(s => s.ProfileSkills)
                 .HasForeignKey(ps => ps.SkillId);
+
+            builder.Entity<Profile>()
+                .HasMany<Material>(p => p.AddedMaterials)
+                .WithOne(m => m.AddedBy);
+            
+            builder.Entity<Profile>()
+                .HasMany<Material>(p => p.PassedMaterials)
+                .WithMany(m => m.PassedByUsers);
         }
     }
 }
