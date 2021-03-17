@@ -15,8 +15,7 @@ namespace EducationPortal.WEB.MVC.Validation
             RuleFor(x => x.Name)
                 .NotEmpty()
                 .MinimumLength(1)
-                .MaximumLength(100)
-                .WithMessage("Name length must be from 1 to 100.");
+                .MaximumLength(100);
         }
         
     }

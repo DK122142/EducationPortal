@@ -16,18 +16,14 @@ namespace EducationPortal.WEB.MVC.Validation
             RuleFor(x => x.Name)
                 .NotEmpty()
                 .MinimumLength(10)
-                .MaximumLength(200)
-                .WithMessage("Name length must be from 10 to 200 symbols");
+                .MaximumLength(200);
 
             RuleFor(x => x.Published)
                 .NotEmpty();
 
             RuleFor(x => x.Source)
                 .NotEmpty()
-                .Matches(new Regex(
-                    @"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$",
-                    RegexOptions.IgnoreCase))
-                .WithMessage("Incorrect url");
+                .Must(x => new Uri(x).IsWellFormedOriginalString());
         }
     }
 }

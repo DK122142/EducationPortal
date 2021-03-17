@@ -15,22 +15,18 @@ namespace EducationPortal.WEB.MVC.Validation
             RuleFor(x => x.Login)
                 .NotEmpty()
                 .MinimumLength(4)
-                .MaximumLength(40)
-                .WithMessage("Username length must be from 4 to 40");
+                .MaximumLength(40);
 
-            RuleFor(x=>x.Password)
+            RuleFor(x => x.Password)
                 .NotEmpty()
                 .MinimumLength(4)
-                .MaximumLength(40)
-                .WithMessage("Password length must be from 4 to 40");
+                .MaximumLength(40);
 
             RuleFor(x => x.ConfirmPassword)
                 .NotEmpty()
                 .MinimumLength(4)
                 .MaximumLength(40)
-                .WithMessage("Password length must be from 4 to 40")
-                .Equal(x => x.Password)
-                .WithMessage("Passwords not match");  
+                .Equal(x => x.Password);
         }
     }
 }
