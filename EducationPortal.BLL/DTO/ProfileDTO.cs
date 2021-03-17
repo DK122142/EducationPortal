@@ -5,17 +5,19 @@ namespace EducationPortal.BLL.DTO
 {
     public class ProfileDto
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
         public string AccountUserName { get; set; }
         
-        public virtual IEnumerable<Guid> SkillsId { get; set; }
-
-        public virtual IEnumerable<Guid> PassedMaterialsId { get; set; }
+        public IEnumerable<Guid> ProfileSkillsId { get; set; }
         
-        public virtual IEnumerable<Guid> CreatedCoursesId { get; set; }
+        public IEnumerable<Guid> AddedMaterialsId { get; set; }
+
+        public IEnumerable<Guid> PassedMaterialsId { get; set; }
+        
+        public IEnumerable<Guid> CreatedCoursesId { get; set; }
         
         public IEnumerable<Guid> CompletedCoursesId { get; set; }
 

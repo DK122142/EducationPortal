@@ -58,7 +58,7 @@ namespace EducationPortal.DAL.DbContexts
                 .WithMany(p => p.CompletedCourses);
 
             builder.Entity<ProfileSkill>()
-                .HasKey(ps => new { ps.ProfileId, Id = ps.SkillId });
+                .HasKey(ps => new { ps.ProfileId, ps.SkillId });
             
             builder.Entity<ProfileSkill>()
                 .HasOne(ps => ps.Profile)

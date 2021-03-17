@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EducationPortal.DAL.Entities;
 
 namespace EducationPortal.BLL.DTO
 {
     public class MaterialDto
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
         public string Source { get; set; }
 
-        public IEnumerable<string> PassedByUsersId { get; set; }
+        public Guid AddedById { get; set; }
 
-        public IEnumerable<string> IncludedInId { get; set; }
+        public IEnumerable<Guid> PassedByUsersId { get; set; }
+
+        public IEnumerable<Guid> IncludedInCoursesId { get; set; }
         
         public string Discriminator { get; set; }
     }

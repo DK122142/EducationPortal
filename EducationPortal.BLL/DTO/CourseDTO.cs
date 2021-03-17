@@ -11,14 +11,14 @@ namespace EducationPortal.BLL.DTO
 
         public string Description { get; set; }
 
-        public string CreatorId { get; set; }
+        public Guid CreatorId { get; set; }
 
-        public IEnumerable<string> MaterialNames { get; set; }
+        public IEnumerable<Guid> MaterialsId { get; set; }
 
-        public IEnumerable<string> SkillNames { get; set; }
+        public IEnumerable<Guid> SkillsId { get; set; }
 
-        public IEnumerable<string> JoinedProfilesId { get; set; }
+        public IEnumerable<Guid> JoinedProfilesId { get; set; }
 
-        public IEnumerable<string> CompletedProfilesId { get; set; }
+        public IEnumerable<Guid> CompletedProfilesId { get; set; }
     }
 }

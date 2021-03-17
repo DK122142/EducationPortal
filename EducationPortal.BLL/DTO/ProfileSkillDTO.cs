@@ -1,10 +1,12 @@
-﻿namespace EducationPortal.BLL.DTO
+﻿using System;
+
+namespace EducationPortal.BLL.DTO
 {
     public class ProfileSkillDto
     {
-        public string SkillName { get; set; }
+        public Guid ProfileId { get; set; }
 
-        public string ProfileId { get; set; }
+        public Guid SkillId { get; set; }
 
         public int Level { get; set; }
     }

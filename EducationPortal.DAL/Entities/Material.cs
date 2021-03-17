@@ -16,7 +16,7 @@ namespace EducationPortal.DAL.Entities
 
         public virtual IEnumerable<Profile> PassedByUsers { get; set; }
 
-        public virtual IEnumerable<Course> IncludedIn { get; set; }
+        public virtual IEnumerable<Course> IncludedInCourses { get; set; }
 
         public string Discriminator { get; set; }
     }
