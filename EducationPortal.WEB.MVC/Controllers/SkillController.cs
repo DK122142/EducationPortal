@@ -28,7 +28,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1)
         {
-            int pageSize = 3;
+            int pageSize = 10;
 
             var skillsCount = await this.service.TotalCountAsync();
 
@@ -73,7 +73,6 @@ namespace EducationPortal.WEB.MVC.Controllers
             var model = this.mapper.Map<SkillModel>(skill);
 
             return View(model);
-
         }
 
         [Authorize]

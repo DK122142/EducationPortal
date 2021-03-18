@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -26,7 +27,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1)
         {
-            int pageSize = 3;
+            int pageSize = 10;
 
             var count = await this.service.TotalCountAsync();
 
@@ -61,6 +62,41 @@ namespace EducationPortal.WEB.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
+        [HttpGet]
+        public IActionResult CreateBook() => View();
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateBook(BookCreateViewModel model)
+        {
+            var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            var dto = this.mapper.Map<BookDto>(model);
+
+            await this.service.Create(Guid.Parse(creatorId),  dto);
+
+            return RedirectToAction("Index");
+        }
+        
+        [Authorize]
+        [HttpGet]
+        public IActionResult CreateVideo() => View();
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateVideo(VideoCreateViewModel model)
+        {
+            var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var dto = this.mapper.Map<VideoDto>(model);
+
+            await this.service.Create(Guid.Parse(creatorId),  dto);
+
+            return RedirectToAction("Index");
+        }
         
         [Authorize]
         [HttpGet]
@@ -92,36 +128,78 @@ namespace EducationPortal.WEB.MVC.Controllers
                 return View();
             }
         }
-
-
         
         [Authorize]
         [HttpGet]
-        public IActionResult CreateBook() => View();
+        public async Task<IActionResult> EditBook(Guid id)
+        {
+            var material = await this.service.GetByIdAsync(id);
+            var model = this.mapper.Map<BookModel>(material);
+
+            return View(model);
+        }
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateBook(BookViewModel model)
+        public async Task<IActionResult> EditBook(BookModel model)
         {
-            var book = this.mapper.Map<BookDto>(model);
-            book.Authors = model.Authors.Split(",");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var dto = this.mapper.Map<BookDto>(model);
+                    await this.service.Edit(dto);
+                }
 
-            // await this.service.Add(book);
-
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
         
         [Authorize]
         [HttpGet]
-        public IActionResult CreateVideo() => View();
+        public async Task<IActionResult> EditVideo(Guid id)
+        {
+            var material = await this.service.GetByIdAsync(id);
+            var model = this.mapper.Map<VideoModel>(material);
+
+            return View(model);
+        }
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateVideo(VideoViewModel model)
+        public async Task<IActionResult> EditVideo(VideoModel model)
         {
-            // await this.service.Add(this.mapper.Map<VideoDto>(model));
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var dto = this.mapper.Map<VideoDto>(model);
+                    await this.service.Edit(dto);
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (ModelState.IsValid)
+            {
+                await this.service.DeleteAsync(id);
+            }
 
             return RedirectToAction("Index");
         }

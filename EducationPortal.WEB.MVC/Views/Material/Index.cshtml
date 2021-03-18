@@ -1,4 +1,5 @@
-﻿@model EducationPortal.WEB.MVC.ViewModels.PaginationViewModel<MaterialModel>
+﻿@using System.Security.Claims
+@model EducationPortal.WEB.MVC.ViewModels.PaginationViewModel<MaterialModel>
 
 @addTagHelper *, EducationPortal.WEB.MVC
 
@@ -46,34 +47,43 @@
             {
                 <tr>
                     <td>@item.Name</td><td>@item.Discriminator</td><td>@item.Source</td>
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated
+                         && Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)) == item.AddedById)
                     {
-                <td>
-                    @switch (item.Discriminator)
-                    {
-                        case "Article":
-                            <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@item.Id" method="get">
-                                <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                    Edit
+                        <td>
+                            @switch (item.Discriminator)
+                            {
+                                case "Article":
+                                    <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@item.Id" method="get">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                            Edit
+                                        </button>
+                                    </form>
+                                    break;
+                                case "Book": 
+                                    <form asp-controller="Material" asp-action="EditBook" asp-route-id="@item.Id" method="get">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                            Edit
+                                        </button>
+                                    </form>
+                                    break;
+                                case "Video": 
+                                    <form asp-controller="Material" asp-action="EditVideo" asp-route-id="@item.Id" method="get">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                            Edit
+                                        </button>
+                                    </form>
+                                    break;
+                            }
+                        </td>
+                        
+                        <td>
+                            <form asp-controller="Material" asp-action="Delete" asp-route-id="@item.Id" method="post">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Delete
                                 </button>
                             </form>
-                            break;
-                        case "Book": 
-                            <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@item.Id" method="get">
-                                <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                    EditB
-                                </button>
-                            </form>
-                            break;
-                        case "Video": 
-                            <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@item.Id" method="get">
-                                <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                    EditV
-                                </button>
-                            </form>
-                            break;
-                    }
-                </td>
+                        </td>
                     }
                 </tr>
             }

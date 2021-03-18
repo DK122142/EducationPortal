@@ -1,6 +1,6 @@
 ﻿namespace EducationPortal.WEB.MVC.ViewModels
 {
-    public class BookViewModel : MaterialViewModel
+    public class BookCreateViewModel : MaterialViewModel
     {
         public int PageCount { get; set; }
 

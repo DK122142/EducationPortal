@@ -1,4 +1,4 @@
-﻿@model EducationPortal.WEB.MVC.ViewModels.BookViewModel
+﻿@model EducationPortal.WEB.MVC.ViewModels.BookCreateViewModel
 
 @{
     ViewData["Title"] = "Create book";
@@ -11,32 +11,32 @@
         <form asp-action="CreateBook">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div>
-                <label asp-for="Source" class="control-label"></label>
+                <label asp-for="Source" ></label>
                 <input asp-for="Source" class="form-control" />
                 <span asp-validation-for="Source" class="text-danger"></span>
             </div>
             <div>
-                <label asp-for="PublicationYear" class="control-label"></label>
+                <label asp-for="PublicationYear"></label>
                 <input asp-for="PublicationYear" class="form-control" />
                 <span asp-validation-for="PublicationYear" class="text-danger"></span>
             </div>
             <div>
-                <label asp-for="PageCount" class="control-label"></label>
+                <label asp-for="PageCount"></label>
                 <input asp-for="PageCount" class="form-control" />
                 <span asp-validation-for="PageCount" class="text-danger"></span>
             </div>
             <div>
-                <label asp-for="Format" class="control-label"></label>
+                <label asp-for="Format" ></label>
                 <input asp-for="Format" class="form-control" />
                 <span asp-validation-for="Format" class="text-danger"></span>
             </div>
             <div>
-                <label asp-for="Authors" class="control-label"></label>
+                <label asp-for="Authors"> Input authors separated by commas </label>
                 <input asp-for="Authors" class="form-control" />
                 <span asp-validation-for="Authors" class="text-danger"></span>
             </div>

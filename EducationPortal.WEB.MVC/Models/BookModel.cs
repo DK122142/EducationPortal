@@ -6,7 +6,7 @@ namespace EducationPortal.WEB.MVC.Models
     {
         public int PageCount { get; set; }
 
-        public IEnumerable<string> Authors { get; set; }
+        public string Authors { get; set; }
 
         public string Format { get; set; }
         

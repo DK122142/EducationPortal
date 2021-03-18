@@ -1,1 +1,48 @@
-﻿
+﻿@model EducationPortal.WEB.MVC.Models.BookModel
+
+@{
+    ViewData["Title"] = "Edit book";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <div>
+        <form asp-action="EditBook">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="@Model.Name"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Source"></label>
+                <input asp-for="Source" class="form-control" placeholder="@Model.Source" />
+                <span asp-validation-for="Source" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="PublicationYear"></label>
+                <input asp-for="PublicationYear" class="form-control"  placeholder="@Model.PublicationYear"/>
+                <span asp-validation-for="PublicationYear" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="PageCount"></label>
+                <input asp-for="PageCount" class="form-control"  placeholder="@Model.PageCount"/>
+                <span asp-validation-for="PageCount" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Format"></label>
+                <input asp-for="Format" class="form-control"  placeholder="@Model.Format"/>
+                <span asp-validation-for="Format" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Authors"> Input authors separated by commas </label>
+                <input asp-for="Authors" class="form-control"  placeholder="@Model.Authors"/>
+                <span asp-validation-for="Authors" class="text-danger"></span>
+            </div>
+            <div>
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
