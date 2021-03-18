@@ -1,5 +1,4 @@
 ﻿using System;
-using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Entities
 {

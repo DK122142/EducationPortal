@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EducationPortal.DAL.Migrations
 {
     [DbContext(typeof(EducationPortalContext))]
-    [Migration("20210312022957_update_profile_and_course")]
-    partial class update_profile_and_course
+    [Migration("20210318092508_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,13 +23,13 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("CourseMaterial", b =>
                 {
-                    b.Property<string>("IncludedInId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("IncludedInCoursesId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("MaterialsId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("MaterialsId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("IncludedInId", "MaterialsId");
+                    b.HasKey("IncludedInCoursesId", "MaterialsId");
 
                     b.HasIndex("MaterialsId");
 
@@ -38,11 +38,11 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("CourseProfile", b =>
                 {
-                    b.Property<string>("JoinedCoursesId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("JoinedCoursesId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("JoinedProfilesId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("JoinedProfilesId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("JoinedCoursesId", "JoinedProfilesId");
 
@@ -53,11 +53,11 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("CourseProfile1", b =>
                 {
-                    b.Property<string>("CompletedCoursesId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CompletedCoursesId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CompletedProfilesId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CompletedProfilesId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CompletedCoursesId", "CompletedProfilesId");
 
@@ -68,11 +68,11 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("CourseSkill", b =>
                 {
-                    b.Property<string>("CoursesId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CoursesId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("SkillsId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("SkillsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CoursesId", "SkillsId");
 
@@ -83,8 +83,9 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Account", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -148,8 +149,12 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Course", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -159,13 +164,19 @@ namespace EducationPortal.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
                     b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Material", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AddedById")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -179,6 +190,8 @@ namespace EducationPortal.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddedById");
+
                     b.ToTable("Materials");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Material");
@@ -186,8 +199,8 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Profile", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -199,26 +212,27 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.ProfileSkill", b =>
                 {
-                    b.Property<string>("ProfileId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
-                    b.HasKey("ProfileId", "Id");
+                    b.HasKey("ProfileId", "SkillId");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("SkillId");
 
                     b.ToTable("ProfileSkill");
                 });
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Skill", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -233,11 +247,11 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("MaterialProfile", b =>
                 {
-                    b.Property<string>("PassedByUsersId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PassedByUsersId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PassedMaterialsId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PassedMaterialsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PassedByUsersId", "PassedMaterialsId");
 
@@ -246,10 +260,11 @@ namespace EducationPortal.DAL.Migrations
                     b.ToTable("MaterialProfile");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -273,7 +288,7 @@ namespace EducationPortal.DAL.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -286,9 +301,8 @@ namespace EducationPortal.DAL.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -297,7 +311,7 @@ namespace EducationPortal.DAL.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -310,9 +324,8 @@ namespace EducationPortal.DAL.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -321,7 +334,7 @@ namespace EducationPortal.DAL.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -332,9 +345,8 @@ namespace EducationPortal.DAL.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -343,13 +355,13 @@ namespace EducationPortal.DAL.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -358,10 +370,10 @@ namespace EducationPortal.DAL.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -423,7 +435,7 @@ namespace EducationPortal.DAL.Migrations
                 {
                     b.HasOne("EducationPortal.DAL.Entities.Course", null)
                         .WithMany()
-                        .HasForeignKey("IncludedInId")
+                        .HasForeignKey("IncludedInCoursesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -479,6 +491,24 @@ namespace EducationPortal.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EducationPortal.DAL.Entities.Course", b =>
+                {
+                    b.HasOne("EducationPortal.DAL.Entities.Profile", "Creator")
+                        .WithMany("CreatedCourses")
+                        .HasForeignKey("CreatorId");
+
+                    b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("EducationPortal.DAL.Entities.Material", b =>
+                {
+                    b.HasOne("EducationPortal.DAL.Entities.Profile", "AddedBy")
+                        .WithMany("AddedMaterials")
+                        .HasForeignKey("AddedById");
+
+                    b.Navigation("AddedBy");
+                });
+
             modelBuilder.Entity("EducationPortal.DAL.Entities.Profile", b =>
                 {
                     b.HasOne("EducationPortal.DAL.Entities.Account", "Account")
@@ -492,15 +522,15 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.ProfileSkill", b =>
                 {
-                    b.HasOne("EducationPortal.DAL.Entities.Skill", "Skill")
-                        .WithMany("ProfileSkills")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EducationPortal.DAL.Entities.Profile", "Profile")
                         .WithMany("ProfileSkills")
                         .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EducationPortal.DAL.Entities.Skill", "Skill")
+                        .WithMany("ProfileSkills")
+                        .HasForeignKey("SkillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -524,16 +554,16 @@ namespace EducationPortal.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("EducationPortal.DAL.Entities.Account", null)
                         .WithMany()
@@ -542,7 +572,7 @@ namespace EducationPortal.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("EducationPortal.DAL.Entities.Account", null)
                         .WithMany()
@@ -551,9 +581,9 @@ namespace EducationPortal.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -566,7 +596,7 @@ namespace EducationPortal.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("EducationPortal.DAL.Entities.Account", null)
                         .WithMany()
@@ -582,6 +612,10 @@ namespace EducationPortal.DAL.Migrations
 
             modelBuilder.Entity("EducationPortal.DAL.Entities.Profile", b =>
                 {
+                    b.Navigation("AddedMaterials");
+
+                    b.Navigation("CreatedCourses");
+
                     b.Navigation("ProfileSkills");
                 });
 

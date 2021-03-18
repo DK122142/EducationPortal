@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EducationPortal.DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace EducationPortal.DAL.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -25,7 +25,7 @@ namespace EducationPortal.DAL.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -47,31 +47,10 @@ namespace EducationPortal.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Materials",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Published = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PageCount = table.Column<int>(type: "int", nullable: true),
-                    Authors = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Format = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PublicationYear = table.Column<int>(type: "int", nullable: true),
-                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quality = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Materials", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Skills",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -86,7 +65,7 @@ namespace EducationPortal.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -107,7 +86,7 @@ namespace EducationPortal.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -129,7 +108,7 @@ namespace EducationPortal.DAL.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,8 +125,8 @@ namespace EducationPortal.DAL.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -170,7 +149,7 @@ namespace EducationPortal.DAL.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -190,7 +169,7 @@ namespace EducationPortal.DAL.Migrations
                 name: "Profiles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -208,10 +187,10 @@ namespace EducationPortal.DAL.Migrations
                 name: "Courses",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -225,35 +204,39 @@ namespace EducationPortal.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MaterialProfile",
+                name: "Materials",
                 columns: table => new
                 {
-                    PassedByUsersId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PassedMaterialsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Published = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PageCount = table.Column<int>(type: "int", nullable: true),
+                    Authors = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Format = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PublicationYear = table.Column<int>(type: "int", nullable: true),
+                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quality = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaterialProfile", x => new { x.PassedByUsersId, x.PassedMaterialsId });
+                    table.PrimaryKey("PK_Materials", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MaterialProfile_Materials_PassedMaterialsId",
-                        column: x => x.PassedMaterialsId,
-                        principalTable: "Materials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MaterialProfile_Profiles_PassedByUsersId",
-                        column: x => x.PassedByUsersId,
+                        name: "FK_Materials_Profiles_AddedById",
+                        column: x => x.AddedById,
                         principalTable: "Profiles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ProfileSkill",
                 columns: table => new
                 {
-                    ProfileId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SkillId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SkillId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -274,35 +257,11 @@ namespace EducationPortal.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CourseMaterial",
-                columns: table => new
-                {
-                    IncludedInId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    MaterialsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CourseMaterial", x => new { x.IncludedInId, x.MaterialsId });
-                    table.ForeignKey(
-                        name: "FK_CourseMaterial_Courses_IncludedInId",
-                        column: x => x.IncludedInId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CourseMaterial_Materials_MaterialsId",
-                        column: x => x.MaterialsId,
-                        principalTable: "Materials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CourseProfile",
                 columns: table => new
                 {
-                    JoinedCoursesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    JoinedProfilesId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    JoinedCoursesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JoinedProfilesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -325,8 +284,8 @@ namespace EducationPortal.DAL.Migrations
                 name: "CourseProfile1",
                 columns: table => new
                 {
-                    CompletedCoursesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CompletedProfilesId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CompletedCoursesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CompletedProfilesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -349,8 +308,8 @@ namespace EducationPortal.DAL.Migrations
                 name: "CourseSkill",
                 columns: table => new
                 {
-                    CoursesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SkillsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CoursesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SkillsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -365,6 +324,54 @@ namespace EducationPortal.DAL.Migrations
                         name: "FK_CourseSkill_Skills_SkillsId",
                         column: x => x.SkillsId,
                         principalTable: "Skills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CourseMaterial",
+                columns: table => new
+                {
+                    IncludedInCoursesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MaterialsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseMaterial", x => new { x.IncludedInCoursesId, x.MaterialsId });
+                    table.ForeignKey(
+                        name: "FK_CourseMaterial_Courses_IncludedInCoursesId",
+                        column: x => x.IncludedInCoursesId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CourseMaterial_Materials_MaterialsId",
+                        column: x => x.MaterialsId,
+                        principalTable: "Materials",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MaterialProfile",
+                columns: table => new
+                {
+                    PassedByUsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PassedMaterialsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaterialProfile", x => new { x.PassedByUsersId, x.PassedMaterialsId });
+                    table.ForeignKey(
+                        name: "FK_MaterialProfile_Materials_PassedMaterialsId",
+                        column: x => x.PassedMaterialsId,
+                        principalTable: "Materials",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MaterialProfile_Profiles_PassedByUsersId",
+                        column: x => x.PassedByUsersId,
+                        principalTable: "Profiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -437,6 +444,11 @@ namespace EducationPortal.DAL.Migrations
                 name: "IX_MaterialProfile_PassedMaterialsId",
                 table: "MaterialProfile",
                 column: "PassedMaterialsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Materials_AddedById",
+                table: "Materials",
+                column: "AddedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProfileSkill_SkillId",

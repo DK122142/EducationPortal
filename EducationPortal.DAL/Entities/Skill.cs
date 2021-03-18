@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using EducationPortal.DAL.Interfaces;
 
 namespace EducationPortal.DAL.Entities
 {
