@@ -54,7 +54,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         public async Task<IActionResult> CreateArticle(ArticleCreateViewModel model)
         {
             var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
+            
             var dto = this.mapper.Map<ArticleDto>(model);
 
             await this.service.Create(Guid.Parse(creatorId),  dto);

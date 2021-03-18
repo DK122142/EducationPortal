@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
-using EducationPortal.DAL.Entities;
 
 namespace EducationPortal.BLL.Interfaces
 {

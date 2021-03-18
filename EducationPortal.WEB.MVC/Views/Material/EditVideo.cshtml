@@ -1,1 +1,38 @@
-﻿
+﻿@model EducationPortal.WEB.MVC.Models.VideoModel
+
+@{
+    ViewData["Title"] = "Edit video";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <div>
+        <form asp-action="EditVideo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="@Model.Name"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Source"></label>
+                <input asp-for="Source" class="form-control" placeholder="@Model.Source"/>
+                <span asp-validation-for="Source" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Duration"></label>
+                <input asp-for="Duration" class="form-control" placeholder="@Model.Duration" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Quality"></label>
+                <input asp-for="Quality" class="form-control" placeholder="@Model.Quality" />
+                <span asp-validation-for="Quality" class="text-danger"></span>
+            </div>
+            <div>
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>

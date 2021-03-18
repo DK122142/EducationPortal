@@ -46,7 +46,8 @@
             @foreach (var item in Model.Models)
             {
                 <tr>
-                    <td>@item.Name</td><td>@item.Discriminator</td><td>@item.Source</td>
+                    <td>@item.Name</td><td>@item.Discriminator</td>
+                    <td><a href="@item.Source" target="_blank">@item.Source</a></td>
                     @if (User.Identity.IsAuthenticated
                          && Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)) == item.AddedById)
                     {
