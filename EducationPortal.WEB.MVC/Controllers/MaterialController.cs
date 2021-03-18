@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
@@ -26,16 +28,16 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             int pageSize = 3;
 
-            var count = await this.service.TotalCount();
+            var count = await this.service.TotalCountAsync();
 
-            var materials = await this.service.GetPage((page - 1) * pageSize, pageSize);
+            var materials = await this.service.GetPageAsync(page, pageSize);
 
             var pvm = new PageViewModel(count, page, pageSize);
 
-            var viewModel = new IndexMaterialsViewModel()
+            var viewModel = new PaginationViewModel<MaterialModel>
             {
                 PageViewModel = pvm,
-                Materials = this.mapper.Map<IEnumerable<MaterialModel>>(materials)
+                Models = this.mapper.Map<IEnumerable<MaterialModel>>(materials)
             };
 
             return View(viewModel);
@@ -48,12 +50,50 @@ namespace EducationPortal.WEB.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateArticle(ArticleViewModel model)
+        public async Task<IActionResult> CreateArticle(ArticleCreateViewModel model)
         {
-            await this.service.Add(this.mapper.Map<ArticleDto>(model));
+            var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var dto = this.mapper.Map<ArticleDto>(model);
+
+            await this.service.Create(Guid.Parse(creatorId),  dto);
 
             return RedirectToAction("Index");
         }
+
+        
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> EditArticle(Guid id)
+        {
+            var material = await this.service.GetByIdAsync(id);
+            var model = this.mapper.Map<ArticleModel>(material);
+
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditArticle(ArticleModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var dto = this.mapper.Map<ArticleDto>(model);
+                    await this.service.Edit(dto);
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
         
         [Authorize]
         [HttpGet]
@@ -67,7 +107,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             var book = this.mapper.Map<BookDto>(model);
             book.Authors = model.Authors.Split(",");
 
-            await this.service.Add(book);
+            // await this.service.Add(book);
 
             return RedirectToAction("Index");
         }
@@ -81,7 +121,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateVideo(VideoViewModel model)
         {
-            await this.service.Add(this.mapper.Map<VideoDto>(model));
+            // await this.service.Add(this.mapper.Map<VideoDto>(model));
 
             return RedirectToAction("Index");
         }

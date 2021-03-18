@@ -1,6 +1,6 @@
 ﻿namespace EducationPortal.WEB.MVC.ViewModels
 {
-    public class ArticleViewModel : MaterialViewModel
+    public class ArticleCreateViewModel : MaterialViewModel
     {
         public string Published { get; set; }
     }

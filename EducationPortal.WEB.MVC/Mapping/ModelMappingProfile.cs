@@ -22,12 +22,12 @@ namespace EducationPortal.WEB.MVC.Mapping
             CreateMap<VideoDto, VideoModel>().ReverseMap();
 
             CreateMap<MaterialDto, MaterialViewModel>()
-                .Include<ArticleDto, ArticleViewModel>()
+                .Include<ArticleDto, ArticleCreateViewModel>()
                 .Include<BookDto, BookViewModel>()
                 .Include<VideoDto, VideoViewModel>()
                 .ReverseMap();
             
-            CreateMap<ArticleDto, ArticleViewModel>().ReverseMap();
+            CreateMap<ArticleDto, ArticleCreateViewModel>().ReverseMap();
             CreateMap<BookDto, BookViewModel>().ReverseMap();
             CreateMap<VideoDto, VideoViewModel>().ReverseMap();
 

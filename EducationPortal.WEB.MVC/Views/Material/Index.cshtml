@@ -44,7 +44,38 @@
             <tr><th>Name</th><th>Type</th><th>Link</th></tr>
             @foreach (var item in Model.Models)
             {
-                <tr><td>@item.Name</td><td>@item.Discriminator</td><td>@item.Source</td></tr>
+                <tr>
+                    <td>@item.Name</td><td>@item.Discriminator</td><td>@item.Source</td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                <td>
+                    @switch (item.Discriminator)
+                    {
+                        case "Article":
+                            <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@item.Id" method="get">
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                    Edit
+                                </button>
+                            </form>
+                            break;
+                        case "Book": 
+                            <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@item.Id" method="get">
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                    EditB
+                                </button>
+                            </form>
+                            break;
+                        case "Video": 
+                            <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@item.Id" method="get">
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                    EditV
+                                </button>
+                            </form>
+                            break;
+                    }
+                </td>
+                    }
+                </tr>
             }
         </table>
     </div>

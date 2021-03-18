@@ -5,7 +5,5 @@ namespace EducationPortal.WEB.MVC.ViewModels
     public class UserViewModel
     {
         public ProfileModel Profile { get; set; }
-        
-
     }
 }

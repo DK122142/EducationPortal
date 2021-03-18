@@ -1,57 +1,47 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
-using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using Profile = EducationPortal.DAL.Entities.Profile;
 
 namespace EducationPortal.BLL.Services
 {
     public class MaterialService : Service<Material, MaterialDto>, IMaterialService
     {
-        public MaterialService(IUnitOfWork uow, IMapper mapper) : base(uow, mapper)
+        private IRepository<Profile> profileRepository;
+
+        public MaterialService(IRepository<Material> repository, IRepository<Profile> profileRepository, IMapper mapper) : base(repository, mapper)
         {
+            this.profileRepository = profileRepository;
         }
 
-        public async Task<Material> GetMaterialByName(string materialName)
+        public async Task Create(Guid creatorId, MaterialDto material)
         {
-            return await this.repository.Single(m => m.Name.Equals(materialName));
+            material.Id = Guid.NewGuid();
+
+            var entity = this.mapper.Map<Material>(material);
+
+            var profile = await this.profileRepository.FindAsync(creatorId);
+
+            entity.AddedBy = profile;
+            // profile.AddedMaterials.Add(entity);
+            
+            await this.repository.AddAsync(entity);
+
+            await this.repository.SaveChangesAsync();
         }
 
-        public async Task IncludeMaterialInCourse(string materialId, string courseId)
+        public async Task Edit(MaterialDto material)
         {
-            var material = await this.GetById(materialId);
+            var entity = this.mapper.Map<Material>(material);
 
-            if (material.IncludedInId == null)
-            {
-                material.IncludedInId = new List<string>();
-            }
+            this.repository.Update(entity);
 
-            var included = material.IncludedInId.ToList();
-            included.Add(courseId);
-
-            material.IncludedInId = included;
-
-            await this.Update(material);
-
-            return;
-        }
-
-        public async Task Add(IEnumerable<Material> items)
-        {
-            await this.repository.Add(items);
-            await this.uow.Commit();
-        }
-
-        public async Task<int> Update(IEnumerable<Material> items)
-        {
-            this.repository.Update(items);
-            return await this.uow.Commit();
+            await this.repository.SaveChangesAsync();
         }
     }
 }
