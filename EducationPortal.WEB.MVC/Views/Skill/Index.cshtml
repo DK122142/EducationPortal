@@ -28,19 +28,27 @@
             </tr>
             @foreach (var skill in Model.Models)
             {
-                <tr>
-                    <td>@skill.Name</td><td>@skill.Description</td>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <td>
-                            <form asp-controller="Skill" asp-action="Edit" asp-route-id="@skill.Id" method="get">
-                                <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                    Edit
-                                </button>
-                            </form>
-                        </td>
-                    }
-                </tr>
+        <tr>
+            <td>@skill.Name</td>
+            <td>@skill.Description</td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td>
+                    <form asp-controller="Skill" asp-action="Edit" asp-route-id="@skill.Id" method="get">
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            Edit
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="Skill" asp-action="Delete" asp-route-id="@skill.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            }
+        </tr>
             }
         </table>
     </div>

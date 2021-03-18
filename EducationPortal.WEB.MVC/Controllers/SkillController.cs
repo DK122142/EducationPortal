@@ -79,7 +79,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, SkillModel model)
+        public async Task<IActionResult> Edit(SkillModel model)
         {
             try
             {
@@ -95,6 +95,19 @@ namespace EducationPortal.WEB.MVC.Controllers
             {
                 return View();
             }
+        }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (ModelState.IsValid)
+            {
+                await this.service.DeleteAsync(id);
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
