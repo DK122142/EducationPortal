@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -11,13 +10,11 @@ namespace EducationPortal.BLL.Services
     {        
         private readonly UserManager<Account> userManager;
         private readonly SignInManager<Account> signInManager;
-        private readonly IMapper mapper;
 
-        public AuthService(UserManager<Account> userManager, SignInManager<Account> signInManager, IMapper mapper)
+        public AuthService(UserManager<Account> userManager, SignInManager<Account> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.mapper = mapper;
         }
         
         public async Task<IdentityResult> Register(string username, string password)

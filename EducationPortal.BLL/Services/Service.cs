@@ -53,5 +53,10 @@ namespace EducationPortal.BLL.Services
 
             await this.repository.SaveChangesAsync();
         }
+
+        public async Task<int> TotalCountAsync()
+        {
+            return await this.repository.CountAsync();
+        }
     }
 }

@@ -16,5 +16,7 @@ namespace EducationPortal.BLL.Interfaces
         IQueryable<TDto> FindBy(Expression<Func<TDto, bool>> predicate);
 
         Task Delete(Guid id);
+
+        Task<int> TotalCountAsync();
     }
 }
