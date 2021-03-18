@@ -7,6 +7,6 @@ namespace EducationPortal.BLL.Interfaces
     {
         Task Create(SkillDto item);
 
-        void Edit(SkillDto skill);
+        Task Edit(SkillDto skill);
     }
 }

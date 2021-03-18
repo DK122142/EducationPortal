@@ -22,14 +22,14 @@ namespace EducationPortal.BLL.Services
             this.mapper = mapper;
         }
 
-        public virtual async Task<IEnumerable<TDto>> GetPage(int pageNumber, int itemsOnPage)
+        public virtual async Task<IEnumerable<TDto>> GetPageAsync(int pageNumber, int itemsOnPage)
         {
             var page = await this.repository.SkipTakeToListAsync((pageNumber - 1) * itemsOnPage, itemsOnPage);
 
             return this.mapper.Map<IEnumerable<TDto>>(page);
         }
 
-        public virtual async Task<TDto> GetById(Guid id)
+        public virtual async Task<TDto> GetByIdAsync(Guid id)
         {
             var entity = await this.repository.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace EducationPortal.BLL.Services
             return this.mapper.Map<IQueryable<TDto>>(entity);
         }
 
-        public virtual async Task Delete(Guid id)
+        public virtual async Task DeleteAsync(Guid id)
         {
             var entity = await this.repository.FindAsync(id);
 

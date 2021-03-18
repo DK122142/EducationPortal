@@ -1,54 +1,37 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace EducationPortal.BLL.Services
 {
     public class SkillService : Service<Skill, SkillDto>, ISkillService
     {
-        public SkillService(IUnitOfWork uow, IMapper mapper) : base(uow, mapper)
+        public SkillService(IRepository<Skill> repository, IMapper mapper) : base(repository, mapper)
         {
         }
 
-        public async Task<Skill> GetSkillByName(string skillName)
+        public async Task Create(SkillDto item)
         {
-            return await this.repository.Single(s => s.Name.Equals(skillName));
+            item.Id = Guid.NewGuid();
+
+            var entity = this.mapper.Map<Skill>(item);
+
+            await this.repository.AddAsync(entity);
+
+            await this.repository.SaveChangesAsync();
         }
-
-        public async Task IncludeSkillInCourse(string skillId, string courseId)
+        
+        public async Task Edit(SkillDto skill)
         {
-            var skill = await this.GetById(skillId);
+            var entity = this.mapper.Map<Skill>(skill);
 
-            if (skill.CoursesId == null)
-            {
-                skill.CoursesId = new List<string>();
-            }
+            this.repository.Update(entity);
 
-            var included = skill.CoursesId.ToList();
-            included.Add(courseId);
-
-            skill.CoursesId = included;
-
-            await this.Update(skill);
-
-            return;
-        }
-
-        public Task Add(IEnumerable<Skill> items)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<int> Update(IEnumerable<Skill> items)
-        {
-            this.repository.Update(items);
-            return await this.uow.Commit();
+            await this.repository.SaveChangesAsync();
         }
     }
 }

@@ -9,13 +9,13 @@ namespace EducationPortal.BLL.Interfaces
     public interface IService<TDto>
         where TDto : class
     {
-        Task<IEnumerable<TDto>> GetPage(int pageNumber, int itemsOnPage);
+        Task<IEnumerable<TDto>> GetPageAsync(int pageNumber, int itemsOnPage);
 
-        Task<TDto> GetById(Guid id);
+        Task<TDto> GetByIdAsync(Guid id);
         
         IQueryable<TDto> FindBy(Expression<Func<TDto, bool>> predicate);
 
-        Task Delete(Guid id);
+        Task DeleteAsync(Guid id);
 
         Task<int> TotalCountAsync();
     }

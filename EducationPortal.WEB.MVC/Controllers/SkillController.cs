@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
@@ -31,7 +32,7 @@ namespace EducationPortal.WEB.MVC.Controllers
 
             var skillsCount = await this.service.TotalCountAsync();
 
-            var skills = await this.service.GetPage(page, pageSize);
+            var skills = await this.service.GetPageAsync(page, pageSize);
 
             var pvm = new PageViewModel(skillsCount, page, pageSize);
 
@@ -62,6 +63,38 @@ namespace EducationPortal.WEB.MVC.Controllers
             this.logger.LogInformation($"Added skill {model.Name}");
 
             return RedirectToAction("Index");
+        }
+        
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var skill = await this.service.GetByIdAsync(id);
+            var model = this.mapper.Map<SkillModel>(skill);
+
+            return View(model);
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, SkillModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var dto = this.mapper.Map<SkillDto>(model);
+                    await this.service.Edit(dto);
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }
