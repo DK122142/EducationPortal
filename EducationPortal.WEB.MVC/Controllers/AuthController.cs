@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using AutoMapper;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.WEB.MVC.ViewModels;
 using Microsoft.Extensions.Logging;

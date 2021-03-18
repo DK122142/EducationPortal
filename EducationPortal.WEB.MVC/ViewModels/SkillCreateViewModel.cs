@@ -1,6 +1,6 @@
 ﻿namespace EducationPortal.WEB.MVC.ViewModels
 {
-    public class SkillViewModel
+    public class SkillCreateViewModel
     {
         public string Name { get; set; }
 
