@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using EducationPortal.WEB.MVC.ViewModels;
 using FluentValidation;
 
 namespace EducationPortal.WEB.MVC.Validation
 {
-    public class ArticleViewModelValidator : AbstractValidator<ArticleViewModel>
+    public class ArticleViewModelValidator : AbstractValidator<ArticleCreateViewModel>
     {
         public ArticleViewModelValidator()
         {
