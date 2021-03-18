@@ -10,7 +10,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure.Interfaces
         IEnumerable<T> GetAll<T>();
         // where T : Entity;
 
-        T Get<T>(string id);
+        T Get<T>(Guid id);
         // where T : Entity;
 
         IEnumerable<T> Find<T>(Expression<Func<T, bool>> predicate);
@@ -22,7 +22,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure.Interfaces
         Task UpdateAsync<T>(T item);
         // where T : Entity;
 
-        void Delete<T>(string id);
+        void Delete<T>(Guid id);
             // where T : Entity;
 
         bool Any<T>(Expression<Func<T, bool>> predicate);

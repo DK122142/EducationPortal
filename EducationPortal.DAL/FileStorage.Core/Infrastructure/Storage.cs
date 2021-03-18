@@ -110,7 +110,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
 
-        public T Get<T>(string id)
+        public T Get<T>(Guid id)
             // where T : Entity
         {
             if (this.FileExists<T>(id))
@@ -155,7 +155,7 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
             }
         }
         
-        public void Delete<T>(string id)
+        public void Delete<T>(Guid id)
             // where T : Entity
         {
             if (this.FileExists<T>(id))
@@ -172,18 +172,18 @@ namespace EducationPortal.DAL.FileStorage.Core.Infrastructure
 
         public string FilePathFor<T>(T entity) => $"{this.name}/{typeof(T).Name}/{(entity as IEntity).Id}.json";
 
-        public string FilePathById<T>(string id) => $"{this.name}/{typeof(T).Name}/{id}.json";
+        public string FilePathById<T>(Guid id) => $"{this.name}/{typeof(T).Name}/{id}.json";
 
-        public bool FileExists<T>(string id) => File.Exists(this.FilePathById<T>(id));
+        public bool FileExists<T>(Guid id) => File.Exists(this.FilePathById<T>(id));
 
         public string DirectoryPath<T>() => $"{this.name}/{typeof(T).Name}";
 
-        public string IdByFileName(string fileName)
+        public Guid IdByFileName(string fileName)
         {
             string reversed = new string(fileName.Reverse().ToArray()).Substring(5,36);
             string result = new string(reversed.Reverse().ToArray());
 
-            return result;
+            return Guid.Parse(result);
         }
     }
 }
