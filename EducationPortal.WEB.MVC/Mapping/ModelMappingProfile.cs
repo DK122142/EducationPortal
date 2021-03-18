@@ -42,9 +42,16 @@ namespace EducationPortal.WEB.MVC.Mapping
             CreateMap<BookCreateViewModel, BookDto>()
                 .ForMember(b => b.Authors,
                     c => c.MapFrom(b => b.Authors.Split(",", StringSplitOptions.TrimEntries).ToList()));
-
+            
             CreateMap<CourseDto, CourseModel>().ReverseMap();
-            CreateMap<CourseModel, CourseViewModel>().ReverseMap();
+            CreateMap<CourseDto, CourseViewModel>().ReverseMap();
+            CreateMap<CourseDto, CourseCreateViewModel>().ReverseMap();
+            CreateMap<CourseUpdateViewModel, CourseDto>().ReverseMap();
+                // .ForMember(c => c.SkillsId, conf => conf.MapFrom(c => c.Skills.Models.Select(s => s.Id)))
+                // .ForMember(c => c.MaterialsId, conf => conf.MapFrom(c => c.Materials.Models.Select(s => s.Id)))
+                // .ReverseMap();
+            CreateMap<CourseModel, CourseCreateViewModel>().ReverseMap();
+            CreateMap<CourseModel, CourseUpdateViewModel>().ReverseMap();
             
             CreateMap<SkillDto, SkillModel>().ReverseMap();
             CreateMap<SkillDto, SkillCreateViewModel>().ReverseMap();

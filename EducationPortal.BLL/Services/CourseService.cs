@@ -1,102 +1,73 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
-using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Profile = EducationPortal.DAL.Entities.Profile;
 
 namespace EducationPortal.BLL.Services
 {
     public class CourseService : Service<Course, CourseDto>, ICourseService
     {
-        private IMaterialService materialService;
-        private ISkillService skillService;
-
-        public CourseService(IMapper mapper,  IMaterialService materialService, ISkillService skillService) : base(uow, mapper)
+        private IRepository<Material> materialRepository;
+        private IRepository<Skill> skillRepository;
+        private IRepository<Profile> profileRepository;
+        
+        public CourseService(IRepository<Course> repository, IRepository<Material> materialRepository, IRepository<Skill> skillRepository, IMapper mapper, IRepository<Profile> profileRepository) : base(repository, mapper)
         {
-            this.materialService = materialService;
-            this.skillService = skillService;
+            this.materialRepository = materialRepository;
+            this.skillRepository = skillRepository;
+            this.profileRepository = profileRepository;
         }
 
-        public async Task<int> CreateCourse(CourseDto course)
+        public async Task<Guid> Create(Guid creatorId, CourseDto course)
         {
-            var courseEntity = this.mapper.Map<Course>(course);
+            var creator = await this.profileRepository.FindAsync(creatorId);
             
-            if (courseEntity.Materials == null)
-            {
-                courseEntity.Materials = new List<Material>();
-            }
+            var newCourse = this.mapper.Map<Course>(course);
 
-            if (courseEntity.Skills == null)
-            {
-                courseEntity.Skills = new List<Skill>();
-            }
+            newCourse.Id = Guid.NewGuid();
+            newCourse.Creator = creator;
 
-            var courseMaterials = courseEntity.Materials;
-            var courseSkills = courseEntity.Skills.ToList();
+            await this.repository.AddAsync(newCourse);
+
+            await this.repository.SaveChangesAsync();
+
+            return newCourse.Id;
+        }
+
+        public async Task Edit(CourseDto course)
+        {
+            var skills = this.skillRepository.FindBy(s => course.SkillsId.Contains(s.Id));
+
+            var materials = this.materialRepository.FindBy(m => course.MaterialsId.Contains(m.Id));
+
+            var updatedCourse = this.mapper.Map<Course>(course);
             
-            foreach (var name in course.MaterialNames)
-            {
-                courseMaterials.Add(await this.materialService.GetMaterialByName(name.Trim()));
-            }
+            updatedCourse.Skills = await skills.ToListAsync();
+            updatedCourse.Materials = await materials.ToListAsync();
 
-            foreach (var name in course.SkillNames)
-            {
-                courseSkills.Add(await this.skillService.GetSkillByName(name.Trim()));
-            }
+            this.repository.Update(updatedCourse);
 
-            courseEntity.Materials = courseMaterials;
-            courseEntity.Skills = courseSkills;
-
-            foreach (var courseMaterial in courseMaterials)
-            {
-                var included = courseMaterial.IncludedIn.ToList();
-
-                included.Add(courseEntity);
-
-                courseMaterial.IncludedIn = included;
-
-            }
-
-            this.uow.Repository<Material>().Update(courseMaterials);
-            await this.repository.Add(courseEntity);
-
-            var res = await this.uow.Commit();
-
-            return res;
+            await this.repository.SaveChangesAsync();
         }
 
-        public async Task<Course> GetByName(string courseName)
+        public IQueryable<SkillDto> SearchSkill(string searchString)
         {
-            return await this.repository.Single(s => s.Name.Equals(courseName));
+            var skills = this.skillRepository.FindBy(s => s.Name.Contains(searchString));
+
+            var dto = this.mapper.Map<IQueryable<SkillDto>>(skills);
+
+            return dto;
         }
 
-        public void JoinToCourse(string userId, CourseDto course)
+        public void SearchMaterial(string searchString)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public OperationDetails AddMaterialToCourse(string courseId, string materialId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public OperationDetails RemoveMaterialFromCourse(string courseId, string materialId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public OperationDetails AddSkillToCourse(string courseId, string skillId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public OperationDetails RemoveSkillFromCourse(string courseId, string skillId)
-        {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

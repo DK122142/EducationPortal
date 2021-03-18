@@ -1,5 +1,4 @@
-﻿using EducationPortal.WEB.MVC.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using EducationPortal.WEB.MVC.ViewModels;

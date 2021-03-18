@@ -1,0 +1,74 @@
+﻿@model EducationPortal.WEB.MVC.ViewModels.CourseUpdateViewModel
+
+@addTagHelper *, EducationPortal.WEB.MVC
+
+@{
+    ViewData["Title"] = "Add skills to course";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <div>
+        <h3>Added skills</h3>
+        <form asp-action="AddSkills">
+            <div>
+                @if (Model.CourseModel.Skills != null)
+                {
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                        @foreach (var skill in Model.CourseModel.Skills)
+                        {
+                            <tr>
+                                <td>@skill.Name</td>
+                            </tr>
+                        }
+                    </table>
+                }
+            </div>
+            <div>
+                <input type="submit" value="Continue" class="btn btn-outline-success" />
+            </div>
+        </form>
+        
+        <h3>Skills</h3>
+        <div>
+            <div>
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                    @foreach (var item in Model.Skills.Models)
+                    {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    @if (Model.CourseModel.Skills == null || !Model.CourseModel.Skills.Contains(item))
+                    {
+                        <td>
+                            <button type="button" onclick="@{Model.CourseModel.Skills.ToList().Add(item);}" class="btn btn-sm btn-outline-primary">
+                                Add
+                            </button>
+                        </td>
+                    }
+                    else if (Model.CourseModel.Skills.Contains(item))
+                    {
+                        <td>
+                            <button type="button" onclick="@{Model.Skills.Models.ToList().Remove(item);}" class="btn btn-sm btn-outline-danger">
+                                Cancel
+                            </button>
+                        </td>
+                    }
+                </tr>
+                    }
+                </table>
+            </div>
+            <div>
+                <page-link page-model="Model.Skills.PageViewModel" page-action="AddSkills"></page-link>
+            </div>
+        </div>
+    </div>
+</div>

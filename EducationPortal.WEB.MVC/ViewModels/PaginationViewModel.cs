@@ -2,7 +2,7 @@
 
 namespace EducationPortal.WEB.MVC.ViewModels
 {
-    public class PaginationViewModel<TModel>
+    public class PaginationViewModel<TModel> where TModel : class
     {
         public PageViewModel PageViewModel { get; set; }
 
