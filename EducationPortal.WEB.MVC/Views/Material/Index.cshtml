@@ -1,4 +1,4 @@
-﻿@model EducationPortal.WEB.MVC.ViewModels.IndexMaterialsViewModel
+﻿@model EducationPortal.WEB.MVC.ViewModels.PaginationViewModel<MaterialModel>
 
 @addTagHelper *, EducationPortal.WEB.MVC
 
@@ -42,7 +42,7 @@
     <div>
         <table class="table">
             <tr><th>Name</th><th>Type</th><th>Link</th></tr>
-            @foreach (var item in Model.Materials)
+            @foreach (var item in Model.Models)
             {
                 <tr><td>@item.Name</td><td>@item.Discriminator</td><td>@item.Source</td></tr>
             }

@@ -3,10 +3,10 @@ using EducationPortal.WEB.MVC.Models;
 
 namespace EducationPortal.WEB.MVC.ViewModels
 {
-    public class IndexCoursesViewModel
+    public class PaginationViewModel<TModel>
     {
         public PageViewModel PageViewModel { get; set; }
 
-        public IEnumerable<CourseModel> Courses { get; set; }
+        public IEnumerable<TModel> Models { get; set; }
     }
 }
