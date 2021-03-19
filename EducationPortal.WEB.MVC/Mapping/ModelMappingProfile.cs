@@ -44,14 +44,17 @@ namespace EducationPortal.WEB.MVC.Mapping
                     c => c.MapFrom(b => b.Authors.Split(",", StringSplitOptions.TrimEntries).ToList()));
             
             CreateMap<CourseDto, CourseModel>().ReverseMap();
-            CreateMap<CourseDto, CourseViewModel>().ReverseMap();
+            CreateMap<CourseViewModel, CourseDto>()
+                .ForMember(c => c.SkillsId, conf => conf.MapFrom(c => c.Skills.Select(s => s.Id)))
+                .ForMember(c => c.MaterialsId, conf => conf.MapFrom(c => c.Materials.Select(m => m.Id)))
+                .ReverseMap();
             CreateMap<CourseDto, CourseCreateViewModel>().ReverseMap();
-            CreateMap<CourseUpdateViewModel, CourseDto>().ReverseMap();
-                // .ForMember(c => c.SkillsId, conf => conf.MapFrom(c => c.Skills.Models.Select(s => s.Id)))
-                // .ForMember(c => c.MaterialsId, conf => conf.MapFrom(c => c.Materials.Models.Select(s => s.Id)))
-                // .ReverseMap();
+            CreateMap<CourseContinueCreateViewModel, CourseDto>()
+                .ForMember(c => c.SkillsId, conf => conf.MapFrom(c => c.Skills.Models.Select(s => s.Id)))
+                .ForMember(c => c.MaterialsId, conf => conf.MapFrom(c => c.Materials.Models.Select(s => s.Id)))
+                .ReverseMap();
             CreateMap<CourseModel, CourseCreateViewModel>().ReverseMap();
-            CreateMap<CourseModel, CourseUpdateViewModel>().ReverseMap();
+            CreateMap<CourseModel, CourseContinueCreateViewModel>().ReverseMap();
             
             CreateMap<SkillDto, SkillModel>().ReverseMap();
             CreateMap<SkillDto, SkillCreateViewModel>().ReverseMap();

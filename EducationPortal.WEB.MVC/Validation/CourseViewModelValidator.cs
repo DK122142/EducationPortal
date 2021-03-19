@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace EducationPortal.WEB.MVC.Validation
 {
-    public class CourseViewModelValidator : AbstractValidator<CourseUpdateViewModel>
+    public class CourseViewModelValidator : AbstractValidator<CourseContinueCreateViewModel>
     {
         
     }

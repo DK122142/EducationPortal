@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace EducationPortal.WEB.MVC.Models
+﻿namespace EducationPortal.WEB.MVC.Models
 {
     public class BookModel : MaterialModel
     {

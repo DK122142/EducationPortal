@@ -10,9 +10,8 @@ namespace EducationPortal.BLL.Interfaces
         Task<Guid> Create(Guid creatorId, CourseDto course);
         
         Task Edit(CourseDto course);
-        
-        IQueryable<SkillDto> SearchSkill(string searchString);
 
-        void SearchMaterial(string searchString);
+        Task AddSkillToCourse(Guid skillId, Guid courseId);
+        
     }
 }

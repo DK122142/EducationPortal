@@ -17,11 +17,13 @@ namespace EducationPortal.WEB.MVC.Controllers
         private readonly IMapper mapper;
         private readonly ICourseService service;
         private readonly ISkillService skillService;
+        private readonly IMaterialService materialService;
 
-        public CourseController(IMapper mapper, ICourseService service, ISkillService skillService)
+        public CourseController(IMapper mapper, ICourseService service, ISkillService skillService, IMaterialService materialService)
         {
             this.service = service;
             this.skillService = skillService;
+            this.materialService = materialService;
             this.mapper = mapper;
         }
 
@@ -62,43 +64,80 @@ namespace EducationPortal.WEB.MVC.Controllers
             var course = await this.service.GetByIdAsync(courseId);
 
             var courseModel = this.mapper.Map<CourseViewModel>(course);
-        
-            return RedirectToAction("AddSkills", courseModel);
+            
+            return RedirectToAction("Index");
         }
-        
+
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> AddSkills(CourseViewModel model, int page = 1)
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var courseDto = await this.service.GetByIdAsync(id);
+            var skillsDto = new List<SkillDto>();
+            var materialsDto = new List<MaterialDto>();
+            
+            foreach (var skillId in courseDto.SkillsId)
+            {
+                var skill = await this.skillService.GetByIdAsync(skillId);
+
+                skillsDto.Add(skill);
+            }
+
+            foreach (var materialId in courseDto.MaterialsId)
+            {
+                var material = await materialService.GetByIdAsync(materialId);
+
+                materialsDto.Add(material);
+            }
+
+            var course = this.mapper.Map<CourseViewModel>(courseDto);
+            var skills = this.mapper.Map<IEnumerable<SkillModel>>(skillsDto);
+            var materials = this.mapper.Map<IEnumerable<MaterialModel>>(materialsDto);
+
+            course.Skills = skills;
+            course.Materials = materials;
+
+            return View(course);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> AddSkills(Guid courseId, int page = 1)
         {
             int pageSize = 5;
-
+        
             var skillsCount = await this.skillService.TotalCountAsync();
-
+        
             var skills = await this.skillService.GetPageAsync(page, pageSize);
-
+        
             var pvm = new PageViewModel(skillsCount, page, pageSize);
-
-            var viewModel = new PaginationViewModel<SkillModel>
+        
+            var paginationViewModel = new PaginationViewModel<SkillModel>
             {
                 PageViewModel = pvm,
                 Models = this.mapper.Map<IEnumerable<SkillModel>>(skills)
             };
+            
+            var course = await this.service.GetByIdAsync(courseId);
 
-            return View(new CourseUpdateViewModel
+            var courseModel = this.mapper.Map<CourseViewModel>(course);
+
+            var viewModel = new CourseContinueCreateViewModel
             {
-                CourseModel = model,
-                Skills = viewModel
-            });
+                CourseModel = courseModel,
+                Skills = paginationViewModel
+            };
+        
+            return View(viewModel);
         }
-
+        
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult AddSkills(CourseUpdateViewModel model)
+        public async Task<IActionResult> AddSkill(Guid courseId, Guid id)
         {
+            await this.service.AddSkillToCourse(id, courseId);
 
-
-            return RedirectToAction("Index");
+            return RedirectToAction("AddSkills", new {courseId = courseId});
         }
         
         [Authorize]

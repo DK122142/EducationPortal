@@ -1,0 +1,69 @@
+﻿@model EducationPortal.WEB.MVC.ViewModels.CourseViewModel
+
+@{
+    ViewData["Title"] = "Course";
+}
+
+<h1>@ViewData["Title"]: @Model.Name</h1>
+
+<div>
+    <div>
+        <h4>
+            @Model.Description
+        </h4>
+    </div>
+    <div>
+        <h3>Skills</h3>
+        <div>
+            <table class="table">
+                <tr>
+                    <th>Name</th><th>Description</th>
+                </tr>
+                @foreach (var skill in Model.Skills)
+                {
+                    <tr>
+                        <td>@skill.Name</td>
+                        <td>@skill.Description</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div>
+        <h3>Materials</h3>
+        <table class="table">
+            <tr><th>Name</th><th>Type</th><th>Link</th></tr>
+            @foreach (var item in Model.Materials)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Discriminator</td>
+                    <td><a href="@item.Source" target="_blank">@item.Source</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <a asp-controller="Course" asp-action="AddSkills" asp-route-courseId="@Model.Id">
+                        Add skills
+                    </a>
+                    @* <form method="get" asp-controller="Course" asp-action="AddSkills" asp-route-courseId="@Model.Id"> *@
+                    @*     <div> *@
+                    @*         <input type="submit" value="Add skills" class="btn btn-secondary" /> *@
+                    @*     </div> *@
+                    @* </form> *@
+                </div>
+                @* <div class="col"> *@
+                @*     <form method="get" asp-controller="Course" asp-action="AddMaterials" asp-route-id="@Model.Id"> *@
+                @*         <div> *@
+                @*             <input type="submit" value="Add materials" class="btn btn-secondary" /> *@
+                @*         </div> *@
+                @*     </form> *@
+                @* </div> *@
+            </div>
+        </div>
+    </div>
+</div>

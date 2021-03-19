@@ -56,18 +56,15 @@ namespace EducationPortal.BLL.Services
             await this.repository.SaveChangesAsync();
         }
 
-        public IQueryable<SkillDto> SearchSkill(string searchString)
+        public async Task AddSkillToCourse(Guid skillId, Guid courseId)
         {
-            var skills = this.skillRepository.FindBy(s => s.Name.Contains(searchString));
+            var skill = await this.skillRepository.FindAsync(skillId);
 
-            var dto = this.mapper.Map<IQueryable<SkillDto>>(skills);
+            var course = await this.repository.FindAsync(courseId);
 
-            return dto;
-        }
+            course.Skills.Add(skill);
 
-        public void SearchMaterial(string searchString)
-        {
-            throw new NotImplementedException();
+            await this.repository.SaveChangesAsync();
         }
     }
 }

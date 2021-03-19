@@ -1,4 +1,4 @@
-﻿@model EducationPortal.WEB.MVC.ViewModels.CourseUpdateViewModel
+﻿@model EducationPortal.WEB.MVC.ViewModels.CourseContinueCreateViewModel
 
 @addTagHelper *, EducationPortal.WEB.MVC
 
@@ -9,66 +9,65 @@
 <h1>@ViewData["Title"]</h1>
 
 <div>
-    <div>
-        <h3>Added skills</h3>
-        <form asp-action="AddSkills">
-            <div>
-                @if (Model.CourseModel.Skills != null)
-                {
-                    <table class="table">
-                        <tr>
-                            <th>Name</th>
-                        </tr>
-                        @foreach (var skill in Model.CourseModel.Skills)
-                        {
-                            <tr>
-                                <td>@skill.Name</td>
-                            </tr>
-                        }
-                    </table>
-                }
-            </div>
-            <div>
-                <input type="submit" value="Continue" class="btn btn-outline-success" />
-            </div>
-        </form>
-        
-        <h3>Skills</h3>
+    <h3>Added skills</h3>
         <div>
-            <div>
+            @if (Model.CourseModel.Skills != null)
+            {
                 <table class="table">
                     <tr>
                         <th>Name</th>
-                        <th>Description</th>
                     </tr>
-                    @foreach (var item in Model.Skills.Models)
+                    @foreach (var skill in Model.CourseModel.Skills)
                     {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Description</td>
-                    @if (Model.CourseModel.Skills == null || !Model.CourseModel.Skills.Contains(item))
-                    {
-                        <td>
-                            <button type="button" onclick="@{Model.CourseModel.Skills.ToList().Add(item);}" class="btn btn-sm btn-outline-primary">
-                                Add
-                            </button>
-                        </td>
-                    }
-                    else if (Model.CourseModel.Skills.Contains(item))
-                    {
-                        <td>
-                            <button type="button" onclick="@{Model.Skills.Models.ToList().Remove(item);}" class="btn btn-sm btn-outline-danger">
-                                Cancel
-                            </button>
-                        </td>
-                    }
-                </tr>
+                        <tr>
+                            <td>@skill.Name</td>
+                        </tr>
                     }
                 </table>
-            </div>
-            <div>
-                <page-link page-model="Model.Skills.PageViewModel" page-action="AddSkills"></page-link>
-            </div>
+            }
+            @* <form asp-controller="Course" asp-action="AddSkills" method="post"> *@
+            @*     <button type="submit" class="btn btn-sm btn-outline-success"> *@
+            @*         Continue *@
+            @*     </button> *@
+            @* </form> *@
         </div>
+</div>
+
+<div>
+    <div>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+            @foreach (var skill in Model.Skills.Models)
+            {
+                <tr>
+                    <td>@skill.Name</td>
+                    <td>@skill.Description</td>
+                    @if (Model.CourseModel.Skills == null || !Model.CourseModel.Skills.Contains(skill))
+                       {
+                <td>
+                    <form asp-controller="Course" asp-action="AddSkill" asp-route-courseId="@Model.CourseModel.Id" asp-route-id="@skill.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                            Add
+                        </button>
+                    </form>
+
+                    @* <form> *@
+                    @*     <button type="submit" class="btn btn-sm btn-outline-primary" onclick="@{ *@
+                    @*                                                                               Model.CourseModel.Skills.ToList().Add(skill); *@
+                    @*                                                                           };"> *@
+                    @*         Add *@
+                    @*     </button> *@
+                    @* </form> *@
+                </td>
+                       }
+                </tr>
+            }
+        </table>
+    </div>
+    <div>
+        <page-link page-model="Model.Skills.PageViewModel" page-action="AddSkills"></page-link>
     </div>
 </div>

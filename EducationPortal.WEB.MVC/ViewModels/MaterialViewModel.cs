@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EducationPortal.WEB.MVC.ViewModels
+﻿namespace EducationPortal.WEB.MVC.ViewModels
 {
     public class MaterialViewModel
     {

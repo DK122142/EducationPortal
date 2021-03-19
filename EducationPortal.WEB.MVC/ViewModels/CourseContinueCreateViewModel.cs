@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using EducationPortal.WEB.MVC.Models;
+﻿using EducationPortal.WEB.MVC.Models;
 
 namespace EducationPortal.WEB.MVC.ViewModels
 {
-    public class CourseUpdateViewModel
+    public class CourseContinueCreateViewModel
     {
         public CourseViewModel CourseModel { get; set; }
 
