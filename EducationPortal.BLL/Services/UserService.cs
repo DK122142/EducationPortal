@@ -15,10 +15,12 @@ namespace EducationPortal.BLL.Services
     public class UserService : Service<Profile, ProfileDto>, IUserService
     {
         private readonly IRepository<Course> courseRepository;
+        private readonly IRepository<Skill> skillRepository;
         
-        public UserService(IRepository<Profile> repository, IRepository<Course> courseRepository, IMapper mapper) : base(repository, mapper)
+        public UserService(IRepository<Profile> repository, IRepository<Course> courseRepository, IMapper mapper, IRepository<Skill> skillRepository) : base(repository, mapper)
         {
             this.courseRepository = courseRepository;
+            this.skillRepository = skillRepository;
         }
 
         // public async Task<OperationDetails> JoinToCourse(Guid userId, CourseDto courseToJoin)
@@ -150,11 +152,33 @@ namespace EducationPortal.BLL.Services
             profile.JoinedCourses.Remove(course);
             profile.CompletedCourses.Add(course);
 
+            // Adding materials
             foreach (var courseMaterial in course.Materials)
             {
                 if (!profile.PassedMaterials.Contains(courseMaterial))
                 {
                     profile.PassedMaterials.Add(courseMaterial);
+                }
+            }
+            
+            // Adding skills
+            foreach (var courseSkill in course.Skills)
+            {
+                if (profile.ProfileSkills.Select(ps=>ps.SkillId).Contains(courseSkill.Id))
+                {
+                    profile.ProfileSkills.FirstOrDefault(ps =>
+                        ps.SkillId.Equals(courseSkill.Id) && ps.ProfileId.Equals(profile.Id)).Level += 1;
+                }
+                else
+                {
+                    profile.ProfileSkills.Add(new ProfileSkill
+                    {
+                        Level = 1,
+                        Profile = profile,
+                        ProfileId = profile.Id,
+                        Skill = courseSkill,
+                        SkillId = courseSkill.Id
+                    });
                 }
             }
 
