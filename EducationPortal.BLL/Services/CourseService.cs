@@ -66,5 +66,16 @@ namespace EducationPortal.BLL.Services
 
             await this.repository.SaveChangesAsync();
         }
+
+        public async Task AddMaterialToCourse(Guid materialId, Guid courseId)
+        {
+            var material = await this.materialRepository.FindAsync(materialId);
+
+            var course = await this.repository.FindAsync(courseId);
+
+            course.Materials.Add(material);
+
+            await this.repository.SaveChangesAsync();
+        }
     }
 }

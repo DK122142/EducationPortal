@@ -10,8 +10,10 @@ namespace EducationPortal.BLL.Interfaces
         Task<Guid> Create(Guid creatorId, CourseDto course);
         
         Task Edit(CourseDto course);
-
+        
         Task AddSkillToCourse(Guid skillId, Guid courseId);
+
+        Task AddMaterialToCourse(Guid materialId, Guid courseId);
         
     }
 }

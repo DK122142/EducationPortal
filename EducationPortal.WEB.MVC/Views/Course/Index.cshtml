@@ -30,24 +30,16 @@
         <tr>
             <td>@item.Name</td>
             <td>@item.Description</td>
+            <td>
+                <form asp-controller="Course" asp-action="Details" asp-route-id="@item.Id" method="get">
+                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                        Details
+                    </button>
+                </form>
+            </td>
             @if (User.Identity.IsAuthenticated
               && Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)) == item.CreatorId)
             {
-
-                <td>
-                    <form asp-controller="Course" asp-action="Edit" asp-route-id="@item.Id" method="get">
-                        <button type="submit" class="btn btn-sm btn-outline-secondary">
-                            Edit
-                        </button>
-                    </form>
-                </td>
-                <td>
-                    <form asp-controller="Course" asp-action="Details" asp-route-id="@item.Id" method="get">
-                        <button type="submit" class="btn btn-sm btn-outline-primary">
-                            Details
-                        </button>
-                    </form>
-                </td>
                 <td>
                     <form asp-controller="Course" asp-action="Delete" asp-route-id="@item.Id" method="post">
                         <button type="submit" class="btn btn-sm btn-outline-danger">

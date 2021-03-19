@@ -69,7 +69,6 @@ namespace EducationPortal.WEB.MVC.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Details(Guid id)
         {
             var courseDto = await this.service.GetByIdAsync(id);
@@ -153,6 +152,59 @@ namespace EducationPortal.WEB.MVC.Controllers
             return View(viewModel);
         }
         
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> AddMaterials(Guid courseId, int page = 1)
+        {
+            int pageSize = 100;
+        
+            var count = await this.materialService.TotalCountAsync();
+        
+            var skills = await this.materialService.GetPageAsync(page, pageSize);
+        
+            var pvm = new PageViewModel(count, page, pageSize);
+        
+            var paginationViewModel = new PaginationViewModel<MaterialModel>
+            {
+                PageViewModel = pvm,
+                Models = this.mapper.Map<IEnumerable<MaterialModel>>(skills)
+            };
+            
+            // Course model data
+            var courseDto = await this.service.GetByIdAsync(courseId);
+            var skillsDto = new List<SkillDto>();
+            var materialsDto = new List<MaterialDto>();
+            
+            foreach (var skillId in courseDto.SkillsId)
+            {
+                var skill = await this.skillService.GetByIdAsync(skillId);
+
+                skillsDto.Add(skill);
+            }
+
+            foreach (var materialId in courseDto.MaterialsId)
+            {
+                var material = await materialService.GetByIdAsync(materialId);
+
+                materialsDto.Add(material);
+            }
+
+            var course = this.mapper.Map<CourseViewModel>(courseDto);
+            var skillModels = this.mapper.Map<IEnumerable<SkillModel>>(skillsDto);
+            var materials = this.mapper.Map<IEnumerable<MaterialModel>>(materialsDto);
+
+            course.Skills = skillModels;
+            course.Materials = materials;
+
+            var viewModel = new CourseContinueCreateViewModel
+            {
+                CourseModel = course,
+                Materials = paginationViewModel
+            };
+        
+            return View(viewModel);
+        }
+        
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddSkill(Guid courseId, Guid id)
@@ -160,6 +212,15 @@ namespace EducationPortal.WEB.MVC.Controllers
             await this.service.AddSkillToCourse(id, courseId);
 
             return RedirectToAction("AddSkills", new {courseId = courseId});
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddMaterial(Guid courseId, Guid id)
+        {
+            await this.service.AddMaterialToCourse(id, courseId);
+
+            return RedirectToAction("AddMaterials", new {courseId = courseId});
         }
         
         [Authorize]

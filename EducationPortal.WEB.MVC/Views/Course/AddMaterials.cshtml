@@ -1,0 +1,71 @@
+﻿@using Castle.Core.Internal
+@model EducationPortal.WEB.MVC.ViewModels.CourseContinueCreateViewModel
+
+@addTagHelper *, EducationPortal.WEB.MVC
+
+@{
+    ViewData["Title"] = "Add materials to course";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h3>Added materials</h3>
+    <div>
+        @if (!Model.CourseModel.Materials.IsNullOrEmpty())
+        {
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                </tr>
+                @foreach (var skill in Model.CourseModel.Materials)
+                {
+                    <tr>
+                        <td>@skill.Name</td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>
+
+<div>
+    <div>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Link</th>
+            </tr>
+            @foreach (var material in Model.Materials.Models)
+            {
+        <tr>
+            <td>@material.Name</td>
+            <td>@material.Discriminator</td>
+            <td><a href="@material.Source" target="_blank">@material.Source</a></td>
+
+            @if (Model.CourseModel.Materials.IsNullOrEmpty() ||
+                !Model.CourseModel.Materials.Select(s => s.Id).Contains(material.Id))
+            {
+                <td>
+                    <form asp-controller="Course" asp-action="AddMaterial" asp-route-courseId="@Model.CourseModel.Id" asp-route-id="@material.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                            Add
+                        </button>
+                    </form>
+                </td>
+            }
+            else
+            {
+                <td>
+                    Added
+                </td>
+            }
+        </tr>
+            }
+        </table>
+    </div>
+    <div>
+        <page-link page-model="Model.Materials.PageViewModel" page-action="AddMaterials"></page-link>
+    </div>
+</div>
