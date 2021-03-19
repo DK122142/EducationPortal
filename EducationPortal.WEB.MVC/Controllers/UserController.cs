@@ -16,7 +16,6 @@ namespace EducationPortal.WEB.MVC.Controllers
     {
         private IMapper mapper;
         private IUserService service;
-        private ICourseService courseService;
 
         public UserController(IMapper mapper, IUserService service)
         {

@@ -24,7 +24,7 @@ namespace EducationPortal.BLL.Services
             this.profileRepository = profileRepository;
         }
 
-        public async Task<Guid> Create(Guid creatorId, CourseDto course)
+        public async Task Create(Guid creatorId, CourseDto course)
         {
             var creator = await this.profileRepository.FindAsync(creatorId);
             
@@ -36,8 +36,6 @@ namespace EducationPortal.BLL.Services
             await this.repository.AddAsync(newCourse);
 
             await this.repository.SaveChangesAsync();
-
-            return newCourse.Id;
         }
 
         public async Task Edit(CourseDto course)

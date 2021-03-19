@@ -6,7 +6,7 @@ namespace EducationPortal.BLL.Interfaces
 {
     public interface ICourseService : IService<CourseDto>
     {
-        Task<Guid> Create(Guid creatorId, CourseDto course);
+        Task Create(Guid creatorId, CourseDto course);
         
         Task Edit(CourseDto course);
         

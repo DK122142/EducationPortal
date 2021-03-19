@@ -27,7 +27,6 @@ namespace EducationPortal.BLL.Services
             var profile = await this.profileRepository.FindAsync(creatorId);
 
             entity.AddedBy = profile;
-            // profile.AddedMaterials.Add(entity);
             
             await this.repository.AddAsync(entity);
 
