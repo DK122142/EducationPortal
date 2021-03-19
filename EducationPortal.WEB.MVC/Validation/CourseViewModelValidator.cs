@@ -3,8 +3,19 @@ using FluentValidation;
 
 namespace EducationPortal.WEB.MVC.Validation
 {
-    public class CourseViewModelValidator : AbstractValidator<CourseContinueCreateViewModel>
+    public class CourseViewModelValidator : AbstractValidator<CourseCreateViewModel>
     {
+        public CourseViewModelValidator()
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty()
+                .MinimumLength(1)
+                .MaximumLength(100);
+            
+            RuleFor(x => x.Description)
+                .MinimumLength(1)
+                .MaximumLength(1000);
+        }
         
     }
 }

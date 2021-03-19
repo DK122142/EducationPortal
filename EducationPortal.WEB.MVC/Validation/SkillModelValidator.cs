@@ -1,11 +1,16 @@
-﻿using EducationPortal.WEB.MVC.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using EducationPortal.WEB.MVC.Models;
 using FluentValidation;
 
 namespace EducationPortal.WEB.MVC.Validation
 {
-    public class SkillViewModelValidator : AbstractValidator<SkillCreateViewModel>
+    public class SkillModelValidator : AbstractValidator<SkillModel>
     {
-        public SkillViewModelValidator()
+        public SkillModelValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
@@ -16,6 +21,5 @@ namespace EducationPortal.WEB.MVC.Validation
                 .MinimumLength(1)
                 .MaximumLength(1000);
         }
-        
     }
 }

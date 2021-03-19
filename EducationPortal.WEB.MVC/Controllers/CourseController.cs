@@ -55,13 +55,18 @@ namespace EducationPortal.WEB.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CourseCreateViewModel model)
         {
-            var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (ModelState.IsValid)
+            {
+                var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             
-            var dto = this.mapper.Map<CourseDto>(model);
+                var dto = this.mapper.Map<CourseDto>(model);
         
-            await this.service.Create(Guid.Parse(creatorId), dto);
+                await this.service.Create(Guid.Parse(creatorId), dto);
             
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
 
         [HttpGet]

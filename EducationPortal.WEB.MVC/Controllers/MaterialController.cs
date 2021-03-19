@@ -52,13 +52,18 @@ namespace EducationPortal.WEB.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateArticle(ArticleCreateViewModel model)
         {
-            var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (ModelState.IsValid)
+            {
+                var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             
-            var dto = this.mapper.Map<ArticleDto>(model);
+                var dto = this.mapper.Map<ArticleDto>(model);
 
-            await this.service.Create(Guid.Parse(creatorId),  dto);
+                await this.service.Create(Guid.Parse(creatorId),  dto);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
 
         [Authorize]
@@ -70,13 +75,18 @@ namespace EducationPortal.WEB.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateBook(BookCreateViewModel model)
         {
-            var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (ModelState.IsValid)
+            {
+                var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             
-            var dto = this.mapper.Map<BookDto>(model);
+                var dto = this.mapper.Map<BookDto>(model);
 
-            await this.service.Create(Guid.Parse(creatorId),  dto);
+                await this.service.Create(Guid.Parse(creatorId),  dto);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
         
         [Authorize]
@@ -88,13 +98,18 @@ namespace EducationPortal.WEB.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateVideo(VideoCreateViewModel model)
         {
-            var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (ModelState.IsValid)
+            {
+                var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var dto = this.mapper.Map<VideoDto>(model);
+                var dto = this.mapper.Map<VideoDto>(model);
 
-            await this.service.Create(Guid.Parse(creatorId),  dto);
+                await this.service.Create(Guid.Parse(creatorId),  dto);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
         
         [Authorize]
@@ -124,7 +139,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
         
@@ -155,7 +170,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
         
@@ -186,7 +201,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
         

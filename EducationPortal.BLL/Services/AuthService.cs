@@ -47,6 +47,9 @@ namespace EducationPortal.BLL.Services
             return default;
         }
 
-        public async Task LogOut() => await this.signInManager.SignOutAsync();
+        public async Task LogOut()
+        {
+            await this.signInManager.SignOutAsync();
+        }
     }
 }

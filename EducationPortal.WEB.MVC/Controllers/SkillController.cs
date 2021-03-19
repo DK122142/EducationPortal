@@ -56,13 +56,18 @@ namespace EducationPortal.WEB.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SkillCreateViewModel model)
         {
-            var dto = this.mapper.Map<SkillDto>(model);
+            if (ModelState.IsValid)
+            {
+                var dto = this.mapper.Map<SkillDto>(model);
 
-            await this.service.Create(dto);
+                await this.service.Create(dto);
 
-            this.logger.LogInformation($"Added skill {model.Name}");
+                this.logger.LogInformation($"Added skill {model.Name}");
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
         
         [Authorize]
@@ -92,7 +97,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 
