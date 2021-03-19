@@ -37,10 +37,10 @@ namespace EducationPortal.WEB.MVC.Controllers
             var materials = await this.service.LearnedMaterials(id);
             var skills = await this.service.ProfileSkills(id);
             
-            var jcModels = this.mapper.Map<List<CourseModel>>(joinedCourses);
-            var ccModels = this.mapper.Map<List<CourseModel>>(completedCourses);
-            var mModels = this.mapper.Map<List<MaterialModel>>(materials);
-            var sModels = this.mapper.Map<List<ProfileSkillModel>>(skills);
+            var jcModels = this.mapper.Map<List<CourseModel>>(joinedCourses.Value);
+            var ccModels = this.mapper.Map<List<CourseModel>>(completedCourses.Value);
+            var mModels = this.mapper.Map<List<MaterialModel>>(materials.Value);
+            var sModels = this.mapper.Map<List<ProfileSkillModel>>(skills.Value);
 
             this.logger.LogInformation($"Opened profile of {profile.Name}");
 

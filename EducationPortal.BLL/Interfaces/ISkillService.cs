@@ -1,12 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using EducationPortal.BLL.DTO;
+using EducationPortal.BLL.Infrastructure;
 
 namespace EducationPortal.BLL.Interfaces
 {
     public interface ISkillService : IService<SkillDto>
     {
-        Task Create(SkillDto item);
+        Task<ResultDetails<Guid>> Create(SkillDto item);
 
-        Task Edit(SkillDto skill);
+        Task<ResultDetails<Guid>> Edit(SkillDto skill);
     }
 }
