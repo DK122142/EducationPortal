@@ -9,18 +9,21 @@ using EducationPortal.WEB.MVC.Models;
 using EducationPortal.WEB.MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace EducationPortal.WEB.MVC.Controllers
 {
     public class MaterialController : Controller
     {
-        private IMaterialService service;
-        private IMapper mapper;
+        private readonly IMaterialService service;
+        private readonly IMapper mapper;
+        private readonly ILogger logger;
 
-        public MaterialController(IMapper mapper, IMaterialService service)
+        public MaterialController(IMapper mapper, IMaterialService service, ILogger<MaterialController> logger)
         {
             this.mapper = mapper;
             this.service = service;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -39,6 +42,8 @@ namespace EducationPortal.WEB.MVC.Controllers
                 PageViewModel = pvm,
                 Models = this.mapper.Map<IEnumerable<MaterialModel>>(materials)
             };
+
+            this.logger.LogInformation($"Opened page {page} of materials");
 
             return View(viewModel);
         }
@@ -59,6 +64,8 @@ namespace EducationPortal.WEB.MVC.Controllers
                 var dto = this.mapper.Map<ArticleDto>(model);
 
                 await this.service.Create(Guid.Parse(creatorId),  dto);
+
+                this.logger.LogInformation($"Created article {model.Name}");
 
                 return RedirectToAction("Index");
             }
@@ -82,6 +89,7 @@ namespace EducationPortal.WEB.MVC.Controllers
                 var dto = this.mapper.Map<BookDto>(model);
 
                 await this.service.Create(Guid.Parse(creatorId),  dto);
+                this.logger.LogInformation($"Created book {model.Name}");
 
                 return RedirectToAction("Index");
             }
@@ -105,6 +113,7 @@ namespace EducationPortal.WEB.MVC.Controllers
                 var dto = this.mapper.Map<VideoDto>(model);
 
                 await this.service.Create(Guid.Parse(creatorId),  dto);
+                this.logger.LogInformation($"Created video {model.Name}");
 
                 return RedirectToAction("Index");
             }
@@ -133,6 +142,8 @@ namespace EducationPortal.WEB.MVC.Controllers
                 {
                     var dto = this.mapper.Map<ArticleDto>(model);
                     await this.service.Edit(dto);
+                    
+                    this.logger.LogInformation($"Updated article {model.Name}");
                 }
 
                 return RedirectToAction("Index");
@@ -164,6 +175,7 @@ namespace EducationPortal.WEB.MVC.Controllers
                 {
                     var dto = this.mapper.Map<BookDto>(model);
                     await this.service.Edit(dto);
+                    this.logger.LogInformation($"Updated book {model.Name}");
                 }
 
                 return RedirectToAction("Index");
@@ -195,6 +207,7 @@ namespace EducationPortal.WEB.MVC.Controllers
                 {
                     var dto = this.mapper.Map<VideoDto>(model);
                     await this.service.Edit(dto);
+                    this.logger.LogInformation($"Updated video {model.Name}");
                 }
 
                 return RedirectToAction("Index");
@@ -213,6 +226,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             if (ModelState.IsValid)
             {
                 await this.service.DeleteAsync(id);
+                this.logger.LogInformation($"Deleted material {id}");
             }
 
             return RedirectToAction("Index");

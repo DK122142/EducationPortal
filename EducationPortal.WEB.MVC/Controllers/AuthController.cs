@@ -8,8 +8,8 @@ namespace EducationPortal.WEB.MVC.Controllers
 {
     public class AuthController : Controller
     {
-        private IAuthService service;
-        private ILogger logger;
+        private readonly IAuthService service;
+        private readonly ILogger logger;
 
         public AuthController(IAuthService service, ILogger<AuthController> logger)
         {

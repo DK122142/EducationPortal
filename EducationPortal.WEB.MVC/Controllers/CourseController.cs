@@ -9,6 +9,7 @@ using EducationPortal.WEB.MVC.Models;
 using EducationPortal.WEB.MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace EducationPortal.WEB.MVC.Controllers
 {
@@ -18,12 +19,14 @@ namespace EducationPortal.WEB.MVC.Controllers
         private readonly ICourseService service;
         private readonly ISkillService skillService;
         private readonly IMaterialService materialService;
+        private readonly ILogger logger;
 
-        public CourseController(IMapper mapper, ICourseService service, ISkillService skillService, IMaterialService materialService)
+        public CourseController(IMapper mapper, ICourseService service, ISkillService skillService, IMaterialService materialService, ILogger<CourseController> logger)
         {
             this.service = service;
             this.skillService = skillService;
             this.materialService = materialService;
+            this.logger = logger;
             this.mapper = mapper;
         }
 
@@ -62,6 +65,8 @@ namespace EducationPortal.WEB.MVC.Controllers
                 var dto = this.mapper.Map<CourseDto>(model);
         
                 await this.service.Create(Guid.Parse(creatorId), dto);
+
+                this.logger.LogInformation($"Course {model.Name} created by {creatorId}");
             
                 return RedirectToAction("Index");
             }
@@ -211,6 +216,8 @@ namespace EducationPortal.WEB.MVC.Controllers
         public async Task<IActionResult> AddSkill(Guid courseId, Guid id)
         {
             await this.service.AddSkillToCourse(id, courseId);
+            
+            this.logger.LogInformation($"Added skill {id} to course {courseId}");
 
             return RedirectToAction("AddSkills", new {courseId = courseId});
         }
@@ -220,6 +227,8 @@ namespace EducationPortal.WEB.MVC.Controllers
         public async Task<IActionResult> AddMaterial(Guid courseId, Guid id)
         {
             await this.service.AddMaterialToCourse(id, courseId);
+
+            this.logger.LogInformation($"Added material {id} to course {courseId}");
 
             return RedirectToAction("AddMaterials", new {courseId = courseId});
         }
@@ -232,6 +241,8 @@ namespace EducationPortal.WEB.MVC.Controllers
             if (ModelState.IsValid)
             {
                 await this.service.DeleteAsync(id);
+                
+                this.logger.LogInformation($"Deleted course {id}");
             }
 
             return RedirectToAction("Index");
