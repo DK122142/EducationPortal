@@ -7,29 +7,91 @@
 <h3>@Model.Profile.Name</h3>
 
 <div>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <form method="get" asp-controller="Course" asp-action="Create">
-                    <div>
-                        <input type="submit" value="Create course" class="btn btn-secondary" />
-                    </div>
-                </form>
-            </div>
-            <div class="col">
-                <form method="get" asp-controller="Material" asp-action="Index">
-                    <div>
-                        <input type="submit" value="All materials" class="btn btn-secondary" />
-                    </div>
-                </form>
-            </div>
-            <div class="col">
-                <form method="get" asp-controller="Skill" asp-action="Create">
-                    <div>
-                        <input type="submit" value="Add skill" class="btn btn-secondary" />
-                    </div>
-                </form>
-            </div>
+    <div>
+        <h3>
+            Joined to courses
+        </h3>
+        <div>
+            <table class="table">
+                <tr><th>Name</th><th>Description</th></tr>
+                @foreach (var item in Model.JoinedCourses)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <form asp-controller="Course" asp-action="Details" asp-route-id="@item.Id" method="get">
+                                <button type="submit" class="btn btn-sm btn-outline-primary">
+                                    Details
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div>
+        <h3>
+            Completed courses
+        </h3>
+        <div>
+            <table class="table">
+                <tr><th>Name</th><th>Description</th></tr>
+                @foreach (var item in Model.CompletedCourses)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <form asp-controller="Course" asp-action="Details" asp-route-id="@item.Id" method="get">
+                                <button type="submit" class="btn btn-sm btn-outline-primary">
+                                    Details
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div>
+        <h3>
+            Learned materials
+        </h3>
+        <div>
+            <table class="table">
+                <tr><th>Name</th><th>Type</th><th>Link</th></tr>
+                @foreach (var item in Model.PassedMaterials)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Discriminator</td>
+                        <td><a href="@item.Source" target="_blank">@item.Source</a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div>
+        <h3>
+            Skills of user
+        </h3>
+        <div>
+            <table class="table">
+                <tr>
+                    <th>Name</th><th>Description</th>
+                    <th>Level</th>
+                </tr>
+                @foreach (var skill in Model.ProfileSkills)
+                {
+                    <tr>
+                        <td>@skill.SkillName</td>
+                        <td>@skill.SkillDescription</td>
+                        <td>@skill.Level</td>
+                    </tr>
+                }
+            </table>
         </div>
     </div>
 </div>

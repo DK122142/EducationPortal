@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -26,12 +27,26 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var profile = await this.service.GetByIdAsync(Guid.Parse(id));
+            var id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var profile = await this.service.GetByIdAsync(id);
+            
+            var joinedCourses = await this.service.JoinedCourses(id);
+            var completedCourses = await this.service.CompletedCourses(id);
+            var materials = await this.service.LearnedMaterials(id);
+            var skills = await this.service.ProfileSkills(id);
+            
+            var jcModels = this.mapper.Map<List<CourseModel>>(joinedCourses);
+            var ccModels = this.mapper.Map<List<CourseModel>>(completedCourses);
+            var mModels = this.mapper.Map<List<MaterialModel>>(materials);
+            var sModels = this.mapper.Map<List<ProfileSkillModel>>(skills);
 
             return View(new UserViewModel
             {
-                Profile = this.mapper.Map<ProfileModel>(profile)
+                Profile = this.mapper.Map<ProfileModel>(profile),
+                CompletedCourses = ccModels,
+                JoinedCourses = jcModels,
+                PassedMaterials = mModels,
+                ProfileSkills = sModels
             });
         }
         
