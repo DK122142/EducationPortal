@@ -59,12 +59,8 @@ namespace EducationPortal.WEB.MVC.Controllers
             
             var dto = this.mapper.Map<CourseDto>(model);
         
-            var courseId = await this.service.Create(Guid.Parse(creatorId), dto);
+            await this.service.Create(Guid.Parse(creatorId), dto);
 
-            var course = await this.service.GetByIdAsync(courseId);
-
-            var courseModel = this.mapper.Map<CourseViewModel>(course);
-            
             return RedirectToAction("Index");
         }
 

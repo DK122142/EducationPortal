@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.WEB.MVC.Models;
 using EducationPortal.WEB.MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace EducationPortal.WEB.MVC.Controllers
+namespace EducationPortal.WEB.MVC.Controllers.API
 {
-    [Authorize]
-    public class UserController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
     {
         private IMapper mapper;
         private IUserService service;
@@ -23,23 +26,25 @@ namespace EducationPortal.WEB.MVC.Controllers
             this.service = service;
         }
 
-        [HttpGet]
+
+        [HttpGet("profile")]
+        [Authorize]
         public async Task<IActionResult> Profile()
         {
             var id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var profile = await this.service.GetByIdAsync(id);
-            
+
             var joinedCourses = await this.service.JoinedCourses(id);
             var completedCourses = await this.service.CompletedCourses(id);
             var materials = await this.service.LearnedMaterials(id);
             var skills = await this.service.ProfileSkills(id);
-            
+
             var jcModels = this.mapper.Map<List<CourseModel>>(joinedCourses);
             var ccModels = this.mapper.Map<List<CourseModel>>(completedCourses);
             var mModels = this.mapper.Map<List<MaterialModel>>(materials);
             var sModels = this.mapper.Map<List<ProfileSkillModel>>(skills);
 
-            return View(new UserViewModel
+            return new ObjectResult(new UserViewModel
             {
                 Profile = this.mapper.Map<ProfileModel>(profile),
                 CompletedCourses = ccModels,
@@ -48,27 +53,27 @@ namespace EducationPortal.WEB.MVC.Controllers
                 ProfileSkills = sModels
             });
         }
-        
+
         [Authorize]
-        [HttpPost]
+        [HttpPost("jointocourse/{id:Guid}")]
         public async Task<IActionResult> JoinToCourse(Guid id)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             await this.service.JoinToCourse(Guid.Parse(userId), id);
 
-            return RedirectToAction("Index", "Home");
+            return Ok();
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("completecourse/{id:Guid}")]
         public async Task<IActionResult> CompleteCourse(Guid id)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             await this.service.CompleteCourse(Guid.Parse(userId), id);
 
-            return RedirectToAction("Index", "Home");
+            return Ok();
         }
     }
 }
