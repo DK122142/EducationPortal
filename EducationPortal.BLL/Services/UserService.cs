@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
+using EducationPortal.BLL.Infrastructure;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.DAL.Entities;
 using EducationPortal.DAL.Interfaces;
@@ -20,112 +21,168 @@ namespace EducationPortal.BLL.Services
             this.courseRepository = courseRepository;
         }
 
-        public async Task JoinToCourse(Guid profileId, Guid courseId)
+        public async Task<ResultDetails<Guid>> JoinToCourse(Guid profileId, Guid courseId)
         {
-            var profile = await this.repository.FindAsync(profileId);
-
-            var course = await this.courseRepository.FindAsync(courseId);
-
-            profile.JoinedCourses.Add(course);
-
-            await this.repository.SaveChangesAsync();
-        }
-
-        public async Task LeaveCourse(Guid profileId, Guid courseId)
-        {
-            var profile = await this.repository.FindAsync(profileId);
-
-            var course = await this.courseRepository.FindAsync(courseId);
-
-            profile.JoinedCourses.Remove(course);
-
-            await this.repository.SaveChangesAsync();
-        }
-
-        public async Task CompleteCourse(Guid profileId, Guid courseId)
-        {
-            var profile = await this.repository.FindAsync(profileId);
-
-            var course = await this.courseRepository.FindAsync(courseId);
-
-            profile.JoinedCourses.Remove(course);
-            profile.CompletedCourses.Add(course);
-
-            // Adding materials
-            foreach (var courseMaterial in course.Materials)
+            try
             {
-                if (!profile.PassedMaterials.Contains(courseMaterial))
-                {
-                    profile.PassedMaterials.Add(courseMaterial);
-                }
+                var profile = await this.repository.FindAsync(profileId);
+
+                var course = await this.courseRepository.FindAsync(courseId);
+
+                profile.JoinedCourses.Add(course);
+
+                await this.repository.SaveChangesAsync();
+
+                return new ResultDetails<Guid>(true, value: course.Id);
             }
+            catch
+            {
+                return new ResultDetails<Guid>(false);
+            }
+        }
+
+        public async Task<ResultDetails<Guid>> LeaveCourse(Guid profileId, Guid courseId)
+        {
+            try
+            {
+                var profile = await this.repository.FindAsync(profileId);
+
+                var course = await this.courseRepository.FindAsync(courseId);
+
+                profile.JoinedCourses.Remove(course);
+
+                await this.repository.SaveChangesAsync();
+
+                return new ResultDetails<Guid>(true, value: course.Id);
+            }
+            catch
+            {
+                return new ResultDetails<Guid>(false);
+            }
+        }
+
+        public async Task<ResultDetails<Guid>> CompleteCourse(Guid profileId, Guid courseId)
+        {
             
-            // Adding skills
-            foreach (var courseSkill in course.Skills)
+            try
             {
-                if (profile.ProfileSkills.Select(ps=>ps.SkillId).Contains(courseSkill.Id))
+                var profile = await this.repository.FindAsync(profileId);
+
+                var course = await this.courseRepository.FindAsync(courseId);
+
+                profile.JoinedCourses.Remove(course);
+                profile.CompletedCourses.Add(course);
+
+                // Adding materials
+                foreach (var courseMaterial in course.Materials)
                 {
-                    profile.ProfileSkills.FirstOrDefault(ps =>
-                        ps.SkillId.Equals(courseSkill.Id) && ps.ProfileId.Equals(profile.Id)).Level += 1;
-                }
-                else
-                {
-                    profile.ProfileSkills.Add(new ProfileSkill
+                    if (!profile.PassedMaterials.Contains(courseMaterial))
                     {
-                        Level = 1,
-                        Profile = profile,
-                        ProfileId = profile.Id,
-                        Skill = courseSkill,
-                        SkillId = courseSkill.Id
-                    });
+                        profile.PassedMaterials.Add(courseMaterial);
+                    }
                 }
+            
+                // Adding skills
+                foreach (var courseSkill in course.Skills)
+                {
+                    if (profile.ProfileSkills.Select(ps=>ps.SkillId).Contains(courseSkill.Id))
+                    {
+                        profile.ProfileSkills.FirstOrDefault(ps =>
+                            ps.SkillId.Equals(courseSkill.Id) && ps.ProfileId.Equals(profile.Id)).Level += 1;
+                    }
+                    else
+                    {
+                        profile.ProfileSkills.Add(new ProfileSkill
+                        {
+                            Level = 1,
+                            Profile = profile,
+                            ProfileId = profile.Id,
+                            Skill = courseSkill,
+                            SkillId = courseSkill.Id
+                        });
+                    }
+                }
+
+                await this.repository.SaveChangesAsync();
+
+                return new ResultDetails<Guid>(true, value: course.Id);
             }
-
-            await this.repository.SaveChangesAsync();
+            catch
+            {
+                return new ResultDetails<Guid>(false);
+            }
         }
 
-        public async Task<List<CourseDto>> JoinedCourses(Guid profileId)
+        public async Task<ResultDetails<List<CourseDto>>> JoinedCourses(Guid profileId)
         {
-            var profile = await this.repository.FindAsync(profileId);
+            try
+            {
+                var profile = await this.repository.FindAsync(profileId);
 
-            var joinedCourses = profile.JoinedCourses;
+                var joinedCourses = profile.JoinedCourses;
 
-            var joinedCoursesDto = this.mapper.Map<ICollection<CourseDto>>(joinedCourses);
+                var joinedCoursesDto = this.mapper.Map<ICollection<CourseDto>>(joinedCourses);
 
-            return joinedCoursesDto.ToList();
+                return new ResultDetails<List<CourseDto>>(true, value: joinedCoursesDto.ToList());
+            }
+            catch
+            {
+                return new ResultDetails<List<CourseDto>>(false);
+            }
         }
 
-        public async Task<List<CourseDto>> CompletedCourses(Guid profileId)
+        public async Task<ResultDetails<List<CourseDto>>> CompletedCourses(Guid profileId)
         {
-            var profile = await this.repository.FindAsync(profileId);
+            try
+            {
+                var profile = await this.repository.FindAsync(profileId);
 
-            var completedCourses = profile.CompletedCourses;
+                var completedCourses = profile.CompletedCourses;
 
-            var completedCoursesDto = this.mapper.Map<ICollection<CourseDto>>(completedCourses);
-
-            return completedCoursesDto.ToList();
+                var completedCoursesDto = this.mapper.Map<ICollection<CourseDto>>(completedCourses);
+                
+                return new ResultDetails<List<CourseDto>>(true, value: completedCoursesDto.ToList());
+            }
+            catch
+            {
+                return new ResultDetails<List<CourseDto>>(false);
+            }
         }
 
-        public async Task<List<MaterialDto>> LearnedMaterials(Guid profileId)
+        public async Task<ResultDetails<List<MaterialDto>>> LearnedMaterials(Guid profileId)
         {
-            var profile = await this.repository.FindAsync(profileId);
+            try
+            {
+                var profile = await this.repository.FindAsync(profileId);
 
-            var materials = profile.PassedMaterials;
+                var materials = profile.PassedMaterials;
 
-            var materialsDto = this.mapper.Map<ICollection<MaterialDto>>(materials);
-
-            return materialsDto.ToList();
+                var materialsDto = this.mapper.Map<ICollection<MaterialDto>>(materials);
+                
+                return new ResultDetails<List<MaterialDto>>(true, value: materialsDto.ToList());
+            }
+            catch
+            {
+                return new ResultDetails<List<MaterialDto>>(false);
+            }
         }
 
-        public async Task<List<ProfileSkillDto>> ProfileSkills(Guid profileId)
+        public async Task<ResultDetails<List<ProfileSkillDto>>> ProfileSkills(Guid profileId)
         {
-            var profile = await this.repository.FindAsync(profileId);
+            try
+            {
+                var profile = await this.repository.FindAsync(profileId);
 
-            var profileSkills = profile.ProfileSkills;
+                var profileSkills = profile.ProfileSkills;
 
-            var psDto = this.mapper.Map<IList<ProfileSkillDto>>(profileSkills);
+                var psDto = this.mapper.Map<IList<ProfileSkillDto>>(profileSkills);
 
-            return psDto.ToList();
+                return new ResultDetails<List<ProfileSkillDto>>(true, value: psDto.ToList());
+            }
+            catch
+            {
+                return new ResultDetails<List<ProfileSkillDto>>(false);
+            }
         }
     }
 }

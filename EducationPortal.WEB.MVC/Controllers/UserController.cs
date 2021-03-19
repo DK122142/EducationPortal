@@ -8,19 +8,22 @@ using EducationPortal.BLL.Interfaces;
 using EducationPortal.WEB.MVC.Models;
 using EducationPortal.WEB.MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace EducationPortal.WEB.MVC.Controllers
 {
     [Authorize]
     public class UserController : Controller
     {
-        private IMapper mapper;
-        private IUserService service;
+        private readonly IMapper mapper;
+        private readonly IUserService service;
+        private readonly ILogger logger;
 
-        public UserController(IMapper mapper, IUserService service)
+        public UserController(IMapper mapper, IUserService service, ILogger<UserController> logger)
         {
             this.mapper = mapper;
             this.service = service;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -34,10 +37,12 @@ namespace EducationPortal.WEB.MVC.Controllers
             var materials = await this.service.LearnedMaterials(id);
             var skills = await this.service.ProfileSkills(id);
             
-            var jcModels = this.mapper.Map<List<CourseModel>>(joinedCourses);
-            var ccModels = this.mapper.Map<List<CourseModel>>(completedCourses);
-            var mModels = this.mapper.Map<List<MaterialModel>>(materials);
-            var sModels = this.mapper.Map<List<ProfileSkillModel>>(skills);
+            var jcModels = this.mapper.Map<List<CourseModel>>(joinedCourses.Value);
+            var ccModels = this.mapper.Map<List<CourseModel>>(completedCourses.Value);
+            var mModels = this.mapper.Map<List<MaterialModel>>(materials.Value);
+            var sModels = this.mapper.Map<List<ProfileSkillModel>>(skills.Value);
+
+            this.logger.LogInformation($"Opened profile of {profile.Name}");
 
             return View(new UserViewModel
             {
@@ -57,6 +62,8 @@ namespace EducationPortal.WEB.MVC.Controllers
 
             await this.service.JoinToCourse(Guid.Parse(userId), id);
 
+            this.logger.LogInformation($"User {userId} joined to course {id}");
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -67,6 +74,8 @@ namespace EducationPortal.WEB.MVC.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             await this.service.CompleteCourse(Guid.Parse(userId), id);
+
+            this.logger.LogInformation($"User {userId} completed course {id}");
 
             return RedirectToAction("Index", "Home");
         }

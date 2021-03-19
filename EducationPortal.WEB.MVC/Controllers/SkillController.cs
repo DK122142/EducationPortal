@@ -14,9 +14,9 @@ namespace EducationPortal.WEB.MVC.Controllers
 {
     public class SkillController : Controller
     {
-        private IMapper mapper;
-        private ISkillService service;
-        private ILogger logger;
+        private readonly IMapper mapper;
+        private readonly ISkillService service;
+        private readonly ILogger logger;
 
         public SkillController(IMapper mapper, ISkillService service, ILogger<SkillController> logger)
         {
@@ -56,13 +56,18 @@ namespace EducationPortal.WEB.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SkillCreateViewModel model)
         {
-            var dto = this.mapper.Map<SkillDto>(model);
+            if (ModelState.IsValid)
+            {
+                var dto = this.mapper.Map<SkillDto>(model);
 
-            await this.service.Create(dto);
+                await this.service.Create(dto);
 
-            this.logger.LogInformation($"Added skill {model.Name}");
+                this.logger.LogInformation($"Added skill {model.Name}");
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
         
         [Authorize]
@@ -86,13 +91,15 @@ namespace EducationPortal.WEB.MVC.Controllers
                 {
                     var dto = this.mapper.Map<SkillDto>(model);
                     await this.service.Edit(dto);
+
+                    this.logger.LogInformation($"Updated skill {model.Name}");
                 }
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 
@@ -104,6 +111,8 @@ namespace EducationPortal.WEB.MVC.Controllers
             if (ModelState.IsValid)
             {
                 await this.service.DeleteAsync(id);
+
+                this.logger.LogInformation($"Deleted skill {id}");
             }
 
             return RedirectToAction("Index");

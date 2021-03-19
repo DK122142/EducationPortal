@@ -1,6 +1,6 @@
 ﻿namespace EducationPortal.BLL.Infrastructure
 {
-    public class OperationDetails
+    public class ResultDetails<T>
     {
         public bool IsSucceeded { get; }
 
@@ -8,11 +8,14 @@
 
         public string Property { get; }
 
-        public OperationDetails(bool isSucceeded, string message = "", string property = "")
+        public T Value { get; }
+
+        public ResultDetails(bool isSucceeded, string message = "", string property = "", T value = default)
         {
             this.IsSucceeded = isSucceeded;
             this.Message = message;
             this.Property = property;
+            this.Value = value;
         }
     }
 }
