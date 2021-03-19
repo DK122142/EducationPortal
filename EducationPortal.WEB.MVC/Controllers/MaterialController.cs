@@ -121,7 +121,6 @@ namespace EducationPortal.WEB.MVC.Controllers
             return View(model);
         }
         
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> EditArticle(Guid id)
         {
@@ -154,7 +153,6 @@ namespace EducationPortal.WEB.MVC.Controllers
             }
         }
         
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> EditBook(Guid id)
         {
@@ -186,7 +184,6 @@ namespace EducationPortal.WEB.MVC.Controllers
             }
         }
         
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> EditVideo(Guid id)
         {

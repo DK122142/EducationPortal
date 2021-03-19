@@ -1,7 +1,7 @@
 ﻿@model EducationPortal.WEB.MVC.Models.ArticleModel
 
 @{
-    ViewData["Title"] = "Edit article";
+    ViewData["Title"] = "Article";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -25,9 +25,12 @@
                 <input asp-for="Published" class="form-control"/>
                 <span asp-validation-for="Published" class="text-danger"></span>
             </div>
-            <div>
-                <input type="submit" value="Save" class="btn btn-success" />
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
+            }
         </form>
     </div>
 </div>

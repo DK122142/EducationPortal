@@ -48,36 +48,35 @@
                 <tr>
                     <td>@item.Name</td><td>@item.Discriminator</td>
                     <td><a href="@item.Source" target="_blank">@item.Source</a></td>
+                    <td>
+                        @switch (item.Discriminator)
+                        {
+                            case "Article":
+                                <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@item.Id" method="get">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        View
+                                    </button>
+                                </form>
+                                break;
+                            case "Book": 
+                                <form asp-controller="Material" asp-action="EditBook" asp-route-id="@item.Id" method="get">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        View
+                                    </button>
+                                </form>
+                                break;
+                            case "Video": 
+                                <form asp-controller="Material" asp-action="EditVideo" asp-route-id="@item.Id" method="get">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        View
+                                    </button>
+                                </form>
+                                break;
+                        }
+                    </td>
                     @if (User.Identity.IsAuthenticated
                          && Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)) == item.AddedById)
                     {
-                        <td>
-                            @switch (item.Discriminator)
-                            {
-                                case "Article":
-                                    <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@item.Id" method="get">
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                            Edit
-                                        </button>
-                                    </form>
-                                    break;
-                                case "Book": 
-                                    <form asp-controller="Material" asp-action="EditBook" asp-route-id="@item.Id" method="get">
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                            Edit
-                                        </button>
-                                    </form>
-                                    break;
-                                case "Video": 
-                                    <form asp-controller="Material" asp-action="EditVideo" asp-route-id="@item.Id" method="get">
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                            Edit
-                                        </button>
-                                    </form>
-                                    break;
-                            }
-                        </td>
-                        
                         <td>
                             <form asp-controller="Material" asp-action="Delete" asp-route-id="@item.Id" method="post">
                                 <button type="submit" class="btn btn-sm btn-outline-danger">

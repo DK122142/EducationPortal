@@ -1,7 +1,7 @@
 ﻿@model EducationPortal.WEB.MVC.Models.VideoModel
 
 @{
-    ViewData["Title"] = "Edit video";
+    ViewData["Title"] = "Video";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -12,7 +12,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>
                 <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control"/>
+                <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div>
@@ -27,12 +27,15 @@
             </div>
             <div>
                 <label asp-for="Quality"></label>
-                <input asp-for="Quality" class="form-control"/>
+                <input asp-for="Quality" class="form-control" />
                 <span asp-validation-for="Quality" class="text-danger"></span>
             </div>
-            <div>
-                <input type="submit" value="Save" class="btn btn-success" />
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
+            }
         </form>
     </div>
 </div>
