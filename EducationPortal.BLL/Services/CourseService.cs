@@ -75,5 +75,27 @@ namespace EducationPortal.BLL.Services
 
             await this.repository.SaveChangesAsync();
         }
+
+        public async Task RemoveSkillFromCourse(Guid skillId, Guid courseId)
+        {
+            var skill = await this.skillRepository.FindAsync(skillId);
+
+            var course = await this.repository.FindAsync(courseId);
+
+            course.Skills.Remove(skill);
+
+            await this.repository.SaveChangesAsync();
+        }
+
+        public async Task RemoveMaterialFromCourse(Guid materialId, Guid courseId)
+        {
+            var material = await this.materialRepository.FindAsync(materialId);
+
+            var course = await this.repository.FindAsync(courseId);
+
+            course.Materials.Remove(material);
+
+            await this.repository.SaveChangesAsync();
+        }
     }
 }

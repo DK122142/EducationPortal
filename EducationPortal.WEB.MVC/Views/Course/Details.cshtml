@@ -26,6 +26,17 @@
                     <tr>
                         <td>@skill.Name</td>
                         <td>@skill.Description</td>
+                        <td>
+                            <form asp-controller="Course" asp-action="RemoveSkill" asp-route-courseId="@Model.Id" asp-route-skillId="@skill.Id" method="post">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Remove
+                                </button>
+                            </form>
+                        </td>
+                        @if (skill.ProfileSkillsId.Contains(currentUserId))
+                        {
+                            <td>Acquired</td>
+                        }
                     </tr>
                 }
             </table>
@@ -35,12 +46,23 @@
         <h3>Materials</h3>
         <table class="table">
             <tr><th>Name</th><th>Type</th><th>Link</th></tr>
-            @foreach (var item in Model.Materials)
+            @foreach (var materialModel in Model.Materials)
             {
                 <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Discriminator</td>
-                    <td><a href="@item.Source" target="_blank">@item.Source</a></td>
+                    <td>@materialModel.Name</td>
+                    <td>@materialModel.Discriminator</td>
+                    <td><a href="@materialModel.Source" target="_blank">@materialModel.Source</a></td>
+                    <td>
+                        <form asp-controller="Course" asp-action="RemoveMaterial" asp-route-courseId="@Model.Id" asp-route-materialId="@materialModel.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                Remove
+                            </button>
+                        </form>
+                    </td>
+                    @if (materialModel.PassedByUsersId.Contains(currentUserId))
+                    {
+                        <td>Learned</td>
+                    }
                 </tr>
             }
         </table>

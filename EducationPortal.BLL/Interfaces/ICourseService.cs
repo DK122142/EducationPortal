@@ -13,6 +13,10 @@ namespace EducationPortal.BLL.Interfaces
         Task AddSkillToCourse(Guid skillId, Guid courseId);
 
         Task AddMaterialToCourse(Guid materialId, Guid courseId);
+
+        Task RemoveSkillFromCourse(Guid skillId, Guid courseId);
+
+        Task RemoveMaterialFromCourse(Guid materialId, Guid courseId);
         
     }
 }

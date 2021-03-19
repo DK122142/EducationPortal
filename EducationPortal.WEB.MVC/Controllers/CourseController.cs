@@ -234,6 +234,28 @@ namespace EducationPortal.WEB.MVC.Controllers
         }
         
         [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> RemoveSkill(Guid courseId, Guid skillId)
+        {
+            await this.service.RemoveSkillFromCourse(skillId, courseId);
+            
+            this.logger.LogInformation($"Removed skill {skillId} to course {courseId}");
+
+            return RedirectToAction("Details", new {id = courseId});
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> RemoveMaterial(Guid courseId, Guid materialId)
+        {
+            await this.service.RemoveMaterialFromCourse(materialId, courseId);
+
+            this.logger.LogInformation($"Removed material {materialId} to course {courseId}");
+
+            return RedirectToAction("Details", new {id = courseId});
+        }
+        
+        [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
