@@ -17,9 +17,9 @@ namespace EducationPortal.WEB.MVC.ViewModels
         public IEnumerable<MaterialModel> Materials { get; set; }
 
         public IEnumerable<SkillModel> Skills { get; set; }
+        
+        public IEnumerable<Guid> JoinedProfilesId { get; set; }
 
-        public IEnumerable<ProfileModel> JoinedProfiles { get; set; }
-
-        public IEnumerable<ProfileModel> CompletedProfiles { get; set; }
+        public IEnumerable<Guid> CompletedProfilesId { get; set; }
     }
 }

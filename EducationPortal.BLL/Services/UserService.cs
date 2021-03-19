@@ -150,6 +150,14 @@ namespace EducationPortal.BLL.Services
             profile.JoinedCourses.Remove(course);
             profile.CompletedCourses.Add(course);
 
+            foreach (var courseMaterial in course.Materials)
+            {
+                if (!profile.PassedMaterials.Contains(courseMaterial))
+                {
+                    profile.PassedMaterials.Add(courseMaterial);
+                }
+            }
+
             await this.repository.SaveChangesAsync();
         }
     }

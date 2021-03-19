@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Course";
+    var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 }
 
 <h1>@ViewData["Title"]: @Model.Name</h1>
@@ -45,23 +46,57 @@
         </table>
     </div>
     
-    @if (User.Identity.IsAuthenticated
-         && Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)) == Model.CreatorId)
+    @if (User.Identity.IsAuthenticated)
     {
-        <div>
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <a asp-controller="Course" asp-action="AddSkills" asp-route-courseId="@Model.Id">
-                            Add skills
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a asp-controller="Course" asp-action="AddMaterials" asp-route-courseId="@Model.Id">
-                            Add materials
-                        </a>
+        @if (currentUserId == Model.CreatorId)
+        {
+            <div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <a asp-controller="Course" asp-action="AddSkills" asp-route-courseId="@Model.Id">
+                                Add skills
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a asp-controller="Course" asp-action="AddMaterials" asp-route-courseId="@Model.Id">
+                                Add materials
+                            </a>
+                        </div>
                     </div>
                 </div>
+            </div>
+        }
+        
+        <div class="container">
+            <div class="row">
+                @if (!Model.CompletedProfilesId.Contains(currentUserId) &&
+                    !Model.JoinedProfilesId.Contains(currentUserId))
+                {
+                    <div class="col">
+                        <form asp-controller="User" asp-action="JoinToCourse" asp-route-id="@Model.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-outline-success">
+                                Join to course
+                            </button>
+                        </form>
+                    </div>
+                }
+                @if (Model.JoinedProfilesId.Contains(currentUserId))
+                {
+            <div class="col">
+                <form asp-controller="User" asp-action="CompleteCourse" asp-route-id="@Model.Id" method="post">
+                    <button type="submit" class="btn btn-sm btn-success">
+                        Complete course
+                    </button>
+                </form>
+            </div>
+                }
+                @if (Model.CompletedProfilesId.Contains(currentUserId))
+                {
+                    <div class="col">
+                        Passed
+                    </div>
+                }
             </div>
         </div>
     }
