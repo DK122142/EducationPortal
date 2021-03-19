@@ -3,7 +3,11 @@
 
 @{
     ViewData["Title"] = "Course";
-    var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    var currentUserId = Guid.Empty;
+    if (User.Identity.IsAuthenticated)
+    {
+        currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    }
 }
 
 <h1>@ViewData["Title"]: @Model.Name</h1>
@@ -26,16 +30,20 @@
                     <tr>
                         <td>@skill.Name</td>
                         <td>@skill.Description</td>
-                        <td>
-                            <form asp-controller="Course" asp-action="RemoveSkill" asp-route-courseId="@Model.Id" asp-route-skillId="@skill.Id" method="post">
-                                <button type="submit" class="btn btn-sm btn-outline-danger">
-                                    Remove
-                                </button>
-                            </form>
-                        </td>
-                        @if (skill.ProfileSkillsId.Contains(currentUserId))
+                        @if (User.Identity.IsAuthenticated)
                         {
-                            <td>Acquired</td>
+                            
+                            <td>
+                                <form asp-controller="Course" asp-action="RemoveSkill" asp-route-courseId="@Model.Id" asp-route-skillId="@skill.Id" method="post">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        Remove
+                                    </button>
+                                </form>
+                            </td>
+                            @if (skill.ProfileSkillsId.Contains(currentUserId))
+                            {
+                                <td>Acquired</td>
+                            }
                         }
                     </tr>
                 }
@@ -48,22 +56,52 @@
             <tr><th>Name</th><th>Type</th><th>Link</th></tr>
             @foreach (var materialModel in Model.Materials)
             {
-                <tr>
-                    <td>@materialModel.Name</td>
-                    <td>@materialModel.Discriminator</td>
-                    <td><a href="@materialModel.Source" target="_blank">@materialModel.Source</a></td>
-                    <td>
-                        <form asp-controller="Course" asp-action="RemoveMaterial" asp-route-courseId="@Model.Id" asp-route-materialId="@materialModel.Id" method="post">
-                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                Remove
+        <tr>
+            <td>@materialModel.Name</td>
+            <td>@materialModel.Discriminator</td>
+            <td><a href="@materialModel.Source" target="_blank">@materialModel.Source</a></td>
+            <td>
+                @switch (materialModel.Discriminator)
+                {
+                    case "Article":
+                        <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@materialModel.Id" method="get">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                View
                             </button>
                         </form>
-                    </td>
-                    @if (materialModel.PassedByUsersId.Contains(currentUserId))
-                    {
-                        <td>Learned</td>
-                    }
-                </tr>
+                        break;
+                    case "Book":
+                        <form asp-controller="Material" asp-action="EditBook" asp-route-id="@materialModel.Id" method="get">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                View
+                            </button>
+                        </form>
+                        break;
+                    case "Video":
+                        <form asp-controller="Material" asp-action="EditVideo" asp-route-id="@materialModel.Id" method="get">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                View
+                            </button>
+                        </form>
+                        break;
+                }
+            </td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td>
+                    <form asp-controller="Course" asp-action="RemoveMaterial" asp-route-courseId="@Model.Id" asp-route-materialId="@materialModel.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            Remove
+                        </button>
+                    </form>
+                </td>
+                @if (materialModel.PassedByUsersId.Contains(currentUserId))
+                {
+                    <td>Learned</td>
+                }
+
+            }
+        </tr>
             }
         </table>
     </div>
