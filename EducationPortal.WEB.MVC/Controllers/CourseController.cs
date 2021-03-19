@@ -104,7 +104,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [Authorize]
         public async Task<IActionResult> AddSkills(Guid courseId, int page = 1)
         {
-            int pageSize = 5;
+            int pageSize = 100;
         
             var skillsCount = await this.skillService.TotalCountAsync();
         
@@ -118,13 +118,35 @@ namespace EducationPortal.WEB.MVC.Controllers
                 Models = this.mapper.Map<IEnumerable<SkillModel>>(skills)
             };
             
-            var course = await this.service.GetByIdAsync(courseId);
+            // Course model data
+            var courseDto = await this.service.GetByIdAsync(courseId);
+            var skillsDto = new List<SkillDto>();
+            var materialsDto = new List<MaterialDto>();
+            
+            foreach (var skillId in courseDto.SkillsId)
+            {
+                var skill = await this.skillService.GetByIdAsync(skillId);
 
-            var courseModel = this.mapper.Map<CourseViewModel>(course);
+                skillsDto.Add(skill);
+            }
+
+            foreach (var materialId in courseDto.MaterialsId)
+            {
+                var material = await materialService.GetByIdAsync(materialId);
+
+                materialsDto.Add(material);
+            }
+
+            var course = this.mapper.Map<CourseViewModel>(courseDto);
+            var skillModels = this.mapper.Map<IEnumerable<SkillModel>>(skillsDto);
+            var materials = this.mapper.Map<IEnumerable<MaterialModel>>(materialsDto);
+
+            course.Skills = skillModels;
+            course.Materials = materials;
 
             var viewModel = new CourseContinueCreateViewModel
             {
-                CourseModel = courseModel,
+                CourseModel = course,
                 Skills = paginationViewModel
             };
         
