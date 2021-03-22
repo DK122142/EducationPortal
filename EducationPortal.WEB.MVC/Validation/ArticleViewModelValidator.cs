@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
 using EducationPortal.WEB.MVC.ViewModels;
 using FluentValidation;
 
@@ -18,7 +18,7 @@ namespace EducationPortal.WEB.MVC.Validation
 
             RuleFor(x => x.Source)
                 .NotEmpty()
-                .Matches(new Regex(@"/\b(http|https)\:\/\/(www\.)?[a-z]+\.[a-z]{2,3}\b/g", RegexOptions.IgnoreCase));
+                .Must(uri => Uri.TryCreate(uri, UriKind.Absolute, out _)).When(x => !string.IsNullOrEmpty(x.Source));
         }
     }
 }
