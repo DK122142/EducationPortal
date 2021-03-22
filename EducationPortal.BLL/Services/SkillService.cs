@@ -15,7 +15,7 @@ namespace EducationPortal.BLL.Services
         {
         }
 
-        public async Task<ResultDetails<Guid>> Create(SkillDto item)
+        public async Task<ResultDetails> Create(SkillDto item)
         {
             try
             {
@@ -27,15 +27,15 @@ namespace EducationPortal.BLL.Services
 
                 await this.repository.SaveChangesAsync();
 
-                return new ResultDetails<Guid>(true, value: entity.Id);
+                return new ResultDetails(true);
             }
             catch
             {
-                return new ResultDetails<Guid>(false);
+                return new ResultDetails(false);
             }
         }
         
-        public async Task<ResultDetails<Guid>> Edit(SkillDto skill)
+        public async Task<ResultDetails> Edit(SkillDto skill)
         {
             try
             {
@@ -45,11 +45,11 @@ namespace EducationPortal.BLL.Services
 
                 await this.repository.SaveChangesAsync();
 
-                return new ResultDetails<Guid>(true, value: entity.Id);
+                return new ResultDetails(true);
             }
             catch
             {
-                return new ResultDetails<Guid>(false);
+                return new ResultDetails(false);
             }
         }
     }

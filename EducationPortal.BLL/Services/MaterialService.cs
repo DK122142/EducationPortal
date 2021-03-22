@@ -19,7 +19,7 @@ namespace EducationPortal.BLL.Services
             this.profileRepository = profileRepository;
         }
 
-        public async Task<ResultDetails<Guid>> Create(Guid creatorId, MaterialDto material)
+        public async Task<ResultDetails> Create(Guid creatorId, MaterialDto material)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace EducationPortal.BLL.Services
 
                 var entity = this.mapper.Map<Material>(material);
 
-                var profile = await this.profileRepository.FindAsync(creatorId);
+                var profile = await this.profileRepository.GetByIdAsync(creatorId);
 
                 entity.AddedBy = profile;
             
@@ -35,15 +35,15 @@ namespace EducationPortal.BLL.Services
 
                 await this.repository.SaveChangesAsync();
 
-                return new ResultDetails<Guid>(true, value: entity.Id);
+                return new ResultDetails(true);
             }
             catch
             {
-                return new ResultDetails<Guid>(false);
+                return new ResultDetails(false);
             }
         }
 
-        public async Task<ResultDetails<Guid>> Edit(MaterialDto material)
+        public async Task<ResultDetails> Edit(MaterialDto material)
         {
             try
             {
@@ -53,11 +53,11 @@ namespace EducationPortal.BLL.Services
 
                 await this.repository.SaveChangesAsync();
 
-                return new ResultDetails<Guid>(true, value: entity.Id);
+                return new ResultDetails(true);
             }
             catch
             {
-                return new ResultDetails<Guid>(false);
+                return new ResultDetails(false);
             }
         }
     }

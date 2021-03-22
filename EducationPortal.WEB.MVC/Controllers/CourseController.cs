@@ -219,7 +219,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             
             this.logger.LogInformation($"Added skill {id} to course {courseId}");
 
-            return RedirectToAction("AddSkills", new {courseId = courseId});
+            return RedirectToAction("AddSkills", new {courseId});
         }
 
         [Authorize]
@@ -230,7 +230,7 @@ namespace EducationPortal.WEB.MVC.Controllers
 
             this.logger.LogInformation($"Added material {id} to course {courseId}");
 
-            return RedirectToAction("AddMaterials", new {courseId = courseId});
+            return RedirectToAction("AddMaterials", new {courseId});
         }
         
         [Authorize]
