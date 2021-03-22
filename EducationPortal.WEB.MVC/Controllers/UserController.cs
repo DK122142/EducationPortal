@@ -16,13 +16,13 @@ namespace EducationPortal.WEB.MVC.Controllers
     public class UserController : Controller
     {
         private readonly IMapper mapper;
-        private readonly IUserService service;
+        private readonly IUserService userService;
         private readonly ILogger logger;
 
-        public UserController(IMapper mapper, IUserService service, ILogger<UserController> logger)
+        public UserController(IMapper mapper, IUserService userService, ILogger<UserController> logger)
         {
             this.mapper = mapper;
-            this.service = service;
+            this.userService = userService;
             this.logger = logger;
         }
 
@@ -30,27 +30,27 @@ namespace EducationPortal.WEB.MVC.Controllers
         public async Task<IActionResult> Profile()
         {
             var id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var profile = await this.service.GetByIdAsync(id);
+            var profile = await this.userService.GetByIdAsync(id);
             
-            var joinedCourses = await this.service.JoinedCourses(id);
-            var completedCourses = await this.service.CompletedCourses(id);
-            var materials = await this.service.LearnedMaterials(id);
-            var skills = await this.service.ProfileSkills(id);
+            var joinedCoursesDto = await this.userService.JoinedCourses(id);
+            var completedCoursesDto = await this.userService.CompletedCourses(id);
+            var learnedMaterialsDto = await this.userService.LearnedMaterials(id);
+            var profileSkillsDto = await this.userService.ProfileSkills(id);
             
-            var jcModels = this.mapper.Map<List<CourseModel>>(joinedCourses.Value);
-            var ccModels = this.mapper.Map<List<CourseModel>>(completedCourses.Value);
-            var mModels = this.mapper.Map<List<MaterialModel>>(materials.Value);
-            var sModels = this.mapper.Map<List<ProfileSkillModel>>(skills.Value);
+            var joinedCoursesModels = this.mapper.Map<List<CourseModel>>(joinedCoursesDto.Value);
+            var completedCoursesModels = this.mapper.Map<List<CourseModel>>(completedCoursesDto.Value);
+            var materialModels = this.mapper.Map<List<MaterialModel>>(learnedMaterialsDto.Value);
+            var profileSkillModels = this.mapper.Map<List<ProfileSkillModel>>(profileSkillsDto.Value);
 
             this.logger.LogInformation($"Opened profile of {profile.Name}");
 
             return View(new UserViewModel
             {
                 Profile = this.mapper.Map<ProfileModel>(profile),
-                CompletedCourses = ccModels,
-                JoinedCourses = jcModels,
-                PassedMaterials = mModels,
-                ProfileSkills = sModels
+                CompletedCourses = completedCoursesModels,
+                JoinedCourses = joinedCoursesModels,
+                PassedMaterials = materialModels,
+                ProfileSkills = profileSkillModels
             });
         }
         
@@ -60,7 +60,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            await this.service.JoinToCourse(Guid.Parse(userId), id);
+            await this.userService.JoinToCourse(Guid.Parse(userId), id);
 
             this.logger.LogInformation($"User {userId} joined to course {id}");
 
@@ -73,7 +73,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            await this.service.CompleteCourse(Guid.Parse(userId), id);
+            await this.userService.CompleteCourse(Guid.Parse(userId), id);
 
             this.logger.LogInformation($"User {userId} completed course {id}");
 

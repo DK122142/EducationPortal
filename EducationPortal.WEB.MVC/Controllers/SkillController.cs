@@ -15,13 +15,13 @@ namespace EducationPortal.WEB.MVC.Controllers
     public class SkillController : Controller
     {
         private readonly IMapper mapper;
-        private readonly ISkillService service;
+        private readonly ISkillService skillService;
         private readonly ILogger logger;
 
-        public SkillController(IMapper mapper, ISkillService service, ILogger<SkillController> logger)
+        public SkillController(IMapper mapper, ISkillService skillService, ILogger<SkillController> logger)
         {
             this.mapper = mapper;
-            this.service = service;
+            this.skillService = skillService;
             this.logger = logger;
         }
 
@@ -30,9 +30,9 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             int pageSize = 10;
 
-            var skillsCount = await this.service.TotalCountAsync();
+            var skillsCount = await this.skillService.TotalCountAsync();
 
-            var skills = await this.service.GetPageAsync(page, pageSize);
+            var skills = await this.skillService.GetPageAsync(page, pageSize);
 
             var pvm = new PageViewModel(skillsCount, page, pageSize);
 
@@ -60,7 +60,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             {
                 var dto = this.mapper.Map<SkillDto>(model);
 
-                await this.service.Create(dto);
+                await this.skillService.Create(dto);
 
                 this.logger.LogInformation($"Added skill {model.Name}");
 
@@ -74,7 +74,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var skill = await this.service.GetByIdAsync(id);
+            var skill = await this.skillService.GetByIdAsync(id);
             var model = this.mapper.Map<SkillModel>(skill);
 
             return View(model);
@@ -90,7 +90,7 @@ namespace EducationPortal.WEB.MVC.Controllers
                 if (ModelState.IsValid)
                 {
                     var dto = this.mapper.Map<SkillDto>(model);
-                    await this.service.Edit(dto);
+                    await this.skillService.Edit(dto);
 
                     this.logger.LogInformation($"Updated skill {model.Name}");
                 }
@@ -110,7 +110,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                await this.service.DeleteAsync(id);
+                await this.skillService.DeleteAsync(id);
 
                 this.logger.LogInformation($"Deleted skill {id}");
             }

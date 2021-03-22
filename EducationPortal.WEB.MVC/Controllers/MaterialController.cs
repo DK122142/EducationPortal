@@ -15,14 +15,14 @@ namespace EducationPortal.WEB.MVC.Controllers
 {
     public class MaterialController : Controller
     {
-        private readonly IMaterialService service;
+        private readonly IMaterialService materialService;
         private readonly IMapper mapper;
         private readonly ILogger logger;
 
-        public MaterialController(IMapper mapper, IMaterialService service, ILogger<MaterialController> logger)
+        public MaterialController(IMapper mapper, IMaterialService materialService, ILogger<MaterialController> logger)
         {
             this.mapper = mapper;
-            this.service = service;
+            this.materialService = materialService;
             this.logger = logger;
         }
 
@@ -31,9 +31,9 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             int pageSize = 10;
 
-            var count = await this.service.TotalCountAsync();
+            var count = await this.materialService.TotalCountAsync();
 
-            var materials = await this.service.GetPageAsync(page, pageSize);
+            var materials = await this.materialService.GetPageAsync(page, pageSize);
 
             var pvm = new PageViewModel(count, page, pageSize);
 
@@ -63,7 +63,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             
                 var dto = this.mapper.Map<ArticleDto>(model);
 
-                await this.service.Create(Guid.Parse(creatorId),  dto);
+                await this.materialService.Create(Guid.Parse(creatorId),  dto);
 
                 this.logger.LogInformation($"Created article {model.Name}");
 
@@ -88,7 +88,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             
                 var dto = this.mapper.Map<BookDto>(model);
 
-                await this.service.Create(Guid.Parse(creatorId),  dto);
+                await this.materialService.Create(Guid.Parse(creatorId),  dto);
                 this.logger.LogInformation($"Created book {model.Name}");
 
                 return RedirectToAction("Index");
@@ -112,7 +112,7 @@ namespace EducationPortal.WEB.MVC.Controllers
 
                 var dto = this.mapper.Map<VideoDto>(model);
 
-                await this.service.Create(Guid.Parse(creatorId),  dto);
+                await this.materialService.Create(Guid.Parse(creatorId),  dto);
                 this.logger.LogInformation($"Created video {model.Name}");
 
                 return RedirectToAction("Index");
@@ -124,7 +124,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> EditArticle(Guid id)
         {
-            var material = await this.service.GetByIdAsync(id);
+            var material = await this.materialService.GetByIdAsync(id);
             var model = this.mapper.Map<ArticleModel>(material);
 
             return View(model);
@@ -140,7 +140,7 @@ namespace EducationPortal.WEB.MVC.Controllers
                 if (ModelState.IsValid)
                 {
                     var dto = this.mapper.Map<ArticleDto>(model);
-                    await this.service.Edit(dto);
+                    await this.materialService.Edit(dto);
                     
                     this.logger.LogInformation($"Updated article {model.Name}");
                 }
@@ -156,7 +156,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> EditBook(Guid id)
         {
-            var material = await this.service.GetByIdAsync(id);
+            var material = await this.materialService.GetByIdAsync(id);
             var model = this.mapper.Map<BookModel>(material);
 
             return View(model);
@@ -172,7 +172,7 @@ namespace EducationPortal.WEB.MVC.Controllers
                 if (ModelState.IsValid)
                 {
                     var dto = this.mapper.Map<BookDto>(model);
-                    await this.service.Edit(dto);
+                    await this.materialService.Edit(dto);
                     this.logger.LogInformation($"Updated book {model.Name}");
                 }
 
@@ -187,7 +187,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> EditVideo(Guid id)
         {
-            var material = await this.service.GetByIdAsync(id);
+            var material = await this.materialService.GetByIdAsync(id);
             var model = this.mapper.Map<VideoModel>(material);
 
             return View(model);
@@ -203,7 +203,7 @@ namespace EducationPortal.WEB.MVC.Controllers
                 if (ModelState.IsValid)
                 {
                     var dto = this.mapper.Map<VideoDto>(model);
-                    await this.service.Edit(dto);
+                    await this.materialService.Edit(dto);
                     this.logger.LogInformation($"Updated video {model.Name}");
                 }
 
@@ -222,7 +222,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                await this.service.DeleteAsync(id);
+                await this.materialService.DeleteAsync(id);
                 this.logger.LogInformation($"Deleted material {id}");
             }
 

@@ -16,14 +16,14 @@ namespace EducationPortal.WEB.MVC.Controllers
     public class CourseController : Controller
     {
         private readonly IMapper mapper;
-        private readonly ICourseService service;
+        private readonly ICourseService courseService;
         private readonly ISkillService skillService;
         private readonly IMaterialService materialService;
         private readonly ILogger logger;
 
-        public CourseController(IMapper mapper, ICourseService service, ISkillService skillService, IMaterialService materialService, ILogger<CourseController> logger)
+        public CourseController(IMapper mapper, ICourseService courseService, ISkillService skillService, IMaterialService materialService, ILogger<CourseController> logger)
         {
-            this.service = service;
+            this.courseService = courseService;
             this.skillService = skillService;
             this.materialService = materialService;
             this.logger = logger;
@@ -34,9 +34,9 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             int pageSize = 10;
 
-            var count = await this.service.TotalCountAsync();
+            var count = await this.courseService.TotalCountAsync();
 
-            var materials = await this.service.GetPageAsync(page, pageSize);
+            var materials = await this.courseService.GetPageAsync(page, pageSize);
 
             var pvm = new PageViewModel(count, page, pageSize);
 
@@ -62,9 +62,9 @@ namespace EducationPortal.WEB.MVC.Controllers
             {
                 var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             
-                var dto = this.mapper.Map<CourseDto>(model);
+                var courseDto = this.mapper.Map<CourseDto>(model);
         
-                await this.service.Create(Guid.Parse(creatorId), dto);
+                await this.courseService.Create(Guid.Parse(creatorId), courseDto);
 
                 this.logger.LogInformation($"Course {model.Name} created by {creatorId}");
             
@@ -77,7 +77,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            var courseDto = await this.service.GetByIdAsync(id);
+            var courseDto = await this.courseService.GetByIdAsync(id);
             var skillsDto = new List<SkillDto>();
             var materialsDto = new List<MaterialDto>();
             
@@ -124,7 +124,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             };
             
             // Course model data
-            var courseDto = await this.service.GetByIdAsync(courseId);
+            var courseDto = await this.courseService.GetByIdAsync(courseId);
             var skillsDto = new List<SkillDto>();
             var materialsDto = new List<MaterialDto>();
             
@@ -177,7 +177,7 @@ namespace EducationPortal.WEB.MVC.Controllers
             };
             
             // Course model data
-            var courseDto = await this.service.GetByIdAsync(courseId);
+            var courseDto = await this.courseService.GetByIdAsync(courseId);
             var skillsDto = new List<SkillDto>();
             var materialsDto = new List<MaterialDto>();
             
@@ -215,7 +215,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSkill(Guid courseId, Guid id)
         {
-            await this.service.AddSkillToCourse(id, courseId);
+            await this.courseService.AddSkillToCourse(id, courseId);
             
             this.logger.LogInformation($"Added skill {id} to course {courseId}");
 
@@ -226,7 +226,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMaterial(Guid courseId, Guid id)
         {
-            await this.service.AddMaterialToCourse(id, courseId);
+            await this.courseService.AddMaterialToCourse(id, courseId);
 
             this.logger.LogInformation($"Added material {id} to course {courseId}");
 
@@ -237,7 +237,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveSkill(Guid courseId, Guid skillId)
         {
-            await this.service.RemoveSkillFromCourse(skillId, courseId);
+            await this.courseService.RemoveSkillFromCourse(skillId, courseId);
             
             this.logger.LogInformation($"Removed skill {skillId} to course {courseId}");
 
@@ -248,7 +248,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveMaterial(Guid courseId, Guid materialId)
         {
-            await this.service.RemoveMaterialFromCourse(materialId, courseId);
+            await this.courseService.RemoveMaterialFromCourse(materialId, courseId);
 
             this.logger.LogInformation($"Removed material {materialId} to course {courseId}");
 
@@ -262,7 +262,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                await this.service.DeleteAsync(id);
+                await this.courseService.DeleteAsync(id);
                 
                 this.logger.LogInformation($"Deleted course {id}");
             }
