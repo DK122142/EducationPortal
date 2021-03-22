@@ -23,8 +23,6 @@ namespace EducationPortal.BLL.Services
         {
             try
             {
-                material.Id = Guid.NewGuid();
-
                 var entity = this.mapper.Map<Material>(material);
 
                 var profile = await this.profileRepository.GetByIdAsync(creatorId);

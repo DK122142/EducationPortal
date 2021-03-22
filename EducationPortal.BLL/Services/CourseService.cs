@@ -33,7 +33,6 @@ namespace EducationPortal.BLL.Services
             
                 var newCourse = this.mapper.Map<Course>(course);
 
-                newCourse.Id = Guid.NewGuid();
                 newCourse.Creator = creator;
 
                 await this.repository.AddAsync(newCourse);
@@ -52,7 +51,6 @@ namespace EducationPortal.BLL.Services
         {
             try
             {
-                // Ienumer
                 var skills = await this.skillRepository.FindBy(s => course.SkillsId.Contains(s.Id));
 
                 var materials = await this.materialRepository.FindBy(m => course.MaterialsId.Contains(m.Id));

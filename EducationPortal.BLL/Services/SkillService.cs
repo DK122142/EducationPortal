@@ -19,8 +19,6 @@ namespace EducationPortal.BLL.Services
         {
             try
             {
-                item.Id = Guid.NewGuid();
-
                 var entity = this.mapper.Map<Skill>(item);
 
                 await this.repository.AddAsync(entity);
