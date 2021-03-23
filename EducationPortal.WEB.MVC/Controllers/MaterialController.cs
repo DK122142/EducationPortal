@@ -35,11 +35,11 @@ namespace EducationPortal.WEB.MVC.Controllers
 
             var materials = await this.materialService.GetPageAsync(page, pageSize);
 
-            var pvm = new PageViewModel(count, page, pageSize);
+            var pageViewModel = new PageViewModel(count, page, pageSize);
 
             var viewModel = new PaginationViewModel<MaterialModel>
             {
-                PageViewModel = pvm,
+                PageViewModel = pageViewModel,
                 Models = this.mapper.Map<IEnumerable<MaterialModel>>(materials)
             };
 
@@ -55,22 +55,22 @@ namespace EducationPortal.WEB.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateArticle(ArticleCreateViewModel model)
+        public async Task<IActionResult> CreateArticle(ArticleCreateViewModel articleCreateViewModel)
         {
             if (ModelState.IsValid)
             {
                 var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             
-                var dto = this.mapper.Map<ArticleDto>(model);
+                var articleDto = this.mapper.Map<ArticleDto>(articleCreateViewModel);
 
-                await this.materialService.Create(Guid.Parse(creatorId),  dto);
+                await this.materialService.Create(Guid.Parse(creatorId),  articleDto);
 
-                this.logger.LogInformation($"Created article {model.Name}");
+                this.logger.LogInformation($"Created article {articleCreateViewModel.Name}");
 
                 return RedirectToAction("Index");
             }
 
-            return View(model);
+            return View(articleCreateViewModel);
         }
 
         [Authorize]
@@ -80,21 +80,21 @@ namespace EducationPortal.WEB.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateBook(BookCreateViewModel model)
+        public async Task<IActionResult> CreateBook(BookCreateViewModel bookCreateViewModel)
         {
             if (ModelState.IsValid)
             {
                 var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             
-                var dto = this.mapper.Map<BookDto>(model);
+                var bookDto = this.mapper.Map<BookDto>(bookCreateViewModel);
 
-                await this.materialService.Create(Guid.Parse(creatorId),  dto);
-                this.logger.LogInformation($"Created book {model.Name}");
+                await this.materialService.Create(Guid.Parse(creatorId),  bookDto);
+                this.logger.LogInformation($"Created book {bookCreateViewModel.Name}");
 
                 return RedirectToAction("Index");
             }
 
-            return View(model);
+            return View(bookCreateViewModel);
         }
         
         [Authorize]
@@ -104,21 +104,21 @@ namespace EducationPortal.WEB.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateVideo(VideoCreateViewModel model)
+        public async Task<IActionResult> CreateVideo(VideoCreateViewModel videoCreateViewModel)
         {
             if (ModelState.IsValid)
             {
                 var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                var dto = this.mapper.Map<VideoDto>(model);
+                var videoDto = this.mapper.Map<VideoDto>(videoCreateViewModel);
 
-                await this.materialService.Create(Guid.Parse(creatorId),  dto);
-                this.logger.LogInformation($"Created video {model.Name}");
+                await this.materialService.Create(Guid.Parse(creatorId),  videoDto);
+                this.logger.LogInformation($"Created video {videoCreateViewModel.Name}");
 
                 return RedirectToAction("Index");
             }
 
-            return View(model);
+            return View(videoCreateViewModel);
         }
         
         [HttpGet]
@@ -133,23 +133,23 @@ namespace EducationPortal.WEB.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditArticle(ArticleModel model)
+        public async Task<IActionResult> EditArticle(ArticleModel articleModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var dto = this.mapper.Map<ArticleDto>(model);
-                    await this.materialService.Edit(dto);
+                    var articleDto = this.mapper.Map<ArticleDto>(articleModel);
+                    await this.materialService.Edit(articleDto);
                     
-                    this.logger.LogInformation($"Updated article {model.Name}");
+                    this.logger.LogInformation($"Updated article {articleModel.Name}");
                 }
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(model);
+                return View(articleModel);
             }
         }
         
@@ -171,8 +171,8 @@ namespace EducationPortal.WEB.MVC.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var dto = this.mapper.Map<BookDto>(model);
-                    await this.materialService.Edit(dto);
+                    var bookDto = this.mapper.Map<BookDto>(model);
+                    await this.materialService.Edit(bookDto);
                     this.logger.LogInformation($"Updated book {model.Name}");
                 }
 
@@ -202,8 +202,8 @@ namespace EducationPortal.WEB.MVC.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var dto = this.mapper.Map<VideoDto>(model);
-                    await this.materialService.Edit(dto);
+                    var videoDto = this.mapper.Map<VideoDto>(model);
+                    await this.materialService.Edit(videoDto);
                     this.logger.LogInformation($"Updated video {model.Name}");
                 }
 
