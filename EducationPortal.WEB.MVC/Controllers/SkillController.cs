@@ -34,11 +34,11 @@ namespace EducationPortal.WEB.MVC.Controllers
 
             var skills = await this.skillService.GetPageAsync(page, pageSize);
 
-            var pvm = new PageViewModel(skillsCount, page, pageSize);
+            var pageViewModel = new PageViewModel(skillsCount, page, pageSize);
 
             var viewModel = new PaginationViewModel<SkillModel>
             {
-                PageViewModel = pvm,
+                PageViewModel = pageViewModel,
                 Models = this.mapper.Map<IEnumerable<SkillModel>>(skills)
             };
             
@@ -54,20 +54,20 @@ namespace EducationPortal.WEB.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SkillCreateViewModel model)
+        public async Task<IActionResult> Create(SkillCreateViewModel skillCreateViewModel)
         {
             if (ModelState.IsValid)
             {
-                var dto = this.mapper.Map<SkillDto>(model);
+                var skillDto = this.mapper.Map<SkillDto>(skillCreateViewModel);
 
-                await this.skillService.Create(dto);
+                await this.skillService.Create(skillDto);
 
-                this.logger.LogInformation($"Added skill {model.Name}");
+                this.logger.LogInformation($"Added skill {skillCreateViewModel.Name}");
 
                 return RedirectToAction("Index");
             }
 
-            return View(model);
+            return View(skillCreateViewModel);
         }
         
         [Authorize]
@@ -83,23 +83,23 @@ namespace EducationPortal.WEB.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(SkillModel model)
+        public async Task<IActionResult> Edit(SkillModel skillModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var dto = this.mapper.Map<SkillDto>(model);
-                    await this.skillService.Edit(dto);
+                    var skillDto = this.mapper.Map<SkillDto>(skillModel);
+                    await this.skillService.Edit(skillDto);
 
-                    this.logger.LogInformation($"Updated skill {model.Name}");
+                    this.logger.LogInformation($"Updated skill {skillModel.Name}");
                 }
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(model);
+                return View(skillModel);
             }
         }
 

@@ -115,11 +115,11 @@ namespace EducationPortal.WEB.MVC.Controllers
         
             var skills = await this.skillService.GetPageAsync(page, pageSize);
         
-            var pvm = new PageViewModel(skillsCount, page, pageSize);
+            var pageViewModel = new PageViewModel(skillsCount, page, pageSize);
         
             var paginationViewModel = new PaginationViewModel<SkillModel>
             {
-                PageViewModel = pvm,
+                PageViewModel = pageViewModel,
                 Models = this.mapper.Map<IEnumerable<SkillModel>>(skills)
             };
             
@@ -168,11 +168,11 @@ namespace EducationPortal.WEB.MVC.Controllers
         
             var skills = await this.materialService.GetPageAsync(page, pageSize);
         
-            var pvm = new PageViewModel(count, page, pageSize);
+            var pageViewModel = new PageViewModel(count, page, pageSize);
         
             var paginationViewModel = new PaginationViewModel<MaterialModel>
             {
-                PageViewModel = pvm,
+                PageViewModel = pageViewModel,
                 Models = this.mapper.Map<IEnumerable<MaterialModel>>(skills)
             };
             
