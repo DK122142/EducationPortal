@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
@@ -18,20 +15,20 @@ namespace EducationPortal.WEB.MVC.Controllers.API
     public class SkillController : ControllerBase
     {
         private IMapper mapper;
-        private ISkillService service;
+        private ISkillService skillService;
         private ILogger logger;
 
-        public SkillController(IMapper mapper, ISkillService service, ILogger<Controllers.SkillController> logger)
+        public SkillController(IMapper mapper, ISkillService skillService, ILogger<Controllers.SkillController> logger)
         {
             this.mapper = mapper;
-            this.service = service;
+            this.skillService = skillService;
             this.logger = logger;
         }
 
         [HttpGet("{id:Guid}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var skill = await this.service.GetByIdAsync(id);
+            var skill = await this.skillService.GetByIdAsync(id);
 
             if (skill == null)
             {
@@ -46,7 +43,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         {
             var dto = this.mapper.Map<SkillDto>(model);
 
-            await this.service.Create(dto);
+            await this.skillService.Create(dto);
 
             this.logger.LogInformation($"Added skill {model.Name}");
 
@@ -61,7 +58,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
                 if (ModelState.IsValid)
                 {
                     var dto = this.mapper.Map<SkillDto>(model);
-                    await this.service.Edit(dto);
+                    await this.skillService.Edit(dto);
                 }
 
                 return Ok(model);
@@ -75,7 +72,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         [HttpDelete("{id:Guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await this.service.DeleteAsync(id);
+            await this.skillService.DeleteAsync(id);
             return Ok();
         }
     }

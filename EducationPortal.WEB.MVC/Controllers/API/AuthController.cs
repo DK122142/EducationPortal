@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.WEB.MVC.ViewModels;
@@ -14,12 +10,12 @@ namespace EducationPortal.WEB.MVC.Controllers.API
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private IAuthService service;
+        private IAuthService authService;
         private ILogger logger;
 
-        public AuthController(IAuthService service, ILogger<Controllers.AuthController> logger)
+        public AuthController(IAuthService authService, ILogger<Controllers.AuthController> logger)
         {
-            this.service = service;
+            this.authService = authService;
             this.logger = logger;
         }
 
@@ -29,7 +25,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         {
             if (ModelState.IsValid)
             {
-                var result = await this.service.Register(model.Login, model.Password);
+                var result = await this.authService.Register(model.Login, model.Password);
 
                 if (result.Succeeded)
                 {
@@ -55,7 +51,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         {
             if (ModelState.IsValid)
             {
-                var result = await this.service.Login(model.Login, model.Password, model.RememberMe);
+                var result = await this.authService.Login(model.Login, model.Password, model.RememberMe);
                 
                 if (result.Succeeded)
                 {
@@ -85,7 +81,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         public async Task<IActionResult> Logout()
         {
             this.logger.LogInformation($"Logout Username: {User.Identity.Name}");
-            await this.service.LogOut();
+            await this.authService.LogOut();
             return Ok();
         }
     }

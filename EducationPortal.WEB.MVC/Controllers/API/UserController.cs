@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.Interfaces;
@@ -17,13 +15,13 @@ namespace EducationPortal.WEB.MVC.Controllers.API
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IMapper mapper;
-        private IUserService service;
+        private readonly IMapper mapper;
+        private readonly IUserService userService;
 
-        public UserController(IMapper mapper, IUserService service)
+        public UserController(IMapper mapper, IUserService userService)
         {
             this.mapper = mapper;
-            this.service = service;
+            this.userService = userService;
         }
 
 
@@ -32,25 +30,25 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         public async Task<IActionResult> Profile()
         {
             var id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var profile = await this.service.GetByIdAsync(id);
-
-            var joinedCourses = await this.service.JoinedCourses(id);
-            var completedCourses = await this.service.CompletedCourses(id);
-            var materials = await this.service.LearnedMaterials(id);
-            var skills = await this.service.ProfileSkills(id);
-
-            var jcModels = this.mapper.Map<List<CourseModel>>(joinedCourses);
-            var ccModels = this.mapper.Map<List<CourseModel>>(completedCourses);
-            var mModels = this.mapper.Map<List<MaterialModel>>(materials);
-            var sModels = this.mapper.Map<List<ProfileSkillModel>>(skills);
+            var profile = await this.userService.GetByIdAsync(id);
+            
+            var joinedCoursesDto = await this.userService.JoinedCourses(id);
+            var completedCoursesDto = await this.userService.CompletedCourses(id);
+            var learnedMaterialsDto = await this.userService.LearnedMaterials(id);
+            var profileSkillsDto = await this.userService.ProfileSkills(id);
+            
+            var joinedCoursesModels = this.mapper.Map<List<CourseModel>>(joinedCoursesDto.Value);
+            var completedCoursesModels = this.mapper.Map<List<CourseModel>>(completedCoursesDto.Value);
+            var materialModels = this.mapper.Map<List<MaterialModel>>(learnedMaterialsDto.Value);
+            var profileSkillModels = this.mapper.Map<List<ProfileSkillModel>>(profileSkillsDto.Value);
 
             return new ObjectResult(new UserViewModel
             {
                 Profile = this.mapper.Map<ProfileModel>(profile),
-                CompletedCourses = ccModels,
-                JoinedCourses = jcModels,
-                PassedMaterials = mModels,
-                ProfileSkills = sModels
+                CompletedCourses = completedCoursesModels,
+                JoinedCourses = joinedCoursesModels,
+                PassedMaterials = materialModels,
+                ProfileSkills = profileSkillModels
             });
         }
 
@@ -60,7 +58,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            await this.service.JoinToCourse(Guid.Parse(userId), id);
+            await this.userService.JoinToCourse(Guid.Parse(userId), id);
 
             return Ok();
         }
@@ -71,7 +69,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            await this.service.CompleteCourse(Guid.Parse(userId), id);
+            await this.userService.CompleteCourse(Guid.Parse(userId), id);
 
             return Ok();
         }

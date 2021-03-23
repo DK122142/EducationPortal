@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EducationPortal.BLL.DTO;
@@ -19,13 +17,13 @@ namespace EducationPortal.WEB.MVC.Controllers.API
     public class CourseController : ControllerBase
     {
         private readonly IMapper mapper;
-        private readonly ICourseService service;
+        private readonly ICourseService courseService;
         private readonly ISkillService skillService;
         private readonly IMaterialService materialService;
 
-        public CourseController(IMapper mapper, ICourseService service, ISkillService skillService, IMaterialService materialService)
+        public CourseController(IMapper mapper, ICourseService courseService, ISkillService skillService, IMaterialService materialService)
         {
-            this.service = service;
+            this.courseService = courseService;
             this.skillService = skillService;
             this.materialService = materialService;
             this.mapper = mapper;
@@ -34,7 +32,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         [HttpGet("{id:Guid}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var skill = await this.service.GetByIdAsync(id);
+            var skill = await this.courseService.GetByIdAsync(id);
 
             if (skill == null)
             {
@@ -51,7 +49,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
             
             var dto = this.mapper.Map<CourseDto>(model);
         
-            await this.service.Create(Guid.Parse(creatorId), dto);
+            await this.courseService.Create(Guid.Parse(creatorId), dto);
             
             return Ok(model);
         }
@@ -59,14 +57,14 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         [HttpDelete("{id:Guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await this.service.DeleteAsync(id);
+            await this.courseService.DeleteAsync(id);
             return Ok();
         }
         
         [HttpGet("Details/{id:Guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var courseDto = await this.service.GetByIdAsync(id);
+            var courseDto = await this.courseService.GetByIdAsync(id);
             var skillsDto = new List<SkillDto>();
             var materialsDto = new List<MaterialDto>();
             
@@ -98,7 +96,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         [HttpPost("addskill/{courseId:Guid}/{id:Guid}")]
         public async Task<IActionResult> AddSkill(Guid courseId, Guid id)
         {
-            await this.service.AddSkillToCourse(id, courseId);
+            await this.courseService.AddSkillToCourse(id, courseId);
 
             return Ok();
         }
@@ -107,7 +105,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         [HttpPost("addmaterial{courseId:Guid}/{id:Guid}")]
         public async Task<IActionResult> AddMaterial(Guid courseId, Guid id)
         {
-            await this.service.AddMaterialToCourse(id, courseId);
+            await this.courseService.AddMaterialToCourse(id, courseId);
 
             return Ok();
         }
