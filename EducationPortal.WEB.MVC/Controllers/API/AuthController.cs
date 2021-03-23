@@ -13,14 +13,13 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         private IAuthService authService;
         private ILogger logger;
 
-        public AuthController(IAuthService authService, ILogger<Controllers.AuthController> logger)
+        public AuthController(IAuthService authService, ILogger<AuthController> logger)
         {
             this.authService = authService;
             this.logger = logger;
         }
 
         [HttpPost("Register")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -30,7 +29,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
                 if (result.Succeeded)
                 {
                     this.logger.LogInformation($"User with name: {model.Login} registered");
-                    return RedirectToAction("Index", "Home");
+                    return Ok();
                 }
                 else
                 {
@@ -42,11 +41,10 @@ namespace EducationPortal.WEB.MVC.Controllers.API
                 }
             }
 
-            return Ok(model);
+            return BadRequest(model);
         }
 
         [HttpPost("Login")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -58,12 +56,12 @@ namespace EducationPortal.WEB.MVC.Controllers.API
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
                         this.logger.LogInformation($"Login successful. User with name: {model.Login}");
-                        return Redirect(model.ReturnUrl);
+                        return Ok(model.Login);
                     }
                     else
                     {
                         this.logger.LogInformation($"Login successful. User with name: {model.Login}");
-                        return RedirectToAction("Index", "Home");
+                        return Ok(model.Login);
                     }
                 }
                 else
@@ -73,11 +71,10 @@ namespace EducationPortal.WEB.MVC.Controllers.API
                 }
             }
 
-            return Ok(model);
+            return BadRequest(model);
         }
 
         [HttpPost("Logout")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             this.logger.LogInformation($"Logout Username: {User.Identity.Name}");
