@@ -7,8 +7,8 @@ namespace EducationPortal.BLL.Interfaces
 {
     public interface IMaterialService : IService<MaterialDto>
     {
-        Task<ResultDetails<Guid>> Create(Guid creatorId, MaterialDto material);
+        Task<ResultDetails> Create(Guid creatorId, MaterialDto material);
 
-        Task<ResultDetails<Guid>> Edit(MaterialDto material);
+        Task<ResultDetails> Edit(MaterialDto material);
     }
 }

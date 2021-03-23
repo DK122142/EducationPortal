@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -13,7 +12,7 @@ namespace EducationPortal.BLL.Interfaces
 
         Task<TDto> GetByIdAsync(Guid id);
         
-        IQueryable<TDto> FindBy(Expression<Func<TDto, bool>> predicate);
+        Task<IEnumerable<TDto>> FindBy(Expression<Func<TDto, bool>> predicate);
 
         Task DeleteAsync(Guid id);
 

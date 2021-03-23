@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using EducationPortal.DAL.DbContexts;
 using EducationPortal.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EducationPortal.DAL.Repositories
 {
@@ -21,14 +20,14 @@ namespace EducationPortal.DAL.Repositories
             this.table = context.Set<T>();
         }
 
-        public Task<List<T>> SkipTakeToListAsync(int skip, int take)
+        public async Task<IEnumerable<T>> SkipTake(int skip, int take)
         {
-            return this.table.Skip(skip).Take(take).ToListAsync();
+            return await this.table.Skip(skip).Take(take).ToListAsync();
         }
         
-        public Task<int> CountAsync()
+        public async Task<int> CountAsync()
         {
-            return this.table.CountAsync();
+            return await this.table.CountAsync();
         }
 
         public virtual Task SaveChangesAsync()
@@ -36,39 +35,39 @@ namespace EducationPortal.DAL.Repositories
             return this.context.SaveChangesAsync();
         }
 
-        public virtual Task<T> FirstOrDefaultAsync()
+        public virtual async Task<T> FirstOrDefaultAsync()
         {
-            return this.table.FirstOrDefaultAsync();
+            return await this.table.FirstOrDefaultAsync();
         }
 
-        public IQueryable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return this.table.AsNoTracking();
+            return await this.table.AsNoTracking().ToListAsync();
         }
 
-        public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
+        public virtual async Task<IEnumerable<T>> FindBy(Expression<Func<T, bool>> predicate)
         {
-            return this.table.Where(predicate);
+            return await this.table.Where(predicate).ToListAsync();
         }
 
         public virtual Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
         {
             return this.table.AnyAsync(predicate);
         }
-
-        public virtual ValueTask<T> FindAsync(params object[] keys)
+        
+        public virtual async Task<T> GetByIdAsync(params object[] keys)
         {
-            return this.table.FindAsync(keys);
+            return await this.table.FindAsync(keys).AsTask();
         }
 
-        public virtual ValueTask<EntityEntry<T>> AddAsync(T entity)
+        public virtual async Task AddAsync(T entity)
         {
-            return this.table.AddAsync(entity);
+            await this.table.AddAsync(entity).AsTask();
         }
 
-        public virtual Task AddAsync(IEnumerable<T> entities)
+        public virtual async Task AddAsync(IEnumerable<T> entities)
         {
-            return this.table.AddRangeAsync(entities);
+            await this.table.AddRangeAsync(entities);
         }
 
         public virtual void Delete(T entity)
@@ -84,16 +83,6 @@ namespace EducationPortal.DAL.Repositories
         public virtual void Update(T entity)
         {
             context.Entry(entity).State = EntityState.Modified;
-        }
-
-        public virtual IOrderedQueryable<T> OrderBy<K>(Expression<Func<T, K>> predicate)
-        {
-            return this.table.OrderBy(predicate);
-        }
-
-        public virtual IQueryable<IGrouping<K, T>> GroupBy<K>(Expression<Func<T, K>> predicate)
-        {
-            return this.table.GroupBy(predicate);
         }
     }
 }

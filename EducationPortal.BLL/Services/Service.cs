@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -24,30 +23,30 @@ namespace EducationPortal.BLL.Services
 
         public virtual async Task<IEnumerable<TDto>> GetPageAsync(int pageNumber, int itemsOnPage)
         {
-            var page = await this.repository.SkipTakeToListAsync((pageNumber - 1) * itemsOnPage, itemsOnPage);
+            var page = await this.repository.SkipTake((pageNumber - 1) * itemsOnPage, itemsOnPage);
 
             return this.mapper.Map<IEnumerable<TDto>>(page);
         }
 
         public virtual async Task<TDto> GetByIdAsync(Guid id)
         {
-            var entity = await this.repository.FindAsync(id);
+            var entity = await this.repository.GetByIdAsync(id);
 
             return this.mapper.Map<TDto>(entity);
         }
 
-        public virtual IQueryable<TDto> FindBy(Expression<Func<TDto, bool>> predicate)
+        public virtual async Task<IEnumerable<TDto>> FindBy(Expression<Func<TDto, bool>> predicate)
         {
             var expr = this.mapper.Map<Expression<Func<TEntity, bool>>>(predicate);
 
-            var entity = this.repository.FindBy(expr);
+            var entity = await this.repository.FindBy(expr);
 
-            return this.mapper.Map<IQueryable<TDto>>(entity);
+            return this.mapper.Map<IEnumerable<TDto>>(entity);
         }
 
         public virtual async Task DeleteAsync(Guid id)
         {
-            var entity = await this.repository.FindAsync(id);
+            var entity = await this.repository.GetByIdAsync(id);
 
             this.repository.Delete(entity);
 

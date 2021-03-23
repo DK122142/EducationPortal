@@ -21,54 +21,53 @@ namespace EducationPortal.BLL.Services
             this.courseRepository = courseRepository;
         }
 
-        public async Task<ResultDetails<Guid>> JoinToCourse(Guid profileId, Guid courseId)
+        public async Task<ResultDetails> JoinToCourse(Guid profileId, Guid courseId)
         {
             try
             {
-                var profile = await this.repository.FindAsync(profileId);
+                var profile = await this.repository.GetByIdAsync(profileId);
 
-                var course = await this.courseRepository.FindAsync(courseId);
+                var course = await this.courseRepository.GetByIdAsync(courseId);
 
                 profile.JoinedCourses.Add(course);
 
                 await this.repository.SaveChangesAsync();
 
-                return new ResultDetails<Guid>(true, value: course.Id);
+                return new ResultDetails(true);
             }
             catch
             {
-                return new ResultDetails<Guid>(false);
+                return new ResultDetails(false);
             }
         }
 
-        public async Task<ResultDetails<Guid>> LeaveCourse(Guid profileId, Guid courseId)
+        public async Task<ResultDetails> LeaveCourse(Guid profileId, Guid courseId)
         {
             try
             {
-                var profile = await this.repository.FindAsync(profileId);
+                var profile = await this.repository.GetByIdAsync(profileId);
 
-                var course = await this.courseRepository.FindAsync(courseId);
+                var course = await this.courseRepository.GetByIdAsync(courseId);
 
                 profile.JoinedCourses.Remove(course);
 
                 await this.repository.SaveChangesAsync();
 
-                return new ResultDetails<Guid>(true, value: course.Id);
+                return new ResultDetails(true);
             }
             catch
             {
-                return new ResultDetails<Guid>(false);
+                return new ResultDetails(false);
             }
         }
 
-        public async Task<ResultDetails<Guid>> CompleteCourse(Guid profileId, Guid courseId)
+        public async Task<ResultDetails> CompleteCourse(Guid profileId, Guid courseId)
         {
-            
             try
             {
-                var profile = await this.repository.FindAsync(profileId);
+                var profile = await this.repository.GetByIdAsync(profileId);
 
-                var course = await this.courseRepository.FindAsync(courseId);
+                var course = await this.courseRepository.GetByIdAsync(courseId);
 
                 profile.JoinedCourses.Remove(course);
                 profile.CompletedCourses.Add(course);
@@ -105,11 +104,11 @@ namespace EducationPortal.BLL.Services
 
                 await this.repository.SaveChangesAsync();
 
-                return new ResultDetails<Guid>(true, value: course.Id);
+                return new ResultDetails(true);
             }
             catch
             {
-                return new ResultDetails<Guid>(false);
+                return new ResultDetails(false);
             }
         }
 
@@ -117,7 +116,7 @@ namespace EducationPortal.BLL.Services
         {
             try
             {
-                var profile = await this.repository.FindAsync(profileId);
+                var profile = await this.repository.GetByIdAsync(profileId);
 
                 var joinedCourses = profile.JoinedCourses;
 
@@ -135,7 +134,7 @@ namespace EducationPortal.BLL.Services
         {
             try
             {
-                var profile = await this.repository.FindAsync(profileId);
+                var profile = await this.repository.GetByIdAsync(profileId);
 
                 var completedCourses = profile.CompletedCourses;
 
@@ -153,7 +152,7 @@ namespace EducationPortal.BLL.Services
         {
             try
             {
-                var profile = await this.repository.FindAsync(profileId);
+                var profile = await this.repository.GetByIdAsync(profileId);
 
                 var materials = profile.PassedMaterials;
 
@@ -171,7 +170,7 @@ namespace EducationPortal.BLL.Services
         {
             try
             {
-                var profile = await this.repository.FindAsync(profileId);
+                var profile = await this.repository.GetByIdAsync(profileId);
 
                 var profileSkills = profile.ProfileSkills;
 

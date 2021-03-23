@@ -8,14 +8,13 @@ namespace EducationPortal.WEB.MVC.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly IAuthService service;
+        private readonly IAuthService authService;
         private readonly ILogger logger;
 
-        public AuthController(IAuthService service, ILogger<AuthController> logger)
+        public AuthController(IAuthService authService, ILogger<AuthController> logger)
         {
-            this.service = service;
+            this.authService = authService;
             this.logger = logger;
-
         }
 
         [HttpGet]
@@ -27,7 +26,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await this.service.Register(model.Login, model.Password);
+                var result = await this.authService.Register(model.Login, model.Password);
 
                 if (result.Succeeded)
                 {
@@ -56,7 +55,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await this.service.Login(model.Login, model.Password, model.RememberMe);
+                var result = await this.authService.Login(model.Login, model.Password, model.RememberMe);
                 
                 if (result.Succeeded)
                 {
@@ -86,7 +85,7 @@ namespace EducationPortal.WEB.MVC.Controllers
         public async Task<IActionResult> Logout()
         {
             this.logger.LogInformation($"Logout Username: {User.Identity.Name}");
-            await this.service.LogOut();
+            await this.authService.LogOut();
             return RedirectToAction("Index", "Home");
         }
     }

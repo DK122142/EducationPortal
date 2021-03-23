@@ -8,11 +8,11 @@ namespace EducationPortal.BLL.Interfaces
 {
     public interface IUserService : IService<ProfileDto>
     {
-        Task<ResultDetails<Guid>> JoinToCourse(Guid profileId, Guid courseId);
+        Task<ResultDetails> JoinToCourse(Guid profileId, Guid courseId);
 
-        Task<ResultDetails<Guid>> LeaveCourse(Guid profileId, Guid courseId);
+        Task<ResultDetails> LeaveCourse(Guid profileId, Guid courseId);
 
-        Task<ResultDetails<Guid>> CompleteCourse(Guid profileId, Guid courseId);
+        Task<ResultDetails> CompleteCourse(Guid profileId, Guid courseId);
         
         Task<ResultDetails<List<CourseDto>>> JoinedCourses(Guid profileId);
 

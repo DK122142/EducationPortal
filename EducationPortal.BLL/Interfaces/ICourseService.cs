@@ -7,17 +7,17 @@ namespace EducationPortal.BLL.Interfaces
 {
     public interface ICourseService : IService<CourseDto>
     {
-        Task<ResultDetails<Guid>> Create(Guid creatorId, CourseDto course);
+        Task<ResultDetails> Create(Guid creatorId, CourseDto course);
         
-        Task<ResultDetails<Guid>> Edit(CourseDto course);
+        Task<ResultDetails> Edit(CourseDto course);
         
-        Task<ResultDetails<Guid>> AddSkillToCourse(Guid skillId, Guid courseId);
+        Task<ResultDetails> AddSkillToCourse(Guid skillId, Guid courseId);
 
-        Task<ResultDetails<Guid>> AddMaterialToCourse(Guid materialId, Guid courseId);
+        Task<ResultDetails> AddMaterialToCourse(Guid materialId, Guid courseId);
 
-        Task<ResultDetails<Guid>> RemoveSkillFromCourse(Guid skillId, Guid courseId);
+        Task<ResultDetails> RemoveSkillFromCourse(Guid skillId, Guid courseId);
 
-        Task<ResultDetails<Guid>> RemoveMaterialFromCourse(Guid materialId, Guid courseId);
+        Task<ResultDetails> RemoveMaterialFromCourse(Guid materialId, Guid courseId);
         
     }
 }
