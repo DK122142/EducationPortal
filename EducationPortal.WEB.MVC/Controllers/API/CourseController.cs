@@ -41,7 +41,8 @@ namespace EducationPortal.WEB.MVC.Controllers.API
 
             return new ObjectResult(skill);
         }
-
+        
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post(CourseCreateViewModel model)
         {
@@ -53,7 +54,8 @@ namespace EducationPortal.WEB.MVC.Controllers.API
             
             return Ok(model);
         }
-
+        
+        [Authorize]
         [HttpDelete("{id:Guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {

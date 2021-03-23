@@ -24,9 +24,8 @@ namespace EducationPortal.WEB.MVC.Controllers.API
             this.userService = userService;
         }
 
-
-        [HttpGet("profile")]
         [Authorize]
+        [HttpGet("profile")]
         public async Task<IActionResult> Profile()
         {
             var id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);

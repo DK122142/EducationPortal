@@ -5,6 +5,7 @@ using EducationPortal.BLL.DTO;
 using EducationPortal.BLL.Interfaces;
 using EducationPortal.WEB.MVC.Models;
 using EducationPortal.WEB.MVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,11 +15,11 @@ namespace EducationPortal.WEB.MVC.Controllers.API
     [ApiController]
     public class SkillController : ControllerBase
     {
-        private IMapper mapper;
-        private ISkillService skillService;
-        private ILogger logger;
+        private readonly IMapper mapper;
+        private readonly ISkillService skillService;
+        private readonly ILogger logger;
 
-        public SkillController(IMapper mapper, ISkillService skillService, ILogger<Controllers.SkillController> logger)
+        public SkillController(IMapper mapper, ISkillService skillService, ILogger<SkillController> logger)
         {
             this.mapper = mapper;
             this.skillService = skillService;
@@ -37,38 +38,41 @@ namespace EducationPortal.WEB.MVC.Controllers.API
 
             return new ObjectResult(skill);
         }
-
+        
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Post(SkillCreateViewModel model)
+        public async Task<IActionResult> Post(SkillCreateViewModel skillCreateViewModel)
         {
-            var dto = this.mapper.Map<SkillDto>(model);
+            var skillDto = this.mapper.Map<SkillDto>(skillCreateViewModel);
 
-            await this.skillService.Create(dto);
+            await this.skillService.Create(skillDto);
 
-            this.logger.LogInformation($"Added skill {model.Name}");
+            this.logger.LogInformation($"Added skill {skillCreateViewModel.Name}");
 
-            return Ok(model);
+            return Ok(skillCreateViewModel);
         }
-
+        
+        [Authorize]
         [HttpPut("{id:Guid}")]
-        public async Task<IActionResult> Put(Guid id, SkillModel model)
+        public async Task<IActionResult> Put(Guid id, SkillModel skillModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var dto = this.mapper.Map<SkillDto>(model);
-                    await this.skillService.Edit(dto);
+                    var skillDto = this.mapper.Map<SkillDto>(skillModel);
+                    await this.skillService.Edit(skillDto);
                 }
 
-                return Ok(model);
+                return Ok(skillModel);
             }
             catch
             {
                 return BadRequest();
             }
         }
-
+        
+        [Authorize]
         [HttpDelete("{id:Guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
