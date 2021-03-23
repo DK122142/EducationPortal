@@ -1,0 +1,95 @@
+﻿@using System.Security.Claims
+@model EducationPortal.WEB.MVC.ViewModels.PaginationViewModel<MaterialModel>
+
+@addTagHelper *, EducationPortal.WEB.MVC
+
+@{
+    ViewData["Title"] = "Materials";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            <div class="container m-2">
+                <div class="row">
+                    <div class="col">
+                        <form method="get" asp-controller="Material" asp-action="CreateArticle">
+                            <div>
+                                <input type="submit" value="Add article" class="btn btn-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form method="get" asp-controller="Material" asp-action="CreateBook">
+                            <div>
+                                <input type="submit" value="Add book" class="btn btn-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form method="get" asp-controller="Material" asp-action="CreateVideo">
+                            <div>
+                                <input type="submit" value="Add video" class="btn btn-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        <table class="table">
+            <tr><th>Name</th><th>Type</th><th>Link</th></tr>
+            @foreach (var item in Model.Models)
+            {
+                <tr>
+                    <td>@item.Name</td><td>@item.Discriminator</td>
+                    <td><a href="@item.Source" target="_blank">@item.Source</a></td>
+                    <td>
+                        @switch (item.Discriminator)
+                        {
+                            case "Article":
+                                <form asp-controller="Material" asp-action="EditArticle" asp-route-id="@item.Id" method="get">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        View
+                                    </button>
+                                </form>
+                                break;
+                            case "Book": 
+                                <form asp-controller="Material" asp-action="EditBook" asp-route-id="@item.Id" method="get">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        View
+                                    </button>
+                                </form>
+                                break;
+                            case "Video": 
+                                <form asp-controller="Material" asp-action="EditVideo" asp-route-id="@item.Id" method="get">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        View
+                                    </button>
+                                </form>
+                                break;
+                        }
+                    </td>
+                    @if (User.Identity.IsAuthenticated
+                         && Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)) == item.AddedById)
+                    {
+                        <td>
+                            <form asp-controller="Material" asp-action="Delete" asp-route-id="@item.Id" method="post">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+    <div>
+        <page-link page-model="Model.PageViewModel" page-action="Index"></page-link>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿@model EducationPortal.WEB.MVC.ViewModels.CourseCreateViewModel
+
+@{
+    ViewData["Title"] = "Create course";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Description"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div>
+                <input type="submit" value="Continue" class="btn btn-outline-success" />
+            </div>
+        </form>
+    </div>
+</div>

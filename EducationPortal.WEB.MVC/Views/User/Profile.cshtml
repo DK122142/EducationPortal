@@ -1,0 +1,97 @@
+﻿@model EducationPortal.WEB.MVC.ViewModels.UserViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+<h1>@ViewData["Title"]</h1>
+<h3>@Model.Profile.Name</h3>
+
+<div>
+    <div>
+        <h3>
+            Joined to courses
+        </h3>
+        <div>
+            <table class="table">
+                <tr><th>Name</th><th>Description</th></tr>
+                @foreach (var item in Model.JoinedCourses)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <form asp-controller="Course" asp-action="Details" asp-route-id="@item.Id" method="get">
+                                <button type="submit" class="btn btn-sm btn-outline-primary">
+                                    Details
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div>
+        <h3>
+            Completed courses
+        </h3>
+        <div>
+            <table class="table">
+                <tr><th>Name</th><th>Description</th></tr>
+                @foreach (var item in Model.CompletedCourses)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <form asp-controller="Course" asp-action="Details" asp-route-id="@item.Id" method="get">
+                                <button type="submit" class="btn btn-sm btn-outline-primary">
+                                    Details
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div>
+        <h3>
+            Learned materials
+        </h3>
+        <div>
+            <table class="table">
+                <tr><th>Name</th><th>Type</th><th>Link</th></tr>
+                @foreach (var item in Model.PassedMaterials)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Discriminator</td>
+                        <td><a href="@item.Source" target="_blank">@item.Source</a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div>
+        <h3>
+            Skills of user
+        </h3>
+        <div>
+            <table class="table">
+                <tr>
+                    <th>Name</th><th>Description</th>
+                    <th>Level</th>
+                </tr>
+                @foreach (var skill in Model.ProfileSkills)
+                {
+                    <tr>
+                        <td>@skill.SkillName</td>
+                        <td>@skill.SkillDescription</td>
+                        <td>@skill.Level</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

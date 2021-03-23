@@ -1,0 +1,58 @@
+﻿@model EducationPortal.WEB.MVC.ViewModels.PaginationViewModel<SkillModel>
+
+@addTagHelper *, EducationPortal.WEB.MVC
+
+@{
+    ViewData["Title"] = "Skills";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            <div class="my-2">
+                <form method="get" asp-controller="Skill" asp-action="Create">
+                    <div>
+                        <input type="submit" value="Create new skill" class="btn btn-secondary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+    <div>
+        <table class="table">
+            <tr>
+                <th>Name</th><th>Description</th>
+            </tr>
+            @foreach (var skill in Model.Models)
+            {
+        <tr>
+            <td>@skill.Name</td>
+            <td>@skill.Description</td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td>
+                    <form asp-controller="Skill" asp-action="Edit" asp-route-id="@skill.Id" method="get">
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            Edit
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="Skill" asp-action="Delete" asp-route-id="@skill.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            }
+        </tr>
+            }
+        </table>
+    </div>
+    <div>
+        <page-link page-model="Model.PageViewModel" page-action="Index"></page-link>
+    </div>
+</div>
