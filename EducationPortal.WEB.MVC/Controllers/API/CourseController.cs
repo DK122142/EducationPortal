@@ -95,7 +95,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         }
         
         [Authorize]
-        [HttpPost("addskill/{courseId:Guid}/{id:Guid}")]
+        [HttpPost("add-skill/{courseId:Guid}/{id:Guid}")]
         public async Task<IActionResult> AddSkill(Guid courseId, Guid id)
         {
             await this.courseService.AddSkillToCourse(id, courseId);
@@ -104,7 +104,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         }
 
         [Authorize]
-        [HttpPost("addmaterial{courseId:Guid}/{id:Guid}")]
+        [HttpPost("add-material{courseId:Guid}/{id:Guid}")]
         public async Task<IActionResult> AddMaterial(Guid courseId, Guid id)
         {
             await this.courseService.AddMaterialToCourse(id, courseId);

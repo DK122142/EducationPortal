@@ -52,7 +52,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         }
 
         [Authorize]
-        [HttpPost("jointocourse/{id:Guid}")]
+        [HttpPost("join-to-course/{id:Guid}")]
         public async Task<IActionResult> JoinToCourse(Guid id)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -63,7 +63,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         }
 
         [Authorize]
-        [HttpPost("completecourse/{id:Guid}")]
+        [HttpPost("complete-course/{id:Guid}")]
         public async Task<IActionResult> CompleteCourse(Guid id)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

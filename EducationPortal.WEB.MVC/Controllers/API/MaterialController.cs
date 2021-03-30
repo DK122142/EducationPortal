@@ -41,7 +41,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         }
         
         [Authorize]
-        [HttpPost("createarticle")]
+        [HttpPost("create-article")]
         public async Task<IActionResult> CreateArticle(ArticleCreateViewModel articleCreateViewModel)
         {
             if (ModelState.IsValid)
@@ -61,7 +61,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         }
         
         [Authorize]
-        [HttpPost("createbook")]
+        [HttpPost("create-book")]
         public async Task<IActionResult> CreateBook(BookCreateViewModel bookCreateViewModel)
         {
             if (ModelState.IsValid)
@@ -80,7 +80,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         }
         
         [Authorize]
-        [HttpPost("createvideo")]
+        [HttpPost("create-video")]
         public async Task<IActionResult> CreateVideo(VideoCreateViewModel videoCreateViewModel)
         {
             if (ModelState.IsValid)
@@ -99,7 +99,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         }
         
         [Authorize]
-        [HttpPost("editarticle")]
+        [HttpPost("edit-article")]
         public async Task<IActionResult> EditArticle(ArticleModel articleModel)
         {
             try
@@ -121,7 +121,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         }
         
         [Authorize]
-        [HttpPost("editbook")]
+        [HttpPost("edit-book")]
         public async Task<IActionResult> EditBook(BookModel bookModel)
         {
             try
@@ -142,7 +142,7 @@ namespace EducationPortal.WEB.MVC.Controllers.API
         }
         
         [Authorize]
-        [HttpPost("editvideo")]
+        [HttpPost("edit-video")]
         public async Task<IActionResult> EditVideo(VideoModel videoModel)
         {
             try
