@@ -84,11 +84,21 @@ namespace EducationPortal.WEB.MVC
                     conf.RegisterValidatorsFromAssemblyContaining<Startup>();
                     conf.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                 });
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+
+            app.UseSwaggerUI(o =>
+            {
+                o.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                o.RoutePrefix = string.Empty;
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
